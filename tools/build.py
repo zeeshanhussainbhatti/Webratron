@@ -247,7 +247,7 @@ def process():
 
 FAQS = [
  ("How long does it take to build a website?", "It depends on the size of the project. A small business website is much quicker than a custom web portal or e-commerce store. We share a clear timeline with you before work begins."),
- ("How much does a website cost?", "Our Startup Website Package starts at $469, the Professional package at $1,269 and custom web portals at $5,499. Logo design starts at $149 and video animation at $499. Contact us for a quote tailored to your needs."),
+ ("How much does a website cost?", "Website packages start at $469 (Startup) and go up to $5,499 for a customized web portal. Logo design starts at $75, animation videos at $499 and SEO at $3,500 for a 6-month plan. Our Business Starter combo (logo, stationery, social media and a 15-page website) is $1,999. Contact us for a quote tailored to your needs."),
  ("Will my website be mobile-friendly and SEO-ready?", "Yes. Every site we build is fully responsive, fast-loading and follows SEO best practices out of the box, including meta tags, clean structure, sitemaps and performance optimisation."),
  ("Can I update the website myself?", "Absolutely. We build on easy-to-use platforms like WordPress or Shopify (or a custom CMS) and provide a walkthrough so you can edit content, images and products yourself."),
  ("Do you offer support after launch?", "Yes. We offer website maintenance covering updates, fixes, security and content changes. Ask us about support options for your package."),
@@ -280,6 +280,162 @@ def page_hero(crumb, eyebrow, h1, text):
 </section>'''
 
 PLATFORMS = '<span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#7AB55C"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg><b style="color:#7AB55C">Shopify</b></span><span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#1BDBDB"><path d="M20.702 2.29c-2.494-1.554-5.778-1.187-8.706.654C9.076 1.104 5.79.736 3.3 2.29c-3.941 2.463-4.42 8.806-1.07 14.167 2.47 3.954 6.333 6.269 9.77 6.226 3.439.043 7.301-2.273 9.771-6.226 3.347-5.361 2.872-11.704-1.069-14.167zM4.042 15.328a12.838 12.838 0 01-1.546-3.541 10.12 10.12 0 01-.336-3.338c.15-1.98.956-3.524 2.27-4.345 1.315-.822 3.052-.87 4.903-.137.281.113.556.24.825.382A15.11 15.11 0 007.5 7.54c-2.035 3.255-2.655 6.878-1.945 9.765a13.247 13.247 0 01-1.514-1.98zm17.465-3.541a12.866 12.866 0 01-1.547 3.54 13.25 13.25 0 01-1.513 1.984c.635-2.589.203-5.76-1.353-8.734a.39.39 0 00-.563-.153l-4.852 3.032a.397.397 0 00-.126.546l.712 1.139a.395.395 0 00.547.126l3.145-1.965c.101.306.203.606.28.916.296 1.086.41 2.214.335 3.337-.15 1.982-.956 3.525-2.27 4.347a4.437 4.437 0 01-2.25.65h-.101a4.432 4.432 0 01-2.25-.65c-1.314-.822-2.121-2.365-2.27-4.347-.074-1.123.039-2.251.335-3.337a13.212 13.212 0 014.05-6.482 10.148 10.148 0 012.849-1.765c1.845-.733 3.586-.685 4.9.137 1.316.822 2.122 2.365 2.271 4.345a10.146 10.146 0 01-.33 3.334z"/></svg><b style="color:#1BDBDB">GoDaddy</b></span><span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#FF9900"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 01-10.951-.577 17.88 17.88 0 01-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 01-.526-.496l-.31-.347a9.391 9.391 0 01-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 011.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg><b style="color:#FF9900">Amazon</b></span><span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#21759B"><path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0"/></svg><b style="color:#21759B">WordPress</b></span><span class="platform platform--wide" aria-label="Wix"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#0C6EFC"><path d="m0 7.354 2.113 9.292h.801a1.54 1.54 0 0 0 1.506-1.218l1.351-6.34a.171.171 0 0 1 .167-.137c.08 0 .15.058.167.137l1.352 6.34a1.54 1.54 0 0 0 1.506 1.218h.805l2.113-9.292h-.565c-.62 0-1.159.43-1.296 1.035l-1.26 5.545-1.106-5.176a1.76 1.76 0 0 0-2.19-1.324c-.639.176-1.113.716-1.251 1.365l-1.094 5.127-1.26-5.537A1.33 1.33 0 0 0 .563 7.354H0zm13.992 0a.951.951 0 0 0-.951.95v8.342h.635a.952.952 0 0 0 .951-.95V7.353h-.635zm1.778 0 3.158 4.66-3.14 4.632h1.325c.368 0 .712-.181.918-.486l1.756-2.59a.12.12 0 0 1 .197 0l1.754 2.59c.206.305.55.486.918.486h1.326l-3.14-4.632L24 7.354h-1.326c-.368 0-.712.181-.918.486l-1.772 2.617a.12.12 0 0 1-.197 0L18.014 7.84a1.108 1.108 0 0 0-.918-.486H15.77z"/></svg></span><span class="platform platform--img"><img src="assets/img/weebly.png" alt="Weebly" width="90" height="70"></span><span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#111111"><path d="M22.655 8.719c-1.802-1.801-4.726-1.801-6.564 0l-7.351 7.35c-.45.45-.45 1.2 0 1.65.45.449 1.2.449 1.65 0l7.351-7.351c.899-.899 2.362-.899 3.264 0 .9.9.9 2.364 0 3.264l-7.239 7.239c.9.899 2.362.899 3.263 0l5.589-5.589c1.836-1.838 1.836-4.763.037-6.563zm-2.475 2.437c-.451-.45-1.201-.45-1.65 0l-7.354 7.389c-.9.899-2.361.899-3.262 0-.45-.45-1.2-.45-1.65 0s-.45 1.2 0 1.649c1.801 1.801 4.726 1.801 6.564 0l7.351-7.35c.449-.487.449-1.239.001-1.688zm-2.439-7.35c-1.801-1.801-4.726-1.801-6.564 0l-7.351 7.351c-.45.449-.45 1.199 0 1.649s1.2.45 1.65 0l7.395-7.351c.9-.899 2.371-.899 3.27 0 .451.45 1.201.45 1.65 0 .421-.487.421-1.199-.029-1.649h-.021zm-2.475 2.437c-.45-.45-1.2-.45-1.65 0l-7.351 7.389c-.899.9-2.363.9-3.265 0-.9-.899-.9-2.363 0-3.264l7.239-7.239c-.9-.9-2.362-.9-3.263 0L1.35 8.719c-1.8 1.8-1.8 4.725 0 6.563 1.801 1.801 4.725 1.801 6.564 0l7.35-7.351c.451-.488.451-1.238 0-1.688h.002z"/></svg><b style="color:#111111">Squarespace</b></span><span class="platform platform--wide" aria-label="WooCommerce"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#96588A"><path d="M.754 9.58a.754.754 0 00-.754.758v2.525c0 .42.339.758.758.758h3.135l1.431.799-.326-.799h2.373a.757.757 0 00.758-.758v-2.525a.757.757 0 00-.758-.758H.754zm2.709.445h.03c.065.001.124.023.179.067a.26.26 0 01.103.19.29.29 0 01-.033.16c-.13.239-.236.64-.322 1.199-.083.541-.114.965-.094 1.267a.392.392 0 01-.039.219.213.213 0 01-.176.12c-.086.006-.177-.034-.263-.124-.31-.316-.555-.788-.735-1.416-.216.425-.375.744-.478.957-.196.376-.363.568-.502.578-.09.007-.166-.069-.233-.228-.17-.436-.352-1.277-.548-2.524a.297.297 0 01.054-.222c.047-.064.116-.095.21-.102.169-.013.265.065.288.238.103.695.217 1.284.336 1.766l.727-1.387c.066-.126.15-.192.25-.199.146-.01.237.083.273.28.083.441.188.817.315 1.136.086-.844.233-1.453.44-1.828a.255.255 0 01.218-.147zm1.293.36c.056 0 .116.006.18.02.232.05.411.177.53.386.107.18.161.395.161.654 0 .343-.087.654-.26.94-.2.332-.459.5-.781.5a.88.88 0 01-.18-.022.763.763 0 01-.531-.384 1.287 1.287 0 01-.158-.659c0-.342.085-.655.258-.937.202-.333.462-.498.78-.498zm2.084 0c.056 0 .116.006.18.02.236.05.411.177.53.386.107.18.16.395.16.654 0 .343-.086.654-.259.94-.2.332-.459.5-.781.5a.88.88 0 01-.18-.022.763.763 0 01-.531-.384 1.287 1.287 0 01-.16-.659c0-.342.087-.655.26-.937.202-.333.462-.498.78-.498zm4.437.047c-.305 0-.546.102-.718.304-.173.203-.256.49-.256.856 0 .395.086.697.256.906.17.21.418.316.744.316.315 0 .559-.107.728-.316.17-.21.256-.504.256-.883s-.087-.673-.26-.879c-.176-.202-.424-.304-.75-.304zm-1.466.002a1.13 1.13 0 00-.84.326c-.223.22-.332.499-.332.838 0 .362.108.658.328.88.22.223.505.336.861.336.103 0 .22-.016.346-.052v-.54c-.117.034-.216.051-.303.051a.545.545 0 01-.422-.177c-.106-.12-.16-.278-.16-.48 0-.19.053-.348.156-.468a.498.498 0 01.397-.181c.103 0 .212.015.332.049v-.537a1.394 1.394 0 00-.363-.045zm12.414 0a1.135 1.135 0 00-.84.326c-.223.22-.332.499-.332.838 0 .362.108.658.328.88.22.223.506.336.861.336.103 0 .22-.016.346-.052v-.54c-.116.034-.216.051-.303.051a.545.545 0 01-.422-.177c-.106-.12-.16-.278-.16-.48 0-.19.053-.348.156-.468a.498.498 0 01.397-.181c.103 0 .212.015.332.049v-.537a1.394 1.394 0 00-.363-.045zm-9.598.06l-.29 2.264h.579l.156-1.559.395 1.559h.412l.379-1.555.164 1.555h.603l-.304-2.264h-.791l-.12.508c-.03.13-.06.264-.087.4l-.067.352a29.97 29.97 0 00-.258-1.26h-.771zm2.768 0l-.29 2.264h.579l.156-1.559.396 1.559h.412l.375-1.555.165 1.555h.603l-.305-2.264h-.789l-.119.508c-.03.13-.06.264-.086.4l-.066.352c-.063-.352-.15-.771-.26-1.26h-.771zm3.988 0v2.264h.611v-1.031h.012l.494 1.03h.645l-.489-1.019a.61.61 0 00.37-.552.598.598 0 00-.25-.506c-.167-.123-.394-.186-.68-.186h-.713zm3.377 0v2.264H24v-.483h-.63v-.414h.54v-.468h-.54v-.416h.626v-.483H22.76zm-4.793.004v2.264h1.24v-.483h-.627v-.416h.541v-.468h-.54v-.415h.622v-.482h-1.236zm2.025.432c.146.003.25.025.313.072.063.046.091.12.091.227 0 .156-.135.236-.404.24v-.54zm-15.22.011c-.104 0-.205.069-.301.211a1.078 1.078 0 00-.2.639c0 .096.02.2.06.303.049.13.117.198.196.215.083.016.173-.02.27-.106.123-.11.205-.273.252-.492.016-.077.023-.16.023-.246 0-.097-.02-.2-.06-.303-.05-.13-.116-.198-.196-.215a.246.246 0 00-.045-.006zm2.083 0c-.103 0-.204.069-.3.211a1.078 1.078 0 00-.2.639c0 .096.02.2.06.303.049.13.117.198.196.215.083.016.173-.02.27-.106.123-.11.205-.273.252-.492.013-.077.023-.16.023-.246 0-.097-.02-.2-.06-.303-.05-.13-.116-.198-.196-.215a.246.246 0 00-.045-.006zm4.428.006c.233 0 .354.218.354.66-.004.273-.038.46-.098.553a.293.293 0 01-.262.139.266.266 0 01-.242-.139c-.056-.093-.084-.28-.084-.562 0-.436.11-.65.332-.65Z"/></svg></span><span class="platform"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:#146EF5"><path d="m24 4.515-7.658 14.97H9.149l3.205-6.204h-.144C9.566 16.713 5.621 18.973 0 19.485v-6.118s3.596-.213 5.71-2.435H0V4.515h6.417v5.278l.144-.001 2.622-5.277h4.854v5.244h.144l2.72-5.244H24Z"/></svg><b style="color:#146EF5">Webflow</b></span>'
+
+# ================= PACKAGES (tabbed pricing) =================
+import re as _re
+SUIT = "Suitable for potential super-startups and brand revamps for companies."
+SUIT2 = "Suitable for startups and brand revamps for companies."
+ANIM = "Get animations made for your business — custom-made and affordable animation plans."
+SEO6 = "(6 months plan)"
+VECTOR = "Vector Formats (AI, PSD, EPS, PNG, GIF, JPG, PDF)"
+SEO_BASE = ["Prior Analysis", "Business Analysis", "Consumer Analysis", "Competitor Analysis"]
+SEO_TAIL = ["Webpage Optimization", "Meta Tags Creation"]
+
+PACKAGES = {
+ "website": {
+   "label": "Website",
+   "title": "Flexible Website Development Packages for Every Business",
+   "intro": "Whether you're launching a new brand or scaling an existing one, Webratron offers custom website development packages tailored to your goals. Our solutions are built for performance, scalability, and conversion, ensuring your website works as hard as you do.",
+   "sub": {
+     "website": ("Website", [
+       ("Startup Website Package", "$469.00", "$938.00", SUIT, ["3 Page", "5 Stock Images", "1 jQuery Slider Banner", "3 Banner Design", "Contact/Query Form", "Social Media Integration", "Complete W3C Certified HTML", "48 to 72 hours TAT"]),
+       ("Standard Website Package", "$869.00", "$1938.00", SUIT, ["5 Page", "10 Stock Images", "1 jQuery Slider Banner", "5 Banner Design", "Contact/Query Form", "Social Media Integration", "Complete W3C Certified HTML", "48 to 72 hours TAT"]),
+       ("Professional Package", "$1269.00", "$2938.00", SUIT, ["10 Page", "15 Premium Stock Images", "5 Banner Design", "Social Media Integration", "Contact/Query Form", "Complete W3C Certified HTML", "48 to 72 hours TAT", "Complete Deployment"]),
+       ("Business Package", "$1969.00", "$4938.00", SUIT, ["20 Page", "15 Premium Stock Images", "1 jQuery Slider Banner", "5 Banner Design", "Social Media Integration", "Industry Specified Team of Expert Designers and Developers", "Contact/Query Form"]),
+       ("Customized Web Portal", "$5499.00", "$10,998.00", SUIT, ["Complete Custom Design & Development", "Dating Portal, Job Portal, Professional Network Portal, Social Network Portal, Restaurant Portal, Medical Portal, Enterprise Portal (Any One)", "Unique, User Friendly, Interactive, Dynamic, High End UI Design"]),
+     ]),
+     "ecommerce": ("Ecommerce", None),
+     "shopify": ("Shopify", None),
+     "webapp": ("Web App Development", None),
+   },
+ },
+ "logo": {
+   "label": "Logo Design",
+   "title": "Our Logo Design Packages",
+   "intro": "Your visions can become a reality thanks to our talented team of graphic designers. We design logos that are distinctive in style and consistent with the objectives of your business.",
+   "cards": [
+     ("Startup Package", "$75", "$99", SUIT, ["4 Design Concepts", "2 Revisions", "2 Dedicated Designers", "Jpeg PNG Format", "Ownership Rights & Unique Design", "Moneyback Guarantee"]),
+     ("Standard Package", "$149", "$199", SUIT, ["8 Design Concepts", "Unlimited Revisions", "2 Dedicated Designer", VECTOR, "Icon Design", "Banner Design", "Ownership Rights & Unique Design"]),
+     ("Professional Package", "$199", "$249", SUIT, ["12 Design Concepts", "3 Dedicated Designer", VECTOR, "Unlimited Revisions", "Business Card Design", "Letterhead Design", "Envelope Design", "Icon Design"]),
+     ("Business Package", "$360.00", "$738.00", SUIT, ["Unlimited Original Logo Concepts", "4 Dedicated Designer", VECTOR, "Unlimited Revisions", "Business Card Design", "Letterhead Design", "Envelope Design"]),
+     ("Premium Package", "$425.00", "$938.00", SUIT2, ["Unlimited Original Logo Concepts", "4 Dedicated Designer", VECTOR, "Unlimited Revisions", "Business Card Design", "Letterhead Design", "Envelope Design"]),
+     ("3D Logo Design Package", "$499.00", "$2338.00", SUIT2, ["3 Unique 3D Logo Concepts", "Light Effects and VFX", "Fully Rendered", "Multiple 3D Angles", "3 Dedicated Designers", "72 Business Hours Turn Around Time", "Unlimited Revisions"]),
+   ],
+ },
+ "seo": {
+   "label": "SEO",
+   "title": "Our SEO Packages",
+   "intro": "By providing a range of packages, we give clients the information they need to improve their visibility, reach, and organic search rankings on search engines.",
+   "cards": [
+     ("Basic SEO Package", "$3500", "$7000", SEO6, SEO_BASE + ["15 Selected Keywords Targeting", "15 Pages Keyword Targeted"] + SEO_TAIL),
+     ("Premium SEO Package", "$6000", "$12000", SEO6, SEO_BASE + ["30 Selected Keywords Targeting", "30 Pages Keyword Targeted"] + SEO_TAIL),
+     ("Platinum SEO Package", "$8000", "$16000", SEO6, SEO_BASE + ["30 Selected Keywords Targeting", "30 Pages Keyword Targeted"] + SEO_TAIL),
+   ],
+ },
+ "mobile": {"label": "Mobile App", "title": "Our Mobile App Packages", "intro": "Cross-platform iOS and Android apps built with Flutter — from concept and UI/UX design to launch on the app stores.", "cards": None},
+ "branding": {"label": "Branding", "title": "Our Branding Packages", "intro": "Logos, stationery and social media design that give your business a consistent, professional identity everywhere.", "cards": None},
+ "animation": {
+   "label": "Animations",
+   "title": "Our Animations Packages",
+   "intro": "Our animated videos have the ability to captivate viewers and keep them watching, which benefits businesses by increasing website traffic and generating income.",
+   "cards": [
+     ("Basic Animation Package", "$499", "$1598", ANIM, ["30 Second Video", "Professional Script", "Storyboard", "Animation", "Voice-Over & Sound Effects", "4 Weeks Delivery", "Unlimited Revisions", "Dedicated Project Manager"]),
+     ("Classic Animation Package", "$999", "$2198", ANIM, ["60 Second Video", "Professional Script", "Sample Theme", "Storyboard", "Animation", "Voice-Over & Sound Effects", "5 Weeks Delivery", "Dedicated Project Manager"]),
+     ("Premium Animation Package", "$1499", "$2998", ANIM, ["90 Second Video", "Professional Script", "Sample Theme", "Storyboard", "Animation", "Voice-Over & Sound Effects", "6 Weeks Delivery", "Dedicated Project Manager"]),
+     ("Unlimited Animation Package", "$2299", "$4590", ANIM, ["120 Second Video", "Professional Script", "Sample Theme", "Storyboard", "Animation", "Voice-Over & Sound Effects", "Dedicated Project Manager", "Ownership Rights & Unique Design"]),
+   ],
+ },
+}
+
+def _slug(t): return _re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")
+
+def pkg_card(name, price, was, desc, feats):
+    lis = "".join(f"<li>{f}</li>" for f in feats)
+    q = _slug(name)
+    return f'''<article class="pkg">
+          <h3 class="pkg__name">{name}</h3>
+          <div class="pkg__price"><strong>{price}</strong><s>{was}</s></div>
+          <p class="pkg__desc">{desc}</p>
+          <ul class="pkg__list">{lis}</ul>
+          <div class="pkg__actions"><a href="contact.html?package={q}" class="pkg__btn pkg__btn--order">Order Now</a><button type="button" class="pkg__btn pkg__btn--details" aria-expanded="false">View Details</button></div>
+        </article>'''
+
+def pkg_quote(label):
+    return f'''<div class="pkg-quote">
+          <h3>Custom {label} packages</h3>
+          <p>Every {label.lower()} project is different. Tell us what you need and we'll send you a tailored package and price.</p>
+          <div class="hero__actions" style="justify-content:center;margin:0"><a href="contact.html" class="pkg__btn pkg__btn--details">Get a Custom Quote</a><a href="tel:{PHONE_TEL}" class="pkg__btn pkg__btn--order">Call {PHONE}</a></div>
+        </div>'''
+
+def pkg_grid(cards, label):
+    if not cards: return pkg_quote(label)
+    return '<div class="pkg-grid">' + "\n        ".join(pkg_card(*c) for c in cards) + '</div>'
+
+def packages_section(uid="pk"):
+    tabs, panels = [], []
+    for i, (key, d) in enumerate(PACKAGES.items()):
+        sel = "true" if i == 0 else "false"
+        tabs.append(f'<button type="button" role="tab" class="pk-tab{" is-active" if i == 0 else ""}" id="{uid}-tab-{key}" aria-controls="{uid}-{key}" aria-selected="{sel}" data-tab="{uid}-{key}">{d["label"]}</button>')
+        if "sub" in d:
+            stabs, spanels = [], []
+            for j, (sk, (sl, cards)) in enumerate(d["sub"].items()):
+                ssel = "true" if j == 0 else "false"
+                stabs.append(f'<button type="button" role="tab" class="pk-tab pk-tab--sub{" is-active" if j == 0 else ""}" aria-controls="{uid}-{key}-{sk}" aria-selected="{ssel}" data-tab="{uid}-{key}-{sk}">{sl}</button>')
+                spanels.append(f'<div class="pk-panel pk-panel--sub" id="{uid}-{key}-{sk}" role="tabpanel"{"" if j == 0 else " hidden"}>{pkg_grid(cards, sl)}</div>')
+            body = f'<div class="pk-tabs pk-tabs--sub" role="tablist" aria-label="{d["label"]} package types">{"".join(stabs)}</div>' + "".join(spanels)
+        else:
+            body = pkg_grid(d["cards"], d["label"])
+        panels.append(f'''<div class="pk-panel" id="{uid}-{key}" role="tabpanel" aria-labelledby="{uid}-tab-{key}"{"" if i == 0 else " hidden"}>
+        <div class="pk-head"><h2>{d["title"]}</h2><p>{d["intro"]}</p></div>
+        {body}
+      </div>''')
+    return f'''
+<section class="packages" id="packages">
+  <div class="container">
+    <div class="pk-tabs" role="tablist" aria-label="Package categories">{"".join(tabs)}</div>
+    {"".join(panels)}
+  </div>
+</section>'''
+
+COMBO = [
+ ("Logo Design", ["8 Custom Logo Design Concepts", "By 2 Expert Designers", "Icon Design", "All File Formats (PSD, PDF, AI, JPEG, PNG)"]),
+ ("Stationery", ["Business Card, Letterhead, Envelope, Fax Template", "MS Word Letterhead", "Electronic Invoice Template"]),
+ ("Social Media", ["Facebook Page Design", "Instagram Page Design", "LinkedIn Page Design", "YouTube Page Design"]),
+ ("Website", ["15 Pages Website", "Custom Made, Interactive, Dynamic & High End Design", "Custom WP (or) Custom PHP Development", "6 jQuery Slider Banner", "Up to 10 Custom Made Banner Designs", "20 Stock Images", "Unlimited Revisions", "Special Hover Effects", "CMS / Admin Panel Support", "Online Appointment/Scheduling/Online Ordering Integration", "Online Payment Integration", "Custom Dynamic Forms", "Newsletter Subscription", "Newsfeed Integration", "Signup Area (For Newsletters, Offers etc.)", "Search Bar", "Free Google Friendly Sitemap", "Social Media Integration", "Search Engine Submission", "Complete W3C Certified HTML", "Industry Specified Team of Expert Designers and Developers", "Cross Browser Compatible", "Complete Designing", "Facebook Page Design", "Instagram Page Design", "YouTube Page Design", "Complete Deployment", "24 to 48 Hours Turnaround Time"]),
+ ("Value Added Services", ["All Final File Formats", "Dedicated Account Manager", "Ownership Rights & Unique Design", "Moneyback Guarantee"]),
+]
+def combo_section():
+    groups = {g: "".join(f"<li>{x}</li>" for x in items) for g, items in COMBO}
+    return f'''
+<section class="packages packages--combo">
+  <div class="container">
+    <div class="combo">
+      <div class="combo__sale" aria-hidden="true"><small>Up to 50%</small><b>SUPER<br>SALE</b></div>
+      <span class="combo__kicker">Combo Package</span>
+      <h2 class="combo__title">Business Starter Package</h2>
+      <div class="combo__cols">
+        <div>
+          <h3>Logo Design</h3><ul>{groups["Logo Design"]}</ul>
+          <h3>Stationery</h3><ul>{groups["Stationery"]}</ul>
+          <h3>Social Media</h3><ul>{groups["Social Media"]}</ul>
+        </div>
+        <div class="combo__web">
+          <h3>Website</h3><ul class="combo__webl">{groups["Website"]}</ul>
+          <h3>Value Added Services</h3><ul class="combo__webl">{groups["Value Added Services"]}</ul>
+        </div>
+      </div>
+      <div class="combo__foot">
+        <div class="combo__contact"><a href="tel:{PHONE_TEL}">{icon("phone")} {PHONE}</a><a href="contact.html">{icon("chat")} Live Chat</a><small>For more information speak with us</small></div>
+        <div class="combo__price"><s>$3,999.00</s><strong>$1999.00</strong></div>
+        <a href="contact.html?package=business-starter-package" class="pkg__btn pkg__btn--details combo__cta">Activate Now</a>
+      </div>
+    </div>
+  </div>
+</section>'''
+
+PACKAGES_HTML = packages_section("hp")
+COMBO_HTML = combo_section()
+
 
 # ================= HOME =================
 home = f'''
@@ -338,6 +494,9 @@ home = f'''
     </div>
   </div>
 </section>
+
+{PACKAGES_HTML}
+{COMBO_HTML}
 
 <section class="section section--alt">
   <div class="container split">
@@ -586,49 +745,10 @@ page("about.html", "About Us | Webratron Digital Agency",
      about, "about.html")
 
 # ================= PRICING =================
-PLANS = [
- ("starter", "Startup Website", "$469", "$938", "A clean, professional website to get your business online.", ["3-page website", "5 stock images", "3 banner designs", "1 jQuery slider banner", "Contact form", "Social media integration", "Mobile responsive", "100% ownership rights"], False),
- ("growth", "Professional Website", "$1,269", "$2,938", "A complete website for growing businesses.", ["10-page website", "15 premium stock images", "5 banner designs", "CMS / admin panel", "Contact form", "Mobile responsive", "100% ownership rights", "Money-back guarantee"], True),
- ("enterprise", "Web Portal", "$5,499", "$10,998", "A fully custom web portal for established businesses.", ["Custom design & development", "Content management system", "Dedicated project manager", "Mobile responsive", "100% ownership rights", "Money-back guarantee"], False),
-]
-plans = []
-for i, (pid, name, price, was, desc, feats, featured) in enumerate(PLANS):
-    badge = '<span class="plan__badge">Recommended</span>' if featured else ""
-    cls = " plan--featured" if featured else ""
-    btn = "btn--primary" if featured else "btn--ghost"
-    lis = "".join(f"<li>{f}</li>" for f in feats)
-    plans.append(f'''      <article class="card plan{cls} reveal" data-delay="{i}">
-        {badge}
-        <h3>{name}</h3>
-        <p>{desc}</p>
-        <div class="plan__price">{price} <small><s>{was}</s></small></div>
-        <ul class="checklist">{lis}</ul>
-        <a href="contact.html?plan={pid}" class="btn {btn} btn--block">Get started</a>
-      </article>''')
-ADDONS = [("brand", "Logo Design", "from $149"), ("video", "Video Animation", "from $499"), ("cart", "Shopify Store", "from $99"),
-          ("seo", "SEO Packages", "from $3,500"), ("mobile", "Mobile App", "custom quote"), ("shield", "Website Maintenance", "custom quote")]
-addons = "\n".join(f'      <article class="card reveal" data-delay="{i % 3}" style="display:flex;gap:18px;align-items:center;padding:24px"><div class="icon" style="margin:0;flex:0 0 56px">{icon(ic)}</div><div><h3 style="margin:0 0 2px;font-size:1.1rem">{n}</h3><p style="margin:0;color:var(--primary-2);font-weight:600">{p}</p></div></article>' for i, (ic, n, p) in enumerate(ADDONS))
-pricing = page_hero("Pricing", "Pricing", 'Simple, <span class="grad-text">transparent</span> pricing',
-    "Website packages for every stage of business, with full ownership of your design.") + f'''
-<section class="section" style="padding-top:20px">
-  <div class="container">
-    <div class="grid grid--3 pricing">
-{chr(10).join(plans)}
-    </div>
-    <p class="text-center" style="margin-top:32px;font-size:.95rem">Prices in USD. E-commerce, Shopify and other website packages are also available. Need something different? <a href="contact.html" class="grad-text" style="font-weight:600">Request a custom quote</a>.</p>
-  </div>
-</section>
-<section class="section section--alt">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">Add-ons</span>
-      <h2 class="reveal">More <span class="grad-text">services</span></h2>
-    </div>
-    <div class="grid grid--3">
-{addons}
-    </div>
-  </div>
-</section>
+pricing = page_hero("Pricing", "Pricing", 'Packages for <span class="grad-text">every business</span>',
+    "Packages for websites, logos, SEO and animation — with full ownership of your design.") + f'''
+{packages_section("pp")}
+{COMBO_HTML}
 <section class="section">
   <div class="container">
     <div class="section-head">

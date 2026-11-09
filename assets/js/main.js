@@ -106,6 +106,46 @@
     if (map[plan]) budget.value = map[plan];
   }
 
+  /* ---- Package tabs ---- */
+  document.querySelectorAll(".pk-tabs").forEach(function (list) {
+    var tabs = Array.prototype.filter.call(list.children, function (c) { return c.classList.contains("pk-tab"); });
+    tabs.forEach(function (tab, idx) {
+      tab.addEventListener("click", function () {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", String(on));
+          var panel = document.getElementById(t.getAttribute("data-tab"));
+          if (panel) panel.hidden = !on;
+        });
+      });
+      tab.addEventListener("keydown", function (e) {
+        var n = null;
+        if (e.key === "ArrowRight") n = tabs[(idx + 1) % tabs.length];
+        if (e.key === "ArrowLeft") n = tabs[(idx - 1 + tabs.length) % tabs.length];
+        if (n) { e.preventDefault(); n.focus(); n.click(); }
+      });
+    });
+  });
+
+  /* ---- Package "View Details" expands the full feature list ---- */
+  document.querySelectorAll(".pkg__btn--details[aria-expanded]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var card = btn.closest(".pkg");
+      var open = card.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "Hide Details" : "View Details";
+    });
+  });
+
+  /* ---- Pre-fill contact form from ?package= ---- */
+  var pkg = params.get("package");
+  var msg = document.getElementById("message");
+  if (pkg && msg && !msg.value) {
+    var nice = pkg.replace(/[^a-z0-9-]/gi, "").replace(/-/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+    msg.value = "Hi, I'm interested in the " + nice + ". Please share the next steps.";
+  }
+
   /* ---- Contact form ---- */
   var wrap = document.querySelector(".form");
   var form = wrap && wrap.querySelector("form");
