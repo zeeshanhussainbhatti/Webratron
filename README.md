@@ -3,7 +3,7 @@
 A fast, responsive static website for Webratron (website design, development, mobile apps, branding, SEO and video).
 
 ## Pages
-`index.html` · `services.html` · `portfolio.html` · `about.html` · `pricing.html` · `contact.html` · `privacy.html` · `terms.html` · `404.html`
+`index.html` · `about.html` · `portfolio.html` · `services.html` · `blog.html` (+ 3 `blog-*.html` articles) · `pricing.html` · `contact.html` · `privacy.html` · `terms.html` · `404.html`
 
 ## Editing
 All pages are generated from `tools/build.py`, which holds the shared header/footer and all content (services, portfolio, testimonials, pricing, FAQ, contact details).
