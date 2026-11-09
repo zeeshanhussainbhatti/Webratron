@@ -10,7 +10,7 @@ ADDRESS = "80 Broad Street, 5th Floor, New York, NY 10004, USA"
 
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>'
 
-LOGO = '''<svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M9 12l4.2 16h1.6L20 16.5 25.2 28h1.6L31 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'''
+LOGO = '''<svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M9 12l4.2 16h1.6L20 16.5 25.2 28h1.6L31 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'''
 
 ICONS = {
  "web": '<path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 9h18M9 21V9"/>',
@@ -122,7 +122,7 @@ def page(fname, title, desc, body, active=None, schema=""):
   <title>{title}</title>
   <meta name="description" content="{desc}">
   <link rel="canonical" href="{canonical}">
-  <meta name="theme-color" content="#07070d">
+  <meta name="theme-color" content="#080716">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Webratron">
   <meta property="og:title" content="{title}">
