@@ -1,8 +1,12 @@
 import os, textwrap
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://webratron.com"
-EMAIL = "info@webratron.com"
-ADDRESS = "80 Broad Street, New York, NY 10004, USA"
+EMAIL = "support@webratron.com"
+PHONE = "(917) 924-6809"
+PHONE_TEL = "+19179246809"
+TRUSTPILOT = "https://www.trustpilot.com/review/webratron.com"
+PROVEN = "https://www.provenexpert.com/en-us/webratron/"
+ADDRESS = "80 Broad Street, 5th Floor, New York, NY 10004, USA"
 
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>'
 
@@ -21,6 +25,7 @@ ICONS = {
  "mail": '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>',
  "pin": '<path d="M12 22s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/>',
  "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ "phone": '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
  "check": '<path d="M20 6 9 17l-5-5"/>',
  "bolt": '<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',
  "users": '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
@@ -67,8 +72,8 @@ def footer():
     <div class="footer__grid">
       <div class="footer__about">
         <a href="index.html" class="logo" aria-label="Webratron home">{LOGO}<span>Webratron</span></a>
-        <p>A full-service digital agency crafting high-performing websites, apps and brands that help ambitious businesses grow.</p>
-        <div class="socials">{soc}</div>
+        <p>A hub of custom website design — crafting websites, apps, logos and videos that help businesses grow.</p>
+        <p style="margin:0"><a href="{TRUSTPILOT}" target="_blank" rel="noopener"><span class="stars">★★★★★</span> 4.7 on Trustpilot</a></p>
       </div>
       <div class="footer__col">
         <h4>Services</h4>
@@ -76,7 +81,9 @@ def footer():
           <li><a href="services.html#web-design">Website Design</a></li>
           <li><a href="services.html#development">Web Development</a></li>
           <li><a href="services.html#mobile">Mobile Apps</a></li>
-          <li><a href="services.html#branding">Logo &amp; Branding</a></li>
+          <li><a href="services.html#branding">Logo Design &amp; Branding</a></li>
+          <li><a href="services.html#ecommerce">Shopify &amp; E-commerce</a></li>
+          <li><a href="services.html#video">Video Animation</a></li>
           <li><a href="services.html#seo">SEO &amp; Marketing</a></li>
         </ul>
       </div>
@@ -94,7 +101,7 @@ def footer():
         <ul>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
           <li>{ADDRESS}</li>
-          <li>Mon – Fri, 9am – 6pm EST</li>
+          <li><a href="tel:{PHONE_TEL}">{PHONE}</a></li>
         </ul>
       </div>
     </div>
@@ -142,7 +149,7 @@ def page(fname, title, desc, body, active=None, schema=""):
     with open(os.path.join(ROOT, fname), "w") as f:
         f.write(html)
 
-def cta(title="Ready to build something remarkable?", text="Tell us about your project and get a free consultation and quote within 24 hours."):
+def cta(title="Ready to build something remarkable?", text="Tell us about your project and get a free consultation and quote."):
     return f'''
 <section class="section">
   <div class="container">
@@ -161,11 +168,11 @@ SERVICES = [
  ("web-design", "web", "Website Design", "Custom, conversion-focused designs that make your brand unforgettable on every screen.", ["UI/UX", "Figma", "Responsive"]),
  ("development", "code", "Web Development", "Fast, secure, scalable websites and web apps built with WordPress, Shopify, React and Next.js.", ["WordPress", "React", "Next.js"]),
  ("mobile", "mobile", "Mobile App Development", "Beautiful cross-platform iOS & Android apps built with Flutter and React Native.", ["Flutter", "iOS", "Android"]),
- ("branding", "brand", "Logo & Brand Identity", "Logos, colour systems and brand guidelines that give your business a clear, confident voice.", ["Logo", "Guidelines", "Print"]),
- ("ecommerce", "cart", "E-commerce Solutions", "Online stores that sell — from product pages to checkout, payments and inventory.", ["Shopify", "WooCommerce", "Payments"]),
- ("seo", "seo", "SEO & Digital Marketing", "Rank higher, get found and turn traffic into leads with data-driven SEO and campaigns.", ["SEO", "Google Ads", "Analytics"]),
- ("video", "video", "Animation & Video", "Explainer, whiteboard and motion-graphics videos that tell your story in seconds.", ["2D Animation", "Whiteboard", "Motion"]),
- ("maintenance", "shield", "Website Maintenance", "Updates, backups, security monitoring and speed optimisation — so you never worry.", ["Security", "Backups", "Support"]),
+ ("branding", "brand", "Logo Design & Branding", "Custom logos, mascots and stationery that give your business a clear, confident identity.", ["Logo", "Mascot", "Stationery"]),
+ ("ecommerce", "cart", "Shopify & E-commerce", "Online stores that sell — Shopify and custom e-commerce, from product pages to checkout.", ["Shopify", "WooCommerce", "Payments"]),
+ ("seo", "seo", "SEO & Digital Marketing", "Rank higher and get found with SEO, content marketing and social media marketing.", ["SEO", "Content", "Social Media"]),
+ ("video", "video", "Video Animation", "Explainer, whiteboard and 2D brand-intro videos — from 30 to 120 seconds — that tell your story fast.", ["2D Animation", "Whiteboard", "Explainers"]),
+ ("maintenance", "shield", "Website Maintenance", "Updates, fixes, security and content changes to keep your website running smoothly.", ["Updates", "Security", "Support"]),
 ]
 
 def service_cards(limit=None, links=True):
@@ -183,12 +190,12 @@ def service_cards(limit=None, links=True):
     return "\n".join(out)
 
 WORK = [
- ("web", "art--1", "NovaFin", "Web Design · Development", "Fintech marketing site", "A sleek, high-converting website for a fintech startup with an interactive pricing calculator."),
- ("mobile", "art--2", "FitPulse", "Mobile App · Flutter", "Fitness tracking app", "Cross-platform workout and nutrition app with real-time progress tracking."),
- ("branding", "art--3", "Bloom & Co.", "Branding · Logo", "Boutique brand identity", "Complete visual identity — logo, palette, typography and packaging for a floral studio."),
- ("ecommerce web", "art--4", "GreenLeaf", "E-commerce · Shopify", "Organic products store", "Custom Shopify store with subscriptions, upsells and a lightning-fast checkout."),
- ("video", "art--5", "Taskly", "Animation · Video", "SaaS explainer video", "60-second whiteboard animation explaining a productivity product in plain language."),
- ("web", "art--6", "UrbanNest", "WordPress · SEO", "Real-estate platform", "WordPress property-listing site with advanced search filters and local SEO."),
+ ("web", "art--1", "Custom Websites", "Web Design · Development", "Business & corporate websites", "Custom-designed, mobile-responsive websites with CMS so you can update content yourself."),
+ ("mobile", "art--2", "Mobile Apps", "Mobile App · Flutter", "Cross-platform mobile apps", "Concepts turned into sleek, fully functional iOS & Android apps built with Flutter."),
+ ("branding", "art--3", "Logo & Mascot", "Branding · Logo", "Logos & mascot design", "Unique logos and mascots built from 8 initial concepts, refined with unlimited revisions."),
+ ("ecommerce web", "art--4", "Shopify Stores", "E-commerce · Shopify", "Online stores", "Shopify and e-commerce stores with product catalogues, payments and mobile-friendly checkout."),
+ ("video", "art--5", "2D Animation", "Animation · Video", "Explainer & brand-intro videos", "Whiteboard and 2D animated videos that explain your product or introduce your brand."),
+ ("web", "art--6", "WordPress", "WordPress · SEO", "WordPress websites", "WordPress builds with SEO foundations, ongoing maintenance and easy content editing."),
 ]
 
 def work_cards(limit=None):
@@ -205,17 +212,17 @@ def work_cards(limit=None):
     return "\n".join(out)
 
 TESTIMONIALS = [
- ("SM", "Sarah M.", "Founder, e-commerce brand", "Webratron rebuilt our online store from scratch. Page speed doubled and our conversion rate went up within the first month. Communication was excellent throughout."),
- ("JR", "James R.", "CEO, tech startup", "They built our Flutter app on time and kept us in the loop at every stage. The final product looks and feels premium on both iOS and Android."),
- ("AK", "Aisha K.", "Marketing Director", "Our new logo and brand identity finally reflect who we are. The team was creative, patient and incredibly detail-oriented."),
+ ("Mobile app project", "Webratron built our Flutter app on time and kept us in the loop throughout the project."),
+ ("Mascot logo project", "The final mascot logo turned out better than I imagined."),
+ ("2D animation project", "The 2D brand intro they created for us was outstanding."),
 ]
 def testimonials():
     out = []
-    for i, (ini, name, role, q) in enumerate(TESTIMONIALS):
+    for i, (role, q) in enumerate(TESTIMONIALS):
         out.append(f'''      <figure class="card quote reveal" data-delay="{i}">
         <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
         <blockquote>“{q}”</blockquote>
-        <figcaption><span class="avatar">{ini}</span><div><strong>{name}</strong><span>{role}</span></div></figcaption>
+        <figcaption><span class="avatar">★</span><div><strong>Trustpilot review</strong><span>{role}</span></div></figcaption>
       </figure>''')
     return "\n".join(out)
 
@@ -229,12 +236,13 @@ def process():
     return "\n".join(f'      <div class="step reveal" data-delay="{i}"><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(PROCESS))
 
 FAQS = [
- ("How long does it take to build a website?", "A typical business website takes 2–4 weeks from kickoff to launch. Larger projects such as e-commerce stores or custom web apps usually take 4–10 weeks. We'll give you a clear timeline before we start."),
- ("How much does a website cost?", "Our packages start from $999 for a professional starter website. Every business is different, so we provide a free, detailed quote based on your exact requirements — no hidden costs."),
+ ("How long does it take to build a website?", "It depends on the size of the project. A small business website is much quicker than a custom web portal or e-commerce store. We share a clear timeline with you before work begins."),
+ ("How much does a website cost?", "Our Startup Website Package starts at $469, the Professional package at $1,269 and custom web portals at $5,499. Logo design starts at $149 and video animation at $499. Contact us for a quote tailored to your needs."),
  ("Will my website be mobile-friendly and SEO-ready?", "Yes. Every site we build is fully responsive, fast-loading and follows SEO best practices out of the box, including meta tags, clean structure, sitemaps and performance optimisation."),
  ("Can I update the website myself?", "Absolutely. We build on easy-to-use platforms like WordPress or Shopify (or a custom CMS) and provide a walkthrough so you can edit content, images and products yourself."),
- ("Do you offer support after launch?", "Yes. Every project includes free post-launch support, and we offer monthly maintenance plans covering updates, backups, security monitoring and content changes."),
- ("Do you work with clients outside the USA?", "Yes — we work with businesses worldwide. We collaborate remotely using video calls, shared project boards and regular progress updates."),
+ ("Do you offer support after launch?", "Yes. We offer website maintenance covering updates, fixes, security and content changes. Ask us about support options for your package."),
+ ("Do I own the final design?", "Yes. Our packages include full ownership rights to your unique design."),
+ ("Do you work with clients outside the USA?", "Yes. We are based in New York and work with clients remotely through calls, email and regular progress updates."),
 ]
 def faqs(n=None):
     items = FAQS[:n] if n else FAQS
@@ -247,7 +255,7 @@ def faq_schema():
     return '\n  <script type="application/ld+json">' + json.dumps(data) + '</script>'
 
 ORG_SCHEMA = '''
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Webratron","url":"%s","logo":"%s/assets/img/favicon.svg","email":"%s","description":"Full-service digital agency: website design, web development, mobile apps, branding, SEO and video.","address":{"@type":"PostalAddress","streetAddress":"80 Broad Street","addressLocality":"New York","addressRegion":"NY","postalCode":"10004","addressCountry":"US"},"areaServed":"Worldwide"}</script>''' % (SITE, SITE, EMAIL)
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Webratron","url":"%s","logo":"%s/assets/img/favicon.svg","email":"%s","telephone":"+1-917-924-6809","description":"A hub of custom website design: web design, development, Shopify, mobile apps, logo design, branding, SEO and video animation.","address":{"@type":"PostalAddress","streetAddress":"80 Broad Street, 5th Floor","addressLocality":"New York","addressRegion":"NY","postalCode":"10004","addressCountry":"US"},"areaServed":"Worldwide"}</script>''' % (SITE, SITE, EMAIL)
 
 def page_hero(crumb, eyebrow, h1, text):
     return f'''
@@ -269,16 +277,13 @@ home = f'''
     <div>
       <span class="eyebrow reveal">Digital agency · New York</span>
       <h1 class="reveal" data-delay="1">We build websites that <span class="grad-text">grow your business.</span></h1>
-      <p class="hero__lead reveal" data-delay="2">Webratron designs and develops stunning websites, mobile apps and brands for startups and growing businesses — fast, SEO-ready and built to convert.</p>
+      <p class="hero__lead reveal" data-delay="2">Webratron is a hub of custom website design. We create websites, Shopify stores, mobile apps, logos and animated videos for startups and growing businesses.</p>
       <div class="hero__actions reveal" data-delay="3">
         <a href="contact.html" class="btn btn--primary">Get a free quote {ARROW}</a>
         <a href="portfolio.html" class="btn btn--ghost">View our work</a>
       </div>
       <div class="hero__trust reveal" data-delay="3">
-        <div class="avatars" aria-hidden="true">
-          <span style="background:#7c5cff">SM</span><span style="background:#00a8cc">JR</span><span style="background:#d63fb5">AK</span><span style="background:#1fae78">+</span>
-        </div>
-        <small><span class="stars">★★★★★</span><br>Trusted by businesses worldwide</small>
+        <a href="{TRUSTPILOT}" target="_blank" rel="noopener"><small><span class="stars">★★★★★</span><br>Rated 4.7/5 on Trustpilot · 5.0 on ProvenExpert</small></a>
       </div>
     </div>
     <div class="hero__visual reveal" data-delay="2" aria-hidden="true">
@@ -291,7 +296,7 @@ home = f'''
         </div>
       </div>
       <div class="mock mock--phone"><div class="notch"></div><div class="ph-hero"></div><div class="sk" style="margin-bottom:8px"></div><div class="sk sk--w60"></div></div>
-      <div class="mock mock--chip"><span class="dot">{icon("chart")}</span><div><strong>+148%</strong><small>More leads</small></div></div>
+      <div class="mock mock--chip"><span class="dot">{icon("check")}</span><div><strong>4.7 ★</strong><small>Trustpilot rating</small></div></div>
     </div>
   </div>
 </section>
@@ -299,8 +304,8 @@ home = f'''
 <section class="logos" aria-label="Technologies we work with">
   <p>Technologies we master</p>
   <div class="marquee" aria-hidden="true">
-    <span>WordPress</span><span>Shopify</span><span>React</span><span>Next.js</span><span>Flutter</span><span>Laravel</span><span>Figma</span><span>Node.js</span><span>WooCommerce</span><span>Webflow</span>
-    <span>WordPress</span><span>Shopify</span><span>React</span><span>Next.js</span><span>Flutter</span><span>Laravel</span><span>Figma</span><span>Node.js</span><span>WooCommerce</span><span>Webflow</span>
+    <span>WordPress</span><span>Shopify</span><span>React</span><span>Next.js</span><span>Flutter</span><span>PHP</span><span>Laravel</span><span>Figma</span><span>WooCommerce</span><span>Adobe</span>
+    <span>WordPress</span><span>Shopify</span><span>React</span><span>Next.js</span><span>Flutter</span><span>PHP</span><span>Laravel</span><span>Figma</span><span>WooCommerce</span><span>Adobe</span>
   </div>
 </section>
 
@@ -326,9 +331,9 @@ home = f'''
       <ul class="checklist reveal">
         <li>100% custom design — no cookie-cutter templates</li>
         <li>Mobile-first, lightning-fast and SEO-optimised</li>
-        <li>Transparent pricing with clear milestones</li>
-        <li>Dedicated project manager and regular updates</li>
-        <li>Free support after launch</li>
+        <li>Unlimited revisions on logo design</li>
+        <li>100% ownership rights to your unique design</li>
+        <li>Money-back guarantee on eligible packages</li>
       </ul>
       <a href="about.html" class="btn btn--ghost reveal">More about us {ARROW}</a>
     </div>
@@ -351,10 +356,10 @@ home = f'''
 <section class="section">
   <div class="container">
     <div class="stats">
-      <div class="stat reveal"><strong class="grad-text" data-count="250" data-suffix="+">250+</strong><span>Projects delivered</span></div>
-      <div class="stat reveal" data-delay="1"><strong class="grad-text" data-count="98" data-suffix="%">98%</strong><span>Client satisfaction</span></div>
-      <div class="stat reveal" data-delay="2"><strong class="grad-text" data-count="15" data-suffix="+">15+</strong><span>Countries served</span></div>
-      <div class="stat reveal" data-delay="3"><strong class="grad-text" data-count="24" data-suffix="h">24h</strong><span>Response time</span></div>
+      <div class="stat reveal"><strong class="grad-text">4.7★</strong><span>Trustpilot rating</span></div>
+      <div class="stat reveal" data-delay="1"><strong class="grad-text">5.0★</strong><span>ProvenExpert score</span></div>
+      <div class="stat reveal" data-delay="2"><strong class="grad-text" data-count="8" data-suffix="">8</strong><span>Logo concepts per project</span></div>
+      <div class="stat reveal" data-delay="3"><strong class="grad-text">100%</strong><span>Design ownership</span></div>
     </div>
   </div>
 </section>
@@ -362,14 +367,14 @@ home = f'''
 <section class="section section--alt">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow reveal">Selected work</span>
-      <h2 class="reveal">Projects we're <span class="grad-text">proud of</span></h2>
-      <p class="reveal">A glimpse of the brands, websites and apps we've helped bring to life.</p>
+      <span class="eyebrow reveal">What we create</span>
+      <h2 class="reveal">Work across <span class="grad-text">every channel</span></h2>
+      <p class="reveal">Websites, apps, logos and videos — everything your brand needs, under one roof.</p>
     </div>
     <div class="grid grid--3">
 {work_cards(3)}
     </div>
-    <div class="text-center" style="margin-top:44px"><a href="portfolio.html" class="btn btn--ghost">See all projects {ARROW}</a></div>
+    <div class="text-center" style="margin-top:44px"><a href="portfolio.html" class="btn btn--ghost">Explore our work {ARROW}</a></div>
   </div>
 </section>
 
@@ -391,6 +396,7 @@ home = f'''
     <div class="section-head">
       <span class="eyebrow reveal">Testimonials</span>
       <h2 class="reveal">What our clients <span class="grad-text">say</span></h2>
+      <p class="reveal">From our reviews on <a href="{TRUSTPILOT}" target="_blank" rel="noopener" class="grad-text" style="font-weight:600">Trustpilot</a> — rated 4.7 out of 5.</p>
     </div>
     <div class="grid grid--3">
 {testimonials()}
@@ -420,11 +426,11 @@ DETAILS = {
  "web-design": ["Custom UI/UX design in Figma", "Landing pages & multi-page sites", "Conversion-focused layouts", "Interactive prototypes"],
  "development": ["WordPress & headless CMS", "React / Next.js web apps", "API & third-party integrations", "Speed & Core Web Vitals optimisation"],
  "mobile": ["Flutter & React Native apps", "iOS & Android store publishing", "Backend, auth & push notifications", "App UI/UX design"],
- "branding": ["Logo design & variations", "Colour palette & typography", "Brand guidelines", "Business cards & stationery"],
+ "branding": ["8 unique logo concepts", "Unlimited revisions", "2 dedicated designers", "Mascot logos & stationery design"],
  "ecommerce": ["Shopify & WooCommerce stores", "Payment gateway setup", "Product, inventory & shipping", "Conversion rate optimisation"],
- "seo": ["Technical & on-page SEO", "Local SEO & Google Business", "Google & Meta ad campaigns", "Analytics & monthly reports"],
- "video": ["Whiteboard animation", "2D explainer videos", "Logo animation & motion graphics", "Script & voice-over"],
- "maintenance": ["Plugin, theme & core updates", "Daily backups & uptime monitoring", "Security hardening & malware removal", "Content updates on request"],
+ "seo": ["Technical & on-page SEO", "Local SEO & Google Business", "Content marketing", "Social media marketing"],
+ "video": ["Whiteboard animation", "2D explainer videos", "2D brand intros", "30 to 120-second videos"],
+ "maintenance": ["Plugin, theme & core updates", "Bug fixes & troubleshooting", "Security hardening", "Content updates on request"],
 }
 blocks = []
 for i, (sid, ic, name, text, tags) in enumerate(SERVICES):
@@ -475,7 +481,7 @@ page("services.html", "Services — Web Design, Development, Apps & SEO | Webrat
 
 # ================= PORTFOLIO =================
 portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">speaks for itself</span>',
-    "Websites, apps, brands and videos crafted for clients around the world.") + f'''
+    "Websites, apps, logos and videos — explore the kinds of projects we build for our clients.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container">
     <div class="filters" role="group" aria-label="Filter projects">
@@ -496,6 +502,7 @@ portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">sp
     <div class="section-head">
       <span class="eyebrow reveal">Client love</span>
       <h2 class="reveal">Results our clients <span class="grad-text">talk about</span></h2>
+      <p class="reveal">Read all our reviews on <a href="{TRUSTPILOT}" target="_blank" rel="noopener" class="grad-text" style="font-weight:600">Trustpilot</a>.</p>
     </div>
     <div class="grid grid--3">
 {testimonials()}
@@ -511,26 +518,26 @@ VALUES = [("target", "Results-driven", "Every pixel and line of code serves one 
           ("users", "Client-first", "Honest advice, clear communication and a partnership that lasts beyond launch."),
           ("bolt", "Fast & reliable", "Agile workflows and clear milestones mean we deliver on time, every time."),
           ("heart", "Crafted with care", "We sweat the details so your brand looks and feels premium everywhere.")]
-TEAM = [("ZB", "Zeeshan Hussain Bhatti", "Founder & CEO", "#7c5cff"), ("DS", "Design Team", "UI/UX & Branding", "#00a8cc"),
-        ("DV", "Development Team", "Web & Mobile Engineering", "#d63fb5"), ("GM", "Growth Team", "SEO & Marketing", "#1fae78")]
+TEAM = [("DS", "Design Team", "Web, UI/UX & Logo Design", "#7c5cff"), ("DV", "Development Team", "Web, Shopify & Mobile Apps", "#00a8cc"),
+        ("AN", "Animation Team", "Whiteboard & 2D Video", "#d63fb5"), ("GM", "Growth Team", "SEO & Social Media", "#1fae78")]
 vals = "\n".join(f'      <article class="card reveal" data-delay="{i}"><div class="icon">{icon(ic)}</div><h3>{t}</h3><p>{d}</p></article>' for i, (ic, t, d) in enumerate(VALUES))
 team = "\n".join(f'      <article class="card member reveal" data-delay="{i}"><div class="avatar-lg" style="background:{c}">{ini}</div><h3>{n}</h3><span>{r}</span></article>' for i, (ini, n, r, c) in enumerate(TEAM))
 about = page_hero("About", "About Webratron", 'We turn ideas into <span class="grad-text">digital growth</span>',
-    "A passionate team of designers, developers and marketers helping businesses stand out and scale online.") + f'''
+    "Designers, developers, animators and marketers helping businesses stand out and grow online.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container split">
     <div>
       <span class="eyebrow reveal">Our story</span>
       <h2 class="reveal">Built for businesses that <span class="grad-text">aim higher</span></h2>
-      <p class="reveal">Webratron was founded with a simple belief: every business deserves a website and brand that works as hard as they do. We started by building websites for local businesses and have grown into a full-service digital agency serving startups, SMEs and enterprises worldwide.</p>
-      <p class="reveal">Today we design and develop websites, mobile apps, e-commerce stores and brand identities — and help our clients get found through SEO and digital marketing. Headquartered in New York, we work with clients across the globe.</p>
+      <p class="reveal">Webratron is a hub of custom website design, built on a simple belief: every business deserves a website and brand that work as hard as they do.</p>
+      <p class="reveal">From our office at 80 Broad Street in New York, we design and develop websites, Shopify stores, mobile apps, logos and animated videos — and help clients get found through SEO and social media marketing.</p>
       <a href="contact.html" class="btn btn--primary reveal">Work with us {ARROW}</a>
     </div>
     <div class="stats reveal" data-delay="1" style="grid-template-columns:repeat(2,1fr)">
-      <div class="stat"><strong class="grad-text" data-count="250" data-suffix="+">250+</strong><span>Projects delivered</span></div>
-      <div class="stat"><strong class="grad-text" data-count="98" data-suffix="%">98%</strong><span>Client satisfaction</span></div>
-      <div class="stat"><strong class="grad-text" data-count="15" data-suffix="+">15+</strong><span>Countries served</span></div>
+      <div class="stat"><strong class="grad-text">4.7★</strong><span>Trustpilot rating</span></div>
+      <div class="stat"><strong class="grad-text">5.0★</strong><span>ProvenExpert score</span></div>
       <div class="stat"><strong class="grad-text" data-count="8" data-suffix="">8</strong><span>Core services</span></div>
+      <div class="stat"><strong class="grad-text">NYC</strong><span>Headquarters</span></div>
     </div>
   </div>
 </section>
@@ -563,13 +570,13 @@ page("about.html", "About Us | Webratron Digital Agency",
 
 # ================= PRICING =================
 PLANS = [
- ("starter", "Starter", "$999", "Perfect for small businesses and personal brands getting online.", ["Up to 5 pages", "Custom responsive design", "Contact form & Google Maps", "Basic on-page SEO", "Mobile & speed optimised", "2 rounds of revisions", "30 days free support"], False),
- ("growth", "Business", "$2,499", "For growing businesses that need more power and polish.", ["Up to 12 pages", "Premium custom UI/UX design", "WordPress CMS — edit it yourself", "Blog & lead-capture forms", "Advanced SEO & analytics setup", "Social media integration", "Unlimited revisions", "60 days free support"], True),
- ("enterprise", "E-commerce / Custom", "$4,999", "Online stores, web apps and fully custom solutions.", ["Unlimited pages & products", "Shopify / WooCommerce / custom build", "Payment gateways & shipping", "Custom features & integrations", "Conversion rate optimisation", "Priority project manager", "90 days free support"], False),
+ ("starter", "Startup Website", "$469", "$938", "A clean, professional website to get your business online.", ["3-page website", "5 stock images", "3 banner designs", "1 jQuery slider banner", "Contact form", "Social media integration", "Mobile responsive", "100% ownership rights"], False),
+ ("growth", "Professional Website", "$1,269", "$2,938", "A complete website for growing businesses.", ["10-page website", "15 premium stock images", "5 banner designs", "CMS / admin panel", "Contact form", "Mobile responsive", "100% ownership rights", "Money-back guarantee"], True),
+ ("enterprise", "Web Portal", "$5,499", "$10,998", "A fully custom web portal for established businesses.", ["Custom design & development", "Content management system", "Dedicated project manager", "Mobile responsive", "100% ownership rights", "Money-back guarantee"], False),
 ]
 plans = []
-for i, (pid, name, price, desc, feats, featured) in enumerate(PLANS):
-    badge = '<span class="plan__badge">Most popular</span>' if featured else ""
+for i, (pid, name, price, was, desc, feats, featured) in enumerate(PLANS):
+    badge = '<span class="plan__badge">Recommended</span>' if featured else ""
     cls = " plan--featured" if featured else ""
     btn = "btn--primary" if featured else "btn--ghost"
     lis = "".join(f"<li>{f}</li>" for f in feats)
@@ -577,28 +584,28 @@ for i, (pid, name, price, desc, feats, featured) in enumerate(PLANS):
         {badge}
         <h3>{name}</h3>
         <p>{desc}</p>
-        <div class="plan__price">{price}<small> starting</small></div>
+        <div class="plan__price">{price} <small><s>{was}</s></small></div>
         <ul class="checklist">{lis}</ul>
         <a href="contact.html?plan={pid}" class="btn {btn} btn--block">Get started</a>
       </article>''')
-ADDONS = [("brand", "Logo & Branding", "from $299"), ("mobile", "Mobile App", "from $4,999"), ("video", "Explainer Video", "from $399"),
-          ("seo", "Monthly SEO", "from $349/mo"), ("shield", "Maintenance Plan", "from $79/mo"), ("chart", "Ads Management", "from $299/mo")]
+ADDONS = [("brand", "Logo Design", "from $149"), ("video", "Video Animation", "from $499"), ("cart", "Shopify Store", "from $99"),
+          ("seo", "SEO Packages", "from $3,500"), ("mobile", "Mobile App", "custom quote"), ("shield", "Website Maintenance", "custom quote")]
 addons = "\n".join(f'      <article class="card reveal" data-delay="{i % 3}" style="display:flex;gap:18px;align-items:center;padding:24px"><div class="icon" style="margin:0;flex:0 0 56px">{icon(ic)}</div><div><h3 style="margin:0 0 2px;font-size:1.1rem">{n}</h3><p style="margin:0;color:var(--primary-2);font-weight:600">{p}</p></div></article>' for i, (ic, n, p) in enumerate(ADDONS))
 pricing = page_hero("Pricing", "Pricing", 'Simple, <span class="grad-text">transparent</span> pricing',
-    "Clear packages with no hidden fees. Every project starts with a free consultation and a fixed quote.") + f'''
+    "Website packages for every stage of business, with full ownership of your design.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container">
     <div class="grid grid--3 pricing">
 {chr(10).join(plans)}
     </div>
-    <p class="text-center" style="margin-top:32px;font-size:.95rem">Prices are starting points in USD. Need something different? <a href="contact.html" class="grad-text" style="font-weight:600">Request a custom quote</a>.</p>
+    <p class="text-center" style="margin-top:32px;font-size:.95rem">Prices in USD. E-commerce, Shopify and other website packages are also available. Need something different? <a href="contact.html" class="grad-text" style="font-weight:600">Request a custom quote</a>.</p>
   </div>
 </section>
 <section class="section section--alt">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow reveal">Add-ons</span>
-      <h2 class="reveal">Extra services, <span class="grad-text">à la carte</span></h2>
+      <h2 class="reveal">More <span class="grad-text">services</span></h2>
     </div>
     <div class="grid grid--3">
 {addons}
@@ -623,17 +630,17 @@ page("pricing.html", "Pricing — Website & App Packages | Webratron",
 # ================= CONTACT =================
 chips = "".join(f'<label><input type="checkbox" name="services" value="{sid}"><span>{name}</span></label>' for sid, ic, name, t, tg in SERVICES)
 contact = page_hero("Contact", "Contact us", "Let's build something <span class=\"grad-text\">great together</span>",
-    "Tell us about your project. We'll get back to you within 24 hours with ideas and a free quote.") + f'''
+    "Tell us about your project and we'll get back to you with ideas and a free quote.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container contact-grid">
     <div class="contact-info">
       <div class="contact-item reveal"><div class="icon">{icon("mail")}</div><div><strong>Email us</strong><a href="mailto:{EMAIL}">{EMAIL}</a></div></div>
       <div class="contact-item reveal" data-delay="1"><div class="icon">{icon("pin")}</div><div><strong>Visit us</strong><span>{ADDRESS}</span></div></div>
-      <div class="contact-item reveal" data-delay="2"><div class="icon">{icon("clock")}</div><div><strong>Business hours</strong><span>Mon – Fri, 9:00am – 6:00pm EST</span></div></div>
+      <div class="contact-item reveal" data-delay="2"><div class="icon">{icon("phone")}</div><div><strong>Call us</strong><a href="tel:{PHONE_TEL}">{PHONE}</a></div></div>
       <div class="card reveal" data-delay="3" style="padding:26px">
         <h3 style="font-size:1.1rem">What happens next?</h3>
         <ul class="checklist" style="margin:12px 0 0">
-          <li>We review your brief within 24 hours</li>
+          <li>Our team reviews your project brief</li>
           <li>Free discovery call to understand your goals</li>
           <li>You receive a clear proposal &amp; fixed quote</li>
         </ul>
@@ -667,7 +674,7 @@ contact = page_hero("Contact", "Contact us", "Let's build something <span class=
       <div class="form-success" role="status">
         <div class="icon">{icon("check")}</div>
         <h3>Thank you!</h3>
-        <p>Your message is on its way. We'll get back to you within 24 hours.</p>
+        <p>Your message is on its way. We'll get back to you soon.</p>
       </div>
     </div>
   </div>
@@ -708,7 +715,7 @@ terms = page_hero("Terms of Service", "Legal", "Terms of Service", "The terms th
     <h2>Ownership</h2>
     <p>Upon full payment, you own the final designs and website content created for you. Third-party assets (fonts, plugins, stock media) remain subject to their own licences.</p>
     <h2>Refunds</h2>
-    <p>Because our work is custom, payments for completed milestones are non-refundable. If we are unable to deliver an agreed milestone, the payment for that milestone will be refunded.</p>
+    <p>Refund eligibility depends on your package. Packages that include a money-back guarantee are refunded according to the conditions stated in your package details. Contact us with any refund questions.</p>
     <h2>Contact</h2>
     <p>Questions about these terms? Email <a href="mailto:{EMAIL}" class="grad-text">{EMAIL}</a>.</p>
   </div>

@@ -15,7 +15,7 @@ python3 tools/build.py
 Styles: `assets/css/style.css` · Scripts: `assets/js/main.js`
 
 ## Contact form
-By default the form opens the visitor's email app pre-filled to `info@webratron.com`.
+By default the form opens the visitor's email app pre-filled to `support@webratron.com`.
 To receive submissions directly, create a free form endpoint (e.g. Formspree) and set
 `data-endpoint="https://formspree.io/f/XXXX"` on the `<form>` in `tools/build.py`, then rebuild.
 

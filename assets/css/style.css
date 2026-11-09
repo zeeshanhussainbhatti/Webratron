@@ -493,3 +493,4 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 /* ---------- 404 ---------- */
 .notfound { min-height: 100vh; display: grid; place-items: center; text-align: center; position: relative; overflow: hidden; padding: 120px 20px; }
 .notfound h1 { font-size: clamp(6rem, 22vw, 14rem); margin: 0; line-height: 1; }
+.plan--featured h3 { padding-right: 112px; }
