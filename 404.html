@@ -6,7 +6,7 @@
   <title>Page not found | Webratron</title>
   <meta name="description" content="The page you are looking for could not be found.">
   <link rel="canonical" href="https://webratron.com/404.html">
-  <meta name="theme-color" content="#07070d">
+  <meta name="theme-color" content="#080716">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Webratron">
   <meta property="og:title" content="Page not found | Webratron">
@@ -17,34 +17,45 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <div class="container nav">
-    <a href="index.html" class="logo" aria-label="Webratron home"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M9 12l4.2 16h1.6L20 16.5 25.2 28h1.6L31 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Webratron</span></a>
-    <nav aria-label="Primary">
-      <ul class="nav__links" id="nav-links">
+  <div class="container topbar">
+    <a href="index.html" class="brand" aria-label="Webratron home"><img src="assets/img/logo-light.png" alt="Webratron" width="320" height="56"></a>
+    <a href="contact.html" class="topbar__offer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg><span>Chat to avail <strong>50% off</strong></span></a>
+    <a href="contact.html" class="btn btn--quote">Get a Quote</a>
+    <a href="mailto:support@webratron.com" class="topbar__mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span>support@webratron.com</span></a>
+    <div class="topbar__phones"><a href="tel:+19179246809">(917) 924-6809</a><a href="tel:+18646710341">(864) 671-0341</a></div>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+  </div>
+  <div class="navrow">
+    <div class="container">
+      <nav aria-label="Primary">
+        <ul class="nav__links" id="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Work</a></li>
         <li><a href="about.html">About</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li class="has-dd"><a href="services.html">Services <span class="caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></a>
+          <ul class="dropdown"><li><a href="services.html#web-design"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 9h18M9 21V9"/></svg></span>Website Design</a></li><li><a href="services.html#development"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>Web Development</a></li><li><a href="services.html#mobile"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>Mobile App Development</a></li><li><a href="services.html#branding"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></span>Logo Design & Branding</a></li><li><a href="services.html#ecommerce"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 7H6"/></svg></span>Shopify & E-commerce</a></li><li><a href="services.html#seo"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg></span>SEO & Digital Marketing</a></li><li><a href="services.html#video"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3z"/></svg></span>Video Animation</a></li><li><a href="services.html#maintenance"><span class="dd__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>Website Maintenance</a></li></ul></li>
+        <li><a href="blog.html">Blogs</a></li>
         <li><a href="pricing.html">Pricing</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li class="nav__mobile-cta"><a href="contact.html" class="btn btn--primary btn--block">Start a project</a></li>
-      </ul>
-    </nav>
-    <div class="nav__cta">
-      <a href="contact.html" class="btn btn--primary">Start a project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+          <li class="nav__mobile-cta">
+            <a href="contact.html" class="btn btn--primary btn--block">Get a Quote</a>
+            <p><a href="mailto:support@webratron.com">support@webratron.com</a><br><a href="tel:+19179246809">(917) 924-6809</a> · <a href="tel:+18646710341">(864) 671-0341</a></p>
+          </li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="navrow__offer"><span class="pulse"></span>Limited offer: <strong>50% off</strong> — chat now</a>
     </div>
   </div>
 </header>
 <main id="main">
 <section class="notfound">
-  <div class="bg-grid"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
+  <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
   <div style="position:relative;z-index:1">
     <h1 class="grad-text">404</h1>
     <h2>This page got lost in cyberspace.</h2>
@@ -55,48 +66,37 @@
 </main>
 <footer class="site-footer">
   <div class="container">
-    <div class="footer__grid">
-      <div class="footer__about">
-        <a href="index.html" class="logo" aria-label="Webratron home"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M9 12l4.2 16h1.6L20 16.5 25.2 28h1.6L31 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Webratron</span></a>
-        <p>A hub of custom website design — crafting websites, apps, logos and videos that help businesses grow.</p>
-        <p style="margin:0"><a href="https://www.trustpilot.com/review/webratron.com" target="_blank" rel="noopener"><span class="stars">★★★★★</span> 4.7 on Trustpilot</a></p>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" aria-label="Webratron home"><img src="assets/img/logo-dark.png" alt="Webratron" width="320" height="56" class="footer__logo"></a>
+        <p>Webratron is a results-driven web development company focused on building high-performance digital experiences. We create custom websites that not only look exceptional but also help businesses grow, engage, and convert.</p>
+        <img src="assets/img/pay.webp" alt="We accept PayPal, Mastercard, Visa and American Express" width="340" height="53" class="footer__pay" loading="lazy">
       </div>
-      <div class="footer__col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="services.html#web-design">Website Design</a></li>
-          <li><a href="services.html#development">Web Development</a></li>
-          <li><a href="services.html#mobile">Mobile Apps</a></li>
-          <li><a href="services.html#branding">Logo Design &amp; Branding</a></li>
-          <li><a href="services.html#ecommerce">Shopify &amp; E-commerce</a></li>
-          <li><a href="services.html#video">Video Animation</a></li>
-          <li><a href="services.html#seo">SEO &amp; Marketing</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="portfolio.html">Our work</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h4>Get in touch</h4>
-        <ul>
-          <li><a href="mailto:support@webratron.com">support@webratron.com</a></li>
-          <li>80 Broad Street, 5th Floor, New York, NY 10004, USA</li>
-          <li><a href="tel:+19179246809">(917) 924-6809</a></li>
-        </ul>
+      <div class="footer__badges">
+        <img src="assets/img/badges.webp" alt="Top 10 ranked, Verified by 10Best, DesignRush accredited agency, Appfutura top web design company, GoodFirms, Trustpilot, Google reviews, McAfee Secure, DMCA protected" width="755" height="200" loading="lazy">
       </div>
     </div>
-    <div class="footer__bottom">
-      <span>&copy; <span data-year>2026</span> Webratron. All rights reserved.</span>
-      <nav aria-label="Legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></nav>
+    <div class="footer__links">
+      <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="blog.html">Blogs</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h4>Services</h4><ul><li><a href="services.html#web-design">Website Design</a></li><li><a href="services.html#development">Web Development</a></li><li><a href="services.html#mobile">Mobile App Development</a></li><li><a href="services.html#branding">Logo Design & Branding</a></li><li><a href="services.html#ecommerce">Shopify & E-commerce</a></li><li><a href="services.html#seo">SEO & Digital Marketing</a></li><li><a href="services.html#video">Video Animation</a></li><li><a href="services.html#maintenance">Website Maintenance</a></li></ul></div>
+    </div>
+    <div class="footer__locations">
+      <h3>Our Locations</h3>
+      <div class="loc-grid">
+        <div><h4>USA Address:</h4><p>80 Broad St 5th floor, New York, NY 10004, United States</p></div>
+        <div><h4>AU Address:</h4><p>308 Sussex St, Sydney NSW 2000, Australia</p></div>
+        <div><h4>Email:</h4><p><a href="mailto:support@webratron.com">support@webratron.com</a></p><h4>Phone:</h4><p><a href="tel:+19179246809">(917) 924-6809</a></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bar">
+    <div class="container">
+      <span>&copy; Webratron <span data-year>2026</span>. All Rights Reserved</span>
+      <nav aria-label="Legal"><a href="terms.html">Terms &amp; Condition</a><a href="privacy.html">Privacy Policy</a></nav>
     </div>
   </div>
 </footer>
+<a href="contact.html" class="help-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg><span>Help</span></a>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
