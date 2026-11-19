@@ -144,7 +144,8 @@ def page(fname, title, desc, body, active=None, schema=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">{'<link rel="preload" as="image" href="assets/img/hero-visual.webp" fetchpriority="high">' if fname == "index.html" else ""}{schema}
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/v3.css">{'<link rel="preload" as="image" href="assets/img/hero-visual.webp" fetchpriority="high">' if fname == "index.html" else ""}{schema}
 </head>
 <body>
 {header(active)}
@@ -532,8 +533,116 @@ COMBO_HTML = combo_section()
 
 
 # ================= HOME =================
+import json
+
+# ================= HOME v3 (new creative layout) =================
+def _num(p): return float(p.replace("$", "").replace(",", ""))
+
+def calc_config():
+    W = {n: (p, w, f) for (n, p, w, d, f) in PACKAGES["website"]["sub"]["website"][1]}
+    E = {n: (p, w, f) for (n, p, w, d, f) in PACKAGES["website"]["sub"]["ecommerce"][1]}
+    S = {n: (p, w, f) for (n, p, w, d, f) in PACKAGES["website"]["sub"]["shopify"][1]}
+    def pk(src, name, upto):
+        p, w, f = src[name]
+        return {"name": name, "price": _num(p), "was": _num(w), "feats": f[:6], "upto": upto}
+    return {
+      "website": {"label": "How many pages do you need?", "unit": "pages",
+                  "steps": [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25], "plusLast": True,
+                  "tiers": [pk(W, "Startup Website Package", 3), pk(W, "Standard Website Package", 5), pk(W, "Professional Package", 10),
+                            pk(W, "Business Package", 20), pk(W, "Customized Web Portal", 10**9)]},
+      "ecommerce": {"label": "How many products will you sell?", "unit": "products",
+                    "steps": [10, 25, 50, 100, 250, 500], "plusLast": True,
+                    "tiers": [pk(E, "Basic Ecommerce Package", 10), pk(E, "Standard Ecommerce Package", 50),
+                              pk(E, "Professional Ecommerce Package", 100), pk(E, "Business Ecommerce Package", 10**9)]},
+      "shopify": {"label": "How many products in your Shopify store?", "unit": "products",
+                  "steps": [25, 50, 200, 500, 1000, 5000], "plusLast": True,
+                  "tiers": [pk(S, "Basic Shopify Package", 50), pk(S, "Standard Shopify Package", 1000), pk(S, "Professional Shopify Package", 10**9)]},
+      "addons": [{"id": "logo", "name": "Logo Design (Standard)", "price": 149},
+                 {"id": "video", "name": "30-sec Animation Video", "price": 499},
+                 {"id": "seo", "name": "Basic SEO (6 months)", "price": 3500}],
+    }
+
+def calculator():
+    cfg = json.dumps(calc_config()).replace("'", "&#39;")
+    return f'''
+<section class="section calc-sec" id="calculator">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal">Instant estimate</span>
+      <h2 class="reveal">Build your package <span class="grad-text">in seconds</span></h2>
+      <p class="reveal">Pick what you need and we'll match you with the right Webratron package — no forms, no waiting.</p>
+    </div>
+    <div class="calc reveal" data-config='{cfg}'>
+      <div class="calc__controls">
+        <fieldset class="calc__step">
+          <legend><span class="calc__n">1</span>What are we building?</legend>
+          <div class="calc__types" role="radiogroup">
+            <label><input type="radio" name="calc-type" value="website" checked><span>{icon("web")}Website</span></label>
+            <label><input type="radio" name="calc-type" value="ecommerce"><span>{icon("cart")}E-commerce</span></label>
+            <label><input type="radio" name="calc-type" value="shopify"><span>{icon("bolt")}Shopify</span></label>
+          </div>
+        </fieldset>
+        <div class="calc__step">
+          <label for="calc-range" class="calc__legend"><span class="calc__n">2</span><span data-calc-label>How many pages do you need?</span></label>
+          <div class="calc__range">
+            <input type="range" id="calc-range" min="0" max="11" value="2" step="1">
+            <output for="calc-range" data-calc-out>3 pages</output>
+          </div>
+        </div>
+        <fieldset class="calc__step">
+          <legend><span class="calc__n">3</span>Add extras</legend>
+          <div class="calc__addons" data-calc-addons></div>
+        </fieldset>
+      </div>
+      <aside class="calc__summary" aria-live="polite">
+        <small>Recommended for you</small>
+        <h3 data-calc-name>Startup Website Package</h3>
+        <div class="calc__price"><strong data-calc-price>$469</strong><s data-calc-was>$938</s></div>
+        <ul data-calc-feats></ul>
+        <div class="calc__lines" data-calc-lines></div>
+        <div class="calc__total"><span>Estimated total</span><strong data-calc-total>$469</strong></div>
+        <p class="calc__save" data-calc-save>You save $469</p>
+        <a href="contact.html" class="btn btn--primary btn--block" data-calc-cta>Get this quote {ARROW}</a>
+        <p class="calc__note">Estimate based on our published packages. Final quote confirmed after a free consultation.</p>
+      </aside>
+    </div>
+  </div>
+</section>'''
+
+def bento():
+    tiles = []
+    layout = {"web-design": "big", "branding": "wide", "video": "wide"}
+    for sid, ic, name, text, tags in SERVICES:
+        kind = layout.get(sid, "")
+        art = scene(sid) if kind else ""
+        tag_html = "".join(f'<span class="tag">{t}</span>' for t in tags)
+        tiles.append(f'''<a href="services.html#{sid}" class="tile tile--{kind or "sm"} reveal">
+        <div class="tile__body"><div class="icon">{icon(ic)}</div><h3>{name}</h3><p>{text}</p><div class="tags">{tag_html}</div><span class="tile__go" aria-hidden="true">{ARROW}</span></div>
+        {f'<div class="tile__art">{art}</div>' if art else ""}
+      </a>''')
+    tiles.insert(4, f'''<a href="{TRUSTPILOT}" target="_blank" rel="noopener" class="tile tile--stat reveal"><strong>4.7<span>★</span></strong><p>Rated on Trustpilot<br>5.0 on ProvenExpert</p></a>''')
+    tiles.append(f'''<a href="contact.html" class="tile tile--cta reveal"><div><h3>Not sure what you need?</h3><p>Get a free consultation and a clear plan for your brand.</p></div><span class="btn btn--primary">Talk to us {ARROW}</span></a>''')
+    return "\n      ".join(tiles)
+
+def stack():
+    out = []
+    for i, (t, d) in enumerate(PROCESS):
+        out.append(f'''<article class="stack__card" style="--i:{i}">
+        <span class="stack__num">0{i+1}</span>
+        <div><h3>{t}</h3><p>{d}</p></div>
+        <div class="stack__art">{scene(["web-design", "branding", "development", "seo"][i])}</div>
+      </article>''')
+    return "\n      ".join(out)
+
+def tslider():
+    slides = "".join(f'''<figure class="tslide{" is-active" if i == 0 else ""}" data-slide="{i}"><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“{q}”</blockquote><figcaption>Trustpilot review · {role}</figcaption></figure>''' for i, (role, q) in enumerate(TESTIMONIALS))
+    dots = "".join(f'<button type="button" class="tdot{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Show review {i+1}"></button>' for i in range(len(TESTIMONIALS)))
+    return f'<div class="tslider" data-slider>{slides}<div class="tdots">{dots}</div></div>'
+
+KINETIC = "".join(f'<span>{w}</span><i>✦</i>' for w in ["Web Design", "Shopify Stores", "Mobile Apps", "Logo Design", "SEO", "2D Animation", "Branding", "E-commerce"])
+
 home = f'''
-<section class="hero hero--v2">
+<section class="hero hero--v2 hero--inset">
   <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
   <div class="container hero__inner">
     <div>
@@ -551,19 +660,19 @@ home = f'''
         <li>Tailor-made website development solutions</li>
       </ul>
       <div class="hero__actions reveal" data-delay="3">
-        <a href="contact.html" class="btn btn--primary btn--lg">Get Your Website in 24 Hours {ARROW}</a>
-        <a href="pricing.html" class="btn btn--ghost btn--lg">View Packages</a>
+        <a href="contact.html" class="btn btn--primary btn--lg magnetic">Get Your Website in 24 Hours {ARROW}</a>
+        <a href="#calculator" class="btn btn--ghost btn--lg">Estimate my price</a>
       </div>
       <div class="hero__reviews reveal" data-delay="3">
         <img src="assets/img/trust-logos.webp" alt="Reviewed on Bark, Clutch, Google and Trustpilot" width="946" height="92">
       </div>
     </div>
-    <div class="hero__art reveal" data-delay="2">
+    <div class="hero__art reveal" data-delay="2" data-parallax>
       <div class="hero__ring"></div>
       <img src="assets/img/hero-visual.webp" alt="Classical statue stepping out of a smartphone in front of a glowing planet" width="740" height="785" fetchpriority="high">
-      <div class="float-chip float-chip--1"><span class="dot">★</span><div><strong>4.7 / 5</strong><small>Trustpilot rating</small></div></div>
-      <div class="float-chip float-chip--2"><span class="dot dot--orange">⚡</span><div><strong>24 Hours</strong><small>Fast delivery</small></div></div>
-      <div class="float-chip float-chip--3"><span class="dot dot--cyan">$</span><div><strong>From $469</strong><small>Business websites</small></div></div>
+      <div class="float-chip float-chip--1" data-depth="18"><span class="dot">★</span><div><strong>4.7 / 5</strong><small>Trustpilot rating</small></div></div>
+      <div class="float-chip float-chip--2" data-depth="28"><span class="dot dot--orange">⚡</span><div><strong>24 Hours</strong><small>Fast delivery</small></div></div>
+      <div class="float-chip float-chip--3" data-depth="12"><span class="dot dot--cyan">$</span><div><strong>From $469</strong><small>Business websites</small></div></div>
     </div>
   </div>
 </section>
@@ -576,117 +685,100 @@ home = f'''
   </div>
 </section>
 
-<section class="section section--light">
+<section class="kinetic" aria-hidden="true">
+  <div class="kinetic__track">{KINETIC}{KINETIC}</div>
+  <div class="kinetic__track kinetic__track--rev">{KINETIC}{KINETIC}</div>
+</section>
+
+<section class="section">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">What we do</span>
-      <h2 class="reveal">Everything you need to <span class="grad-text">win online</span></h2>
-      <p class="reveal">From your first logo to a full-scale web platform — one team, one vision, end-to-end.</p>
+    <div class="split-head">
+      <div><span class="eyebrow reveal">What we do</span>
+      <h2 class="reveal">Everything you need to <span class="grad-text">win online</span></h2></div>
+      <p class="reveal">From your first logo to a full-scale web platform — one team, one vision, end-to-end. Tap any service to explore.</p>
     </div>
-    <div class="grid grid--4">
-{service_cards()}
+    <div class="bento">
+      {bento()}
     </div>
   </div>
 </section>
 
 {PACKAGES_HTML}
 {COMBO_HTML}
+{calculator()}
+
+<section class="section stack-sec">
+  <div class="container stack-wrap">
+    <div class="stack-intro">
+      <span class="eyebrow reveal">How we work</span>
+      <h2 class="reveal">A simple, proven <span class="grad-text">process</span></h2>
+      <p class="reveal">Clear steps, no surprises — you're involved and informed from day one.</p>
+      <a href="contact.html" class="btn btn--primary reveal">Start your project {ARROW}</a>
+    </div>
+    <div class="stack">
+      {stack()}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt work-sec">
+  <div class="container">
+    <div class="split-head">
+      <div><span class="eyebrow reveal">What we create</span>
+      <h2 class="reveal">Work across <span class="grad-text">every channel</span></h2></div>
+      <div class="hs-nav"><button type="button" class="hs-btn" data-hs="-1" aria-label="Scroll left">←</button><button type="button" class="hs-btn" data-hs="1" aria-label="Scroll right">→</button></div>
+    </div>
+  </div>
+  <div class="hscroll" tabindex="0" aria-label="Our work">
+{work_cards()}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container testi-wrap">
+    <div class="testi-stats">
+      <div class="stat reveal"><strong class="grad-text">4.7★</strong><span>Trustpilot rating</span></div>
+      <div class="stat reveal" data-delay="1"><strong class="grad-text">5.0★</strong><span>ProvenExpert score</span></div>
+      <div class="stat reveal" data-delay="2"><strong class="grad-text">24h</strong><span>Fastest delivery</span></div>
+      <div class="stat reveal" data-delay="3"><strong class="grad-text">100%</strong><span>Design ownership</span></div>
+    </div>
+    <div class="testi-card reveal">
+      <span class="eyebrow">Client love</span>
+      {tslider()}
+      <a href="{TRUSTPILOT}" target="_blank" rel="noopener" class="card__link">Read all reviews on Trustpilot {ARROW}</a>
+    </div>
+  </div>
+</section>
 
 <section class="section section--alt">
-  <div class="container split">
-    <div>
-      <span class="eyebrow reveal">Why Webratron</span>
-      <h2 class="reveal">Design that impresses. <span class="grad-text">Code that performs.</span></h2>
-      <p class="reveal">We combine creative design with solid engineering so your website doesn't just look great — it loads fast, ranks well and turns visitors into customers.</p>
-      <ul class="checklist reveal">
-        <li>100% custom design — no cookie-cutter templates</li>
-        <li>Mobile-first, lightning-fast and SEO-optimised</li>
-        <li>Unlimited revisions on logo design</li>
-        <li>100% ownership rights to your unique design</li>
-        <li>Money-back guarantee on eligible packages</li>
-      </ul>
-      <a href="about.html" class="btn btn--ghost reveal">More about us {ARROW}</a>
+  <div class="container faq-split">
+    <div class="faq-split__head">
+      <span class="eyebrow reveal">FAQ</span>
+      <h2 class="reveal">Questions? <span class="grad-text">Answered.</span></h2>
+      <p class="reveal">Can't find what you're looking for? Our team is one message away.</p>
+      <a href="contact.html" class="btn btn--ghost reveal">Ask a question {ARROW}</a>
     </div>
-    <div class="visual-panel reveal" data-delay="1" aria-hidden="true">
-      <div class="bg-grid"></div>
-      <div class="code-card">
-<span class="c">// webratron.config.js</span><br>
-<span class="k">export default</span> {{<br>
-&nbsp;&nbsp;design: <span class="s">"pixel-perfect"</span>,<br>
-&nbsp;&nbsp;performance: <span class="f">100</span>,<br>
-&nbsp;&nbsp;seo: <span class="s">"optimised"</span>,<br>
-&nbsp;&nbsp;responsive: <span class="k">true</span>,<br>
-&nbsp;&nbsp;goal: <span class="s">"grow your business"</span><br>
-}};
+    <div class="faq">
+{faqs()}
+    </div>
+  </div>
+</section>
+
+<section class="mega-cta">
+  <div class="container">
+    <div class="mega-cta__box">
+      <div class="starfield"></div>
+      <p class="mega-cta__kicker">Ready when you are</p>
+      <h2>Let's build something <span class="grad-text">remarkable.</span></h2>
+      <div class="mega-cta__row">
+        <a href="contact.html" class="mega-btn magnetic"><span>Start a project</span>{ARROW}</a>
+        <div class="mega-cta__contact"><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE_TEL}">{PHONE}</a></div>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section">
-  <div class="container">
-    <div class="stats">
-      <div class="stat reveal"><strong class="grad-text">4.7★</strong><span>Trustpilot rating</span></div>
-      <div class="stat reveal" data-delay="1"><strong class="grad-text">5.0★</strong><span>ProvenExpert score</span></div>
-      <div class="stat reveal" data-delay="2"><strong class="grad-text" data-count="8" data-suffix="">8</strong><span>Logo concepts per project</span></div>
-      <div class="stat reveal" data-delay="3"><strong class="grad-text">100%</strong><span>Design ownership</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">What we create</span>
-      <h2 class="reveal">Work across <span class="grad-text">every channel</span></h2>
-      <p class="reveal">Websites, apps, logos and videos — everything your brand needs, under one roof.</p>
-    </div>
-    <div class="grid grid--3">
-{work_cards(3)}
-    </div>
-    <div class="text-center" style="margin-top:44px"><a href="portfolio.html" class="btn btn--ghost">Explore our work {ARROW}</a></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">How we work</span>
-      <h2 class="reveal">A simple, proven <span class="grad-text">process</span></h2>
-      <p class="reveal">Clear steps, no surprises — you're involved and informed from day one.</p>
-    </div>
-    <div class="process">
-{process()}
-    </div>
-  </div>
-</section>
-
-<section class="section section--light">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">Testimonials</span>
-      <h2 class="reveal">What our clients <span class="grad-text">say</span></h2>
-      <p class="reveal">From our reviews on <a href="{TRUSTPILOT}" target="_blank" rel="noopener" class="grad-text" style="font-weight:600">Trustpilot</a> — rated 4.7 out of 5.</p>
-    </div>
-    <div class="grid grid--3">
-{testimonials()}
-    </div>
-  </div>
-</section>
-
-<section class="section section--light">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow reveal">FAQ</span>
-      <h2 class="reveal">Questions? <span class="grad-text">Answered.</span></h2>
-    </div>
-    <div class="faq">
-{faqs(4)}
-    </div>
-  </div>
-</section>
-{cta()}
 '''
+
 page("index.html", "Webratron — Website Design, Development & Digital Agency",
      "Webratron is a full-service digital agency building custom websites, mobile apps, brands and SEO strategies that help businesses grow.",
      home, "index.html", ORG_SCHEMA)
@@ -754,6 +846,7 @@ portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">sp
     "Websites, apps, logos and videos — explore the kinds of projects we build for our clients.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container">
+    <h2 class="sr-only">Our work</h2>
     <div class="filters" role="group" aria-label="Filter projects">
       <button class="filter is-active" data-filter="all" aria-pressed="true">All</button>
       <button class="filter" data-filter="web" aria-pressed="false">Websites</button>
@@ -987,6 +1080,7 @@ blog = page_hero("Blogs", "Blogs", 'Insights to <span class="grad-text">grow onl
     "Practical tips on web design, development, e-commerce and digital marketing from the Webratron team.") + f'''
 <section class="section" style="padding-top:20px">
   <div class="container">
+    <h2 class="sr-only">Latest articles</h2>
     <div class="grid grid--3">
 {cards}
     </div>

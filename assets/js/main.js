@@ -143,7 +143,8 @@
   var msg = document.getElementById("message");
   if (pkg && msg && !msg.value) {
     var nice = pkg.replace(/[^a-z0-9-]/gi, "").replace(/-/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-    msg.value = "Hi, I'm interested in the " + nice + ". Please share the next steps.";
+    var extras = params.get("extras");
+    msg.value = "Hi, I'm interested in the " + nice + (extras ? " with " + extras.replace(/[<>]/g, "") : "") + ". Please share the next steps.";
   }
 
   /* ---- Contact form ---- */
@@ -212,4 +213,126 @@
 
   /* ---- Footer year ---- */
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+
+  /* ---- Scroll progress bar ---- */
+  var bar = document.createElement("div");
+  bar.className = "progress"; bar.setAttribute("aria-hidden", "true");
+  document.body.appendChild(bar);
+  function prog() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = "scaleX(" + (h > 0 ? window.scrollY / h : 0) + ")";
+  }
+  prog(); window.addEventListener("scroll", prog, { passive: true });
+
+  /* ---- Spotlight hover ---- */
+  if (fine) {
+    document.querySelectorAll(".card, .tile, .work, .stack__card, .calc__step").forEach(function (el) {
+      el.classList.add("spot");
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        el.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    });
+  }
+
+  /* ---- Hero parallax ---- */
+  var par = document.querySelector("[data-parallax]");
+  if (par && fine && !reduce) {
+    var img = par.querySelector("img");
+    var chips = par.querySelectorAll("[data-depth]");
+    document.querySelector(".hero").addEventListener("pointermove", function (e) {
+      var x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
+      if (img) img.style.transform = "translate(" + (x * -14) + "px," + (y * -14) + "px)";
+      chips.forEach(function (c) {
+        var d = +c.getAttribute("data-depth");
+        c.style.transform = "translate(" + (x * d) + "px," + (y * d) + "px)";
+      });
+    });
+  }
+
+  /* ---- Magnetic buttons ---- */
+  if (fine && !reduce) {
+    document.querySelectorAll(".magnetic").forEach(function (b) {
+      b.addEventListener("pointermove", function (e) {
+        var r = b.getBoundingClientRect();
+        b.style.transform = "translate(" + (e.clientX - r.left - r.width / 2) * 0.18 + "px," + (e.clientY - r.top - r.height / 2) * 0.3 + "px)";
+      });
+      b.addEventListener("pointerleave", function () { b.style.transform = ""; });
+    });
+  }
+
+  /* ---- Testimonial slider ---- */
+  document.querySelectorAll("[data-slider]").forEach(function (sl) {
+    var slides = sl.querySelectorAll(".tslide"), dots = sl.querySelectorAll(".tdot"), cur = 0, timer;
+    function go(n) {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) { s.classList.toggle("is-active", i === cur); });
+      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === cur); });
+    }
+    function auto() { if (!reduce) { clearInterval(timer); timer = setInterval(function () { go(cur + 1); }, 6000); } }
+    dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.getAttribute("data-go")); auto(); }); });
+    auto();
+  });
+
+  /* ---- Horizontal gallery buttons ---- */
+  var hs = document.querySelector(".hscroll");
+  document.querySelectorAll("[data-hs]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (hs) hs.scrollBy({ left: +b.getAttribute("data-hs") * (hs.clientWidth * 0.8), behavior: reduce ? "auto" : "smooth" });
+    });
+  });
+
+  /* ---- Price calculator ---- */
+  var calc = document.querySelector(".calc");
+  if (calc) {
+    var cfg = JSON.parse(calc.getAttribute("data-config"));
+    var range = calc.querySelector("#calc-range");
+    var $ = function (sel) { return calc.querySelector(sel); };
+    var money = function (n) { return "$" + Math.round(n).toLocaleString("en-US"); };
+    var addonsBox = $("[data-calc-addons]");
+    cfg.addons.forEach(function (a) {
+      var l = document.createElement("label");
+      l.innerHTML = '<input type="checkbox" value="' + a.id + '"><span>' + a.name + "<b>+" + money(a.price) + "</b></span>";
+      addonsBox.appendChild(l);
+    });
+    function type() { return calc.querySelector('input[name="calc-type"]:checked').value; }
+    function render(bump) {
+      var t = cfg[type()], idx = +range.value, qty = t.steps[idx];
+      var tier = t.tiers.filter(function (x) { return qty <= x.upto; })[0] || t.tiers[t.tiers.length - 1];
+      var plus = t.plusLast && idx === t.steps.length - 1 ? "+" : "";
+      $("[data-calc-label]").textContent = t.label;
+      $("[data-calc-out]").textContent = qty.toLocaleString("en-US") + plus + " " + t.unit;
+      range.style.setProperty("--fill", (idx / (t.steps.length - 1) * 100) + "%");
+      $("[data-calc-name]").textContent = tier.name;
+      $("[data-calc-price]").textContent = money(tier.price);
+      $("[data-calc-was]").textContent = money(tier.was);
+      $("[data-calc-feats]").innerHTML = tier.feats.map(function (f) { return "<li>" + f + "</li>"; }).join("");
+      var total = tier.price, was = tier.was, lines = "", picked = [];
+      addonsBox.querySelectorAll("input:checked").forEach(function (c) {
+        var a = cfg.addons.filter(function (x) { return x.id === c.value; })[0];
+        total += a.price; was += a.price; picked.push(a.name);
+        lines += "<div><span>+ " + a.name + "</span><span>" + money(a.price) + "</span></div>";
+      });
+      $("[data-calc-lines]").innerHTML = lines;
+      $("[data-calc-total]").textContent = money(total);
+      $("[data-calc-save]").textContent = "You save " + money(was - total) + " vs. regular price";
+      var slug = tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      $("[data-calc-cta]").href = "contact.html?package=" + slug + (picked.length ? "&extras=" + encodeURIComponent(picked.join(", ")) : "");
+      if (bump && !reduce) { var s = $(".calc__summary"); s.classList.remove("bump"); void s.offsetWidth; s.classList.add("bump"); }
+    }
+    calc.querySelectorAll('input[name="calc-type"]').forEach(function (r) {
+      r.addEventListener("change", function () {
+        var t = cfg[type()];
+        range.max = t.steps.length - 1; range.value = Math.min(+range.value, t.steps.length - 1);
+        render(true);
+      });
+    });
+    range.addEventListener("input", function () { render(false); });
+    range.addEventListener("change", function () { render(true); });
+    addonsBox.addEventListener("change", function () { render(true); });
+    render(false);
+  }
 })();
