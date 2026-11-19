@@ -671,6 +671,80 @@ def brand_showcase(head=True):
 BRAND_SHOW = brand_showcase()
 
 
+# ================= SHOWREEL (Webratron work-in-motion) =================
+R_MOB = ["mob-home", "mob-lp", "mob-pk", "mob-bento", "mob-logo", "mob-seo", "mob-shop"]
+def _phone(name, cls=""):
+    return f'<div class="ph {cls}"><img src="assets/img/reel/{name}.webp" alt="" width="390" height="844" loading="lazy"></div>'
+
+def showreel():
+    labels = ["Showreel", "Mobile experiences", "Brand patterns", "Logo & identity", "Responsive websites",
+              "Platforms & integrations", "Brand systems", "App interfaces", "Web design", "Digital strategy"]
+    # S1 intro
+    lines = "".join(f'<i style="--x:{(i * 37) % 100}%;--h:{30 + (i * 53) % 60}%;--d:{(i * 0.17) % 2:.2f}s"></i>' for i in range(26))
+    s1 = f'''<div class="sc sc--intro"><div class="sc-grid"></div><img src="assets/img/hero-visual.webp" alt="" class="sc-intro__img" width="740" height="785" loading="lazy"><div class="sc-lines">{lines}</div><span class="sc-cursor"></span><p class="sc-title"><img src="assets/img/logo-light.webp" alt="" width="441" height="80"><span>Work in motion</span></p></div>'''
+    # S2 phone wall
+    cols = ""
+    for c in range(5):
+        seq = [R_MOB[(c * 2 + k) % len(R_MOB)] for k in range(3)]
+        cols += f'<div class="wall__col wall__col--{c % 2}">' + "".join(_phone(n) for n in seq * 2) + '</div>'
+    s2 = f'<div class="sc sc--wall"><div class="wall">{cols}</div></div>'
+    # S3 pattern (nested A chevrons = logo mark)
+    chev = "".join(f'<path d="M{560 - i * 46} 980 L{980} {160 - i * 46} L{1400 + i * 46} 980" style="--i:{i}"/>' for i in range(9))
+    s3 = f'<div class="sc sc--pattern"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">{chev}</svg></div>'
+    # S4 logo
+    s4 = '''<div class="sc sc--logo"><svg class="arcs" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <circle class="a1" cx="-80" cy="450" r="640"/><circle class="a2" cx="1700" cy="420" r="700"/><circle class="a3" cx="800" cy="-560" r="700"/>
+      <path class="dome" d="M560 900 A240 200 0 0 1 1040 900 Z"/><path class="a4" d="M520 900 A280 240 0 0 1 1080 900"/><circle class="dot" cx="560" cy="790" r="9"/></svg>
+      <div class="sc-logo__wrap"><img src="assets/img/logo-dark.webp" alt="" width="593" height="104"><span class="sc-logo__ring"></span></div></div>'''
+    # S5 devices
+    s5 = '''<div class="sc sc--devices"><div class="dev">
+      <div class="mon"><div class="mon__screen"><img src="assets/img/reel/desk-home.webp" alt="" width="1056" height="660" loading="lazy"></div><span class="mon__neck"></span><span class="mon__foot"></span></div>
+      <div class="tab"><img src="assets/img/reel/desk-pricing.webp" alt="" width="1056" height="660" loading="lazy"></div>
+      ''' + _phone("mob-lp", "dev__ph") + '''</div></div>'''
+    # S6 isometric platform
+    tiles = "".join(f'<div class="iso__tile iso__tile--{i}"><span>{icon(ic)}</span></div>' for i, ic in enumerate(["web", "cart", "seo", "mobile"]))
+    s6 = f'''<div class="sc sc--iso"><div class="sc-grid sc-grid--light"></div><div class="iso"><div class="iso__slab"><b>WEBRATRON</b></div>{tiles}<div class="iso__card"><img src="assets/img/reel/desk-services.webp" alt="" width="1056" height="660" loading="lazy"></div></div></div>'''
+    # S7 brand board
+    icons, typo, colors, logo, patterns, comps, imagery, assets = brand_sheets()
+    bcols = "".join(f'<div class="bcol bcol--{i}"><div class="bcol__track">{"".join(c)}{"".join(c)}</div></div>' for i, c in enumerate([[icons, patterns, imagery], [typo, logo, comps], [colors, assets, icons]]))
+    s7 = f'''<div class="sc sc--board"><div class="bshow bshow--reel">
+      <div class="bshow__hero"><img src="assets/img/logo-dark.webp" alt="" width="593" height="104" class="bshow__logo"><div class="bshow__stage"><span class="bshow__ring"></span><img src="assets/img/hero-visual.webp" alt="" width="740" height="785" class="bshow__img" loading="lazy"><span class="bshow__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7l8 5-8 5z" fill="currentColor"/></svg></span></div></div>
+      <div class="bshow__board"><div class="bshow__plane">{bcols}</div></div></div></div>'''
+    # S8 tilted phones
+    rows = "".join('<div class="tilt__row">' + "".join(_phone(R_MOB[(r * 3 + k) % len(R_MOB)]) for k in range(8)) + '</div>' for r in range(3))
+    s8 = f'<div class="sc sc--tilt"><div class="tilt">{rows}</div></div>'
+    # S9 laptop
+    s9 = '''<div class="sc sc--laptop"><span class="tri tri--l"></span><span class="tri tri--r"></span><div class="lap"><div class="lap__screen"><img src="assets/img/reel/desk-lp.webp" alt="" width="1056" height="660" loading="lazy"></div><span class="lap__base"></span></div></div>'''
+    # S10 radar
+    rings = "".join(f'<i style="--d:{i * 0.55:.2f}s"></i>' for i in range(6))
+    s10 = f'''<div class="sc sc--radar"><div class="sc-grid"></div><div class="radar">{rings}</div><img src="assets/img/hero-visual.webp" alt="" class="sc-radar__img" width="740" height="785" loading="lazy"><span class="sc-target"></span><p class="sc-caption">Strategy · Design · Development · Growth</p></div>'''
+    scenes = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10]
+    segs = "".join(f'<button type="button" class="reel__seg" data-go="{i}" aria-label="Scene {i+1}: {l}"><span></span></button>' for i, l in enumerate(labels))
+    return f'''
+<section class="reel-sec" aria-label="Webratron showreel">
+  <div class="container reel-head">
+    <div><span class="eyebrow reveal">Our work in motion</span>
+    <h2 class="reveal">Brands, websites &amp; apps <span class="grad-text">brought to life</span></h2></div>
+    <p class="reveal">A quick reel of what we design and build — every frame made with the Webratron brand system.</p>
+  </div>
+  <div class="reel" data-reel data-labels='{json.dumps(labels)}'>
+    <div class="reel__stage">
+      {"".join(s.replace('class="sc ', f'class="sc{" is-active" if i == 0 else ""} ', 1) for i, s in enumerate(scenes))}
+      <div class="reel__wipe" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+    <div class="reel__ui">
+      <button type="button" class="reel__toggle" aria-label="Pause showreel" data-reel-toggle><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>
+      <span class="reel__count" data-reel-count>01 / 10</span>
+      <span class="reel__label" data-reel-label>{labels[0]}</span>
+      <div class="reel__segs">{segs}</div>
+    </div>
+  </div>
+  <div class="bshow__dots" aria-hidden="true"></div>
+</section>'''
+
+REEL = showreel()
+
+
 # ================= HOME v3 (new creative layout) =================
 def _num(p): return float(p.replace("$", "").replace(",", ""))
 
@@ -839,7 +913,7 @@ home = f'''
   </div>
 </section>
 
-{BRAND_SHOW}
+{REEL}
 
 {PACKAGES_HTML}
 {COMBO_HTML}

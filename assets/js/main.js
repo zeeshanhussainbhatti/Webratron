@@ -368,4 +368,64 @@
     addonsBox.addEventListener("change", function () { render(true); });
     render(false);
   }
+  /* ---- Showreel ---- */
+  document.querySelectorAll("[data-reel]").forEach(function (reel) {
+    var scenes = reel.querySelectorAll(".sc"), segs = reel.querySelectorAll(".reel__seg");
+    var labels = JSON.parse(reel.getAttribute("data-labels") || "[]");
+    var countEl = reel.querySelector("[data-reel-count]"), labelEl = reel.querySelector("[data-reel-label]");
+    var toggle = reel.querySelector("[data-reel-toggle]");
+    var DUR = 3600, cur = 0, timer = null, visible = false, paused = reduce, startedAt = 0, remaining = DUR;
+    reel.style.setProperty("--dur", DUR + "ms");
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function ui() {
+      segs.forEach(function (sg, i) {
+        sg.classList.toggle("is-done", i < cur);
+        sg.classList.remove("is-active");
+      });
+      void reel.offsetWidth;
+      if (segs[cur]) segs[cur].classList.add("is-active");
+      if (countEl) countEl.textContent = pad(cur + 1) + " / " + pad(scenes.length);
+      if (labelEl) labelEl.textContent = labels[cur] || "";
+    }
+    function show(n, instant) {
+      n = (n + scenes.length) % scenes.length;
+      var swap = function () {
+        scenes.forEach(function (sc, i) { sc.classList.toggle("is-active", i === n); });
+        cur = n; ui();
+      };
+      if (instant || reduce) { swap(); return; }
+      reel.classList.remove("is-wiping"); void reel.offsetWidth; reel.classList.add("is-wiping");
+      setTimeout(swap, 420);
+      setTimeout(function () { reel.classList.remove("is-wiping"); }, 1100);
+    }
+    function schedule(ms) {
+      clearTimeout(timer);
+      if (paused || !visible) return;
+      startedAt = Date.now(); remaining = ms;
+      timer = setTimeout(function () { show(cur + 1); schedule(DUR + 420); }, ms);
+    }
+    function stop() { clearTimeout(timer); remaining = Math.max(400, remaining - (Date.now() - startedAt)); }
+    segs.forEach(function (sg) {
+      sg.addEventListener("click", function () { show(+sg.getAttribute("data-go")); schedule(DUR + 420); });
+    });
+    if (toggle) toggle.addEventListener("click", function () {
+      paused = !paused;
+      reel.classList.toggle("is-paused", paused);
+      toggle.setAttribute("aria-label", paused ? "Play showreel" : "Pause showreel");
+      if (paused) stop(); else schedule(remaining);
+    });
+    reel.classList.toggle("is-paused", paused);
+    if (paused && toggle) toggle.setAttribute("aria-label", "Play showreel");
+    ui();
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var was = visible; visible = e.isIntersecting;
+          reel.classList.toggle("is-offscreen", !visible);
+          if (visible && !was) schedule(remaining);
+          if (!visible && was) stop();
+        });
+      }, { threshold: 0.3 }).observe(reel);
+    } else { visible = true; schedule(DUR); }
+  });
 })();
