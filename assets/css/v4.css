@@ -218,3 +218,10 @@ body.v2::after {
 .v2 .footer__logo { width: auto; aspect-ratio: 441 / 80; }
 .v2 .sc-intro__img { aspect-ratio: 740 / 785; }
 .v2 .reel__seg { height: 26px; }
+
+/* AI services page — v2 */
+.v2 .ai-card, .v2 .ai-box { background: var(--glass); border: 1px solid var(--border); box-shadow: 0 30px 60px -40px rgba(0,0,0,.9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); color: var(--text); }
+.v2 .ai-card:hover { box-shadow: var(--glow-b); }
+.v2 .ai-card__n { color: rgba(201,210,255,.4); }
+.v2 .ai-detail__n { -webkit-text-stroke-color: rgba(201,210,255,.18); }
+.v2 .ai-box--alt { background: linear-gradient(160deg, rgba(255,46,99,.18), rgba(6,8,34,.95) 55%); border: 1px solid rgba(255,77,125,.3); }
