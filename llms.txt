@@ -21,6 +21,18 @@
 - [Video Animation](https://webratron.com/video-animation.html): Webratron produces whiteboard, 2D explainer and brand-intro animation videos that keep viewers watching. Packages start at $499 for a 30-second video and include a professional script, storyboard, animation, voice-over and sound effects.
 - [Website Maintenance](https://webratron.com/website-maintenance.html): Webratron keeps your website fast, secure and up to date with plugin, theme and core updates, bug fixes, security hardening and content changes on request. Maintenance is quoted based on your website and needs.
 
+## AI services (custom quote after a free AI audit)
+- [AI Search Optimization (AEO & GEO)](https://webratron.com/ai-services.html#ai-search-optimization): Get your business recommended inside ChatGPT, Google AI Overviews, Perplexity, Gemini and Claude — not just ranked on page one. Includes: llms.txt, schema and entity optimisation; Answer-first content and FAQ engineering; Brand mentions and citation building; AI visibility tracking across assistants.
+- [AI Chatbots & Customer Support](https://webratron.com/ai-services.html#ai-chatbots): A 24/7 AI assistant trained on your services, prices and FAQs that answers visitors instantly on your website, WhatsApp or Messenger — and captures leads. Includes: Trained on your own website and documents; Website, WhatsApp, Instagram & Messenger; Lead capture and human hand-off; Multilingual conversations.
+- [AI Voice Agents](https://webratron.com/ai-services.html#ai-voice-agents): Natural-sounding AI phone agents that answer calls, book appointments, follow up on leads and never miss a customer — day or night. Includes: Inbound call answering and routing; Appointment booking into your calendar; Outbound lead follow-up and reminders; Call summaries sent to your inbox or CRM.
+- [AI Agents & Workflow Automation](https://webratron.com/ai-services.html#ai-automation): AI agents that handle repetitive work — emails, data entry, CRM updates, invoices and reports — so your team can focus on growth. Includes: Lead routing and CRM automation; Email triage, drafting and follow-ups; Document, invoice and data processing; Connects Google Workspace, HubSpot, Shopify, Slack and more.
+- [AI Content Creation](https://webratron.com/ai-services.html#ai-content): On-brand blogs, social posts, product descriptions and ad copy produced faster with AI — and always edited by humans for quality and SEO. Includes: SEO blog articles and landing-page copy; Social media calendars and captions; Product descriptions at scale; Human editing and brand-voice training.
+- [AI Video & Avatars](https://webratron.com/ai-services.html#ai-video): Short-form ad videos, explainers and talking AI presenters created in days instead of weeks — perfect for social media and paid ads. Includes: AI avatar spokesperson videos; Short-form Reels, TikTok and YouTube Shorts; Multilingual voice-over and dubbing; Combined with our 2D animation team.
+- [AI Image & Creative Design](https://webratron.com/ai-services.html#ai-design): Product photos, lifestyle scenes, banners and campaign creatives generated with AI and finished by our designers to match your brand. Includes: AI product photography and backgrounds; Ad creatives and social banners; Brand-consistent style training; Designer retouching and final polish.
+- [AI-Powered PPC & Ads](https://webratron.com/ai-services.html#ai-ppc): Google and Meta ad campaigns optimised with AI bidding, audience signals and creative testing — backed by proper conversion tracking. Includes: Performance Max and AI bidding setup; Conversion tracking (GTM, GA4, offline leads); AI creative and copy testing; Landing pages built to convert.
+- [Custom AI Apps & Integrations](https://webratron.com/ai-services.html#ai-development): Your own AI tools — internal assistants, smart search, recommendation engines and AI features built into your website or mobile app. Includes: AI features inside web and mobile apps; Knowledge-base assistants for your team; Smart search and recommendations; Integrations with leading AI model APIs.
+- [AI Strategy, Consulting & Training](https://webratron.com/ai-services.html#ai-consulting): A clear, practical AI roadmap for your business: where AI saves time or makes money, which tools to use, and training so your team uses them well. Includes: AI opportunity audit; Tool selection and implementation roadmap; Team training workshops; Data, privacy and responsible-AI guidance.
+
 ## Packages and prices (USD)
 ### Website
 - Startup Website Package: $469.00 (regular $938.00) — 3 Page; 5 Stock Images; 1 jQuery Slider Banner; 3 Banner Design; Contact/Query Form
@@ -94,6 +106,7 @@
 ## Pages
 - [Home](https://webratron.com/)
 - [Services](https://webratron.com/services.html)
+- [AI Services](https://webratron.com/ai-services.html)
 - [Pricing](https://webratron.com/pricing.html)
 - [Portfolio](https://webratron.com/portfolio.html)
 - [About](https://webratron.com/about.html)

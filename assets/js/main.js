@@ -99,6 +99,13 @@
     var chip = document.querySelector('.chips input[value="' + svc.replace(/[^a-z-]/gi, "") + '"]');
     if (chip) chip.checked = true;
   }
+  var aiSvc = params.get("ai");
+  if (aiSvc) {
+    var aiChip = document.querySelector('.chips input[value="ai"]');
+    if (aiChip) aiChip.checked = true;
+    var aiMsg = document.getElementById("message");
+    if (aiMsg && !aiMsg.value) aiMsg.value = "Hi, I'm interested in your " + aiSvc.replace(/[^a-z0-9-]/gi, "").replace(/-/g, " ").replace(/\bai\b/i, "AI") + " service. Please share the next steps.";
+  }
   var plan = params.get("plan");
   var budget = document.getElementById("budget");
   if (plan && budget) {

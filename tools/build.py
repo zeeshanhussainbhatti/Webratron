@@ -49,7 +49,7 @@ SOCIAL = {
 }
 SOCIAL_URL = {"Facebook": "https://facebook.com/", "Instagram": "https://instagram.com/", "LinkedIn": "https://linkedin.com/", "X": "https://x.com/"}
 
-NAV = [("index.html", "Home"), ("about.html", "About"), ("portfolio.html", "Portfolio"), ("services.html", "Services"), ("blog.html", "Blogs"), ("pricing.html", "Pricing"), ("contact.html", "Contact")]
+NAV = [("index.html", "Home"), ("about.html", "About"), ("portfolio.html", "Portfolio"), ("services.html", "Services"), ("ai-services.html", "AI Services"), ("blog.html", "Blogs"), ("pricing.html", "Pricing"), ("contact.html", "Contact")]
 
 def header(active):
     lis = []
@@ -101,7 +101,7 @@ def footer():
       </div>
     </div>
     <div class="footer__links">
-      <div><h2 class="footer__h">Quick Links</h2><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="blog.html">Blogs</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h2 class="footer__h">Quick Links</h2><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="ai-services.html">AI Services</a></li><li><a href="blog.html">Blogs</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div><h2 class="footer__h">Services</h2><ul>{"".join(f'<li><a href="{SVC_URL[sid]}">{name}</a></li>' for sid, ic, name, _, _ in SERVICES)}</ul></div>
     </div>
     <div class="footer__locations">
@@ -1165,7 +1165,7 @@ page("pricing.html", "Pricing — Website & App Packages | Webratron",
      pricing, "pricing.html", faq_schema(), crumbs=[("Home", "index.html"), ("Pricing", "pricing.html")])
 
 # ================= CONTACT =================
-chips = "".join(f'<label><input type="checkbox" name="services" value="{sid}"><span>{name}</span></label>' for sid, ic, name, t, tg in SERVICES)
+chips = "".join(f'<label><input type="checkbox" name="services" value="{sid}"><span>{name}</span></label>' for sid, ic, name, t, tg in SERVICES) + '<label><input type="checkbox" name="services" value="ai"><span>AI Services</span></label>'
 contact = page_hero("Contact", "Contact us", "Let's build something <span class=\"grad-text\">great together</span>",
     "Tell us about your project and we'll get back to you with ideas and a free quote.") + f'''
 <section class="section" style="padding-top:20px">
@@ -1526,7 +1526,7 @@ for _sid in SVC: svc_page(_sid)
 
 # ---------- PPC landing pages ----------
 def lead_form(service_value, cta_label):
-    chips = "".join(f'<option value="{n}"{" selected" if s == service_value else ""}>{n}</option>' for s, i, n, _, _ in SERVICES)
+    chips = "".join(f'<option value="{n}"{" selected" if s == service_value else ""}>{n}</option>' for s, i, n, _, _ in SERVICES) + f'<option value="AI Services"{" selected" if service_value == "ai" else ""}>AI Services</option>'
     return f'''<div class="form lp-form" id="lead">
       <form novalidate data-email="{EMAIL}" data-lead-form>
         <p class="lp-form__title">Get your free quote</p>
@@ -1626,6 +1626,206 @@ thanks = f'''
 <script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({{event:"conversion_thank_you"}});</script>'''
 page("thank-you.html", "Thank You | Webratron", "Thanks for contacting Webratron.", thanks, noindex=True)
 
+# ================= AI SERVICES =================
+AI_ICONS = {
+ "geo": '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 7.5l1 2.2 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z"/>',
+ "bot": '<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 16h6"/><circle cx="12" cy="3.5" r="1"/>',
+ "voice": '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>',
+ "flow": '<rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><path d="M9 6h6M18 9v6M9 6c3 0 3 12 6 12"/>',
+ "pen": '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/><path d="M15 5l3 3"/>',
+ "avatar": '<rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/><circle cx="9.5" cy="10.5" r="2.5"/><path d="M5.5 17a4 4 0 0 1 8 0"/>',
+ "image": '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/><path d="M17 3.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/>',
+ "ads": '<path d="M3 11l15-6v14L3 13z"/><path d="M7 13v5a2 2 0 0 0 4 0v-3.5"/><path d="M21 9v4"/>',
+ "chip": '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/><path d="M10 10h4v4h-4z"/>',
+ "spark": '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.4z"/><path d="M19 15l.8 2 2 .8-2 .7-.8 2-.8-2-2-.7 2-.8z"/>',
+}
+ICONS.update(AI_ICONS)
+
+AI = [
+ ("ai-search-optimization", "geo", "AI Search Optimization (AEO & GEO)",
+  "Get your business recommended inside ChatGPT, Google AI Overviews, Perplexity, Gemini and Claude — not just ranked on page one.",
+  ["llms.txt, schema and entity optimisation", "Answer-first content and FAQ engineering", "Brand mentions and citation building", "AI visibility tracking across assistants"],
+  ["Local businesses that want to be the answer to “best … near me”", "SaaS and service brands competing for AI recommendations", "E-commerce stores appearing in AI shopping answers"]),
+ ("ai-chatbots", "bot", "AI Chatbots & Customer Support",
+  "A 24/7 AI assistant trained on your services, prices and FAQs that answers visitors instantly on your website, WhatsApp or Messenger — and captures leads.",
+  ["Trained on your own website and documents", "Website, WhatsApp, Instagram & Messenger", "Lead capture and human hand-off", "Multilingual conversations"],
+  ["Answering pricing and service questions after hours", "Qualifying leads before your sales team calls", "Order status and support for online stores"]),
+ ("ai-voice-agents", "voice", "AI Voice Agents",
+  "Natural-sounding AI phone agents that answer calls, book appointments, follow up on leads and never miss a customer — day or night.",
+  ["Inbound call answering and routing", "Appointment booking into your calendar", "Outbound lead follow-up and reminders", "Call summaries sent to your inbox or CRM"],
+  ["Clinics, salons and service businesses booking appointments", "Real-estate and agencies following up on enquiries", "Restaurants taking reservations and orders"]),
+ ("ai-automation", "flow", "AI Agents & Workflow Automation",
+  "AI agents that handle repetitive work — emails, data entry, CRM updates, invoices and reports — so your team can focus on growth.",
+  ["Lead routing and CRM automation", "Email triage, drafting and follow-ups", "Document, invoice and data processing", "Connects Google Workspace, HubSpot, Shopify, Slack and more"],
+  ["Sending instant replies and quotes to new leads", "Turning form submissions into CRM deals and tasks", "Weekly reporting without spreadsheets"]),
+ ("ai-content", "pen", "AI Content Creation",
+  "On-brand blogs, social posts, product descriptions and ad copy produced faster with AI — and always edited by humans for quality and SEO.",
+  ["SEO blog articles and landing-page copy", "Social media calendars and captions", "Product descriptions at scale", "Human editing and brand-voice training"],
+  ["Publishing consistently without a large content team", "Writing hundreds of product descriptions for a store", "Repurposing one idea into many formats"]),
+ ("ai-video", "avatar", "AI Video & Avatars",
+  "Short-form ad videos, explainers and talking AI presenters created in days instead of weeks — perfect for social media and paid ads.",
+  ["AI avatar spokesperson videos", "Short-form Reels, TikTok and YouTube Shorts", "Multilingual voice-over and dubbing", "Combined with our 2D animation team"],
+  ["Testing many ad variations quickly", "Product explainers in several languages", "Consistent weekly social video"]),
+ ("ai-design", "image", "AI Image & Creative Design",
+  "Product photos, lifestyle scenes, banners and campaign creatives generated with AI and finished by our designers to match your brand.",
+  ["AI product photography and backgrounds", "Ad creatives and social banners", "Brand-consistent style training", "Designer retouching and final polish"],
+  ["Lifestyle product images without a photoshoot", "Seasonal campaign creatives in hours", "A/B testing ad visuals"]),
+ ("ai-ppc", "ads", "AI-Powered PPC & Ads",
+  "Google and Meta ad campaigns optimised with AI bidding, audience signals and creative testing — backed by proper conversion tracking.",
+  ["Performance Max and AI bidding setup", "Conversion tracking (GTM, GA4, offline leads)", "AI creative and copy testing", "Landing pages built to convert"],
+  ["Lowering cost per lead", "Scaling e-commerce sales with smart campaigns", "Measuring which ads actually bring customers"]),
+ ("ai-development", "chip", "Custom AI Apps & Integrations",
+  "Your own AI tools — internal assistants, smart search, recommendation engines and AI features built into your website or mobile app.",
+  ["AI features inside web and mobile apps", "Knowledge-base assistants for your team", "Smart search and recommendations", "Integrations with leading AI model APIs"],
+  ["An internal assistant that answers staff questions", "AI product recommendations in your store", "Document analysis and summarisation tools"]),
+ ("ai-consulting", "spark", "AI Strategy, Consulting & Training",
+  "A clear, practical AI roadmap for your business: where AI saves time or makes money, which tools to use, and training so your team uses them well.",
+  ["AI opportunity audit", "Tool selection and implementation roadmap", "Team training workshops", "Data, privacy and responsible-AI guidance"],
+  ["Businesses unsure where to start with AI", "Teams that bought AI tools but don't use them", "Owners who want measurable ROI from AI"]),
+]
+
+AI_FAQS = [
+ ("What AI services does Webratron offer?", "Webratron offers AI Search Optimization (AEO and GEO), AI chatbots, AI voice agents, AI agents and workflow automation, AI content creation, AI video and avatars, AI image and creative design, AI-powered PPC, custom AI apps and integrations, and AI strategy, consulting and training."),
+ ("What is AI Search Optimization (AEO / GEO)?", "AI Search Optimization makes your business more likely to be cited or recommended by AI assistants such as ChatGPT, Google AI Overviews, Perplexity, Gemini and Claude. It combines structured data, llms.txt, answer-first content, FAQs and brand mentions."),
+ ("How much do AI services cost?", "Every AI project is scoped to your goals, so we provide a custom quote after a free AI audit. Contact Webratron for a no-obligation consultation."),
+ ("Will an AI chatbot or voice agent replace my staff?", "No. AI assistants handle repetitive questions, bookings and follow-ups around the clock, and hand complex conversations to your team, so your staff can focus on higher-value work."),
+ ("Is my business data safe?", "Yes. We follow data-privacy best practices, only use the data needed for your project, and can work with providers and settings that do not use your data for model training."),
+ ("Do I need a new website to use AI services?", "No. Our AI chatbots, voice agents, automation and AI search optimization work with your existing website, CRM and tools. We can also build a new site if you need one."),
+]
+
+def ai_card(i, slug, ic, name, text):
+    return f'''<a href="#{slug}" class="ai-card reveal" data-delay="{i % 4}"><span class="ai-card__n">{i+1:02d}</span><div class="icon">{icon(ic)}</div><h3>{name}</h3><p>{text}</p><span class="card__link">Explore {ARROW}</span></a>'''
+
+def ai_detail(i, slug, ic, name, text, feats, uses):
+    f = "".join(f"<li>{x}</li>" for x in feats)
+    u = "".join(f"<li>{x}</li>" for x in uses)
+    return f'''
+<section class="section ai-detail{" section--alt" if i % 2 else ""}" id="{slug}">
+  <div class="container ai-detail__grid">
+    <div class="ai-detail__head">
+      <span class="ai-detail__n">{i+1:02d}</span>
+      <div class="icon reveal">{icon(ic)}</div>
+      <h2 class="reveal">{name}</h2>
+      <p class="reveal">{text}</p>
+      <div class="hero__actions reveal" style="margin:0"><a href="contact.html?ai={slug}" class="btn btn--primary" data-track="cta_click">Get a quote {ARROW}</a></div>
+    </div>
+    <div class="ai-detail__cols">
+      <div class="ai-box reveal"><h3>What's included</h3><ul class="checklist">{f}</ul></div>
+      <div class="ai-box ai-box--alt reveal" data-delay="1"><h3>Perfect for</h3><ul class="ai-uses">{u}</ul></div>
+    </div>
+  </div>
+</section>'''
+
+AI_ORB = '''<svg class="ai-orb" viewBox="0 0 400 400" aria-hidden="true"><defs>
+<radialGradient id="aio" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".25" stop-color="#9fb1ff"/><stop offset=".6" stop-color="#3b5bff"/><stop offset="1" stop-color="#1a1060"/></radialGradient>
+<linearGradient id="aig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b5bff"/><stop offset=".5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ff2e63"/></linearGradient></defs>
+<g class="ai-orb__rings" fill="none" stroke="url(#aig)"><ellipse cx="200" cy="200" rx="180" ry="62" stroke-width="2.5"/><ellipse cx="200" cy="200" rx="180" ry="62" stroke-width="2.5" transform="rotate(60 200 200)"/><ellipse cx="200" cy="200" rx="180" ry="62" stroke-width="2.5" transform="rotate(-60 200 200)"/></g>
+<circle cx="200" cy="200" r="92" fill="url(#aio)"/><circle cx="200" cy="200" r="92" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+<path d="M162 238 L200 160 L238 238" fill="none" stroke="#ff2e63" stroke-width="13" stroke-linejoin="miter"/><path d="M186 244 L200 255 L214 244" fill="none" stroke="#ff2e63" stroke-width="9"/>
+<g class="ai-orb__dots"><circle cx="20" cy="200" r="7" fill="#ff2e63"/><circle cx="290" cy="44" r="6" fill="#38bdf8"/><circle cx="110" cy="356" r="6" fill="#a78bfa"/></g></svg>'''
+
+AI_STEPS = [("Free AI audit", "We review your website, tools and workflows and find where AI saves time or brings revenue."),
+            ("Strategy & plan", "You get a clear plan: which AI services, which tools, expected impact and a fixed quote."),
+            ("Build & train", "We build, connect and train the AI on your business data, then test it thoroughly."),
+            ("Launch & improve", "We launch, monitor results and keep improving accuracy, conversions and ROI.")]
+
+cards = "\n      ".join(ai_card(i, s, ic, n, t) for i, (s, ic, n, t, f, u) in enumerate(AI))
+details = "".join(ai_detail(i, s, ic, n, t, f, u) for i, (s, ic, n, t, f, u) in enumerate(AI))
+steps = "\n".join(f'      <div class="step reveal" data-delay="{i}"><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(AI_STEPS))
+ai_faq_html = "\n".join(f'      <details class="reveal"><summary>{q}</summary><p>{a}</p></details>' for q, a in AI_FAQS)
+jump = "".join(f'<a href="#{s}" class="chip-link">{n.split(" (")[0]}</a>' for s, ic, n, t, f, u in AI)
+
+ai_body = f'''
+<section class="page-hero svc-hero ai-hero">
+  <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
+  <div class="container svc-hero__grid">
+    <div>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>AI Services</span></nav>
+      <span class="eyebrow">AI Services · New</span>
+      <h1>AI Services That <span class="grad-text">Grow Your Business</span></h1>
+      <p class="svc-hero__lead">From getting recommended by ChatGPT to chatbots, voice agents and automation — Webratron designs, builds and trains AI that works for your business 24/7.</p>
+      <div class="hero__actions"><a href="#ai-audit" class="btn btn--primary btn--lg" data-track="cta_click">Get a free AI audit {ARROW}</a><a href="#ai-services" class="btn btn--ghost btn--lg">Explore 10 AI services</a></div>
+    </div>
+    <div class="svc-hero__art">{AI_ORB}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container answer-grid">
+    <div class="answer reveal">
+      <span class="eyebrow">Quick answer</span>
+      <h2>What AI services does Webratron offer?</h2>
+      <p>Webratron offers 10 AI services: AI Search Optimization (AEO &amp; GEO), AI chatbots, AI voice agents, AI agents &amp; workflow automation, AI content creation, AI video &amp; avatars, AI image &amp; creative design, AI-powered PPC, custom AI apps &amp; integrations, and AI strategy, consulting &amp; training. Every project starts with a free AI audit and a custom quote.</p>
+    </div>
+    <aside class="facts reveal" aria-label="Key facts">
+      <h2>Key facts</h2>
+      <dl>
+        <div><dt>AI services</dt><dd>10 services, one team</dd></div>
+        <div><dt>Start</dt><dd>Free AI audit &amp; consultation</dd></div>
+        <div><dt>Pricing</dt><dd>Custom quote per project</dd></div>
+        <div><dt>Works with</dt><dd>Your existing website, CRM &amp; tools</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="ai-services">
+  <div class="container">
+    <div class="split-head">
+      <div><span class="eyebrow reveal">10 AI services</span>
+      <h2 class="reveal">Everything AI, <span class="grad-text">under one roof</span></h2></div>
+      <p class="reveal">Pick one service or combine them — our team designs, builds and trains AI around your goals.</p>
+    </div>
+    <div class="ai-grid">
+      {cards}
+    </div>
+    <div class="chip-links ai-jump">{jump}</div>
+  </div>
+</section>
+{details}
+<section class="section">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow reveal">How it works</span><h2 class="reveal">From idea to <span class="grad-text">working AI</span></h2></div>
+    <div class="process">
+{steps}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container faq-split">
+    <div class="faq-split__head">
+      <span class="eyebrow reveal">FAQ</span>
+      <h2 class="reveal">AI services: <span class="grad-text">your questions answered</span></h2>
+      <p class="reveal">Still have questions? Call <a href="tel:{PHONE_TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+    </div>
+    <div class="faq">
+{ai_faq_html}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ai-audit">
+  <div class="container contact-grid">
+    <div>
+      <span class="eyebrow reveal">Free AI audit</span>
+      <h2 class="reveal">Find out where AI can <span class="grad-text">save you time &amp; money</span></h2>
+      <p class="reveal">Tell us about your business. We'll review your website, tools and workflows and send you practical AI recommendations — free, with no obligation.</p>
+      <ul class="checklist reveal"><li>Personalised AI opportunities for your business</li><li>Recommended tools and services</li><li>Clear next steps and a custom quote</li></ul>
+    </div>
+    {lead_form("ai", "Get My Free AI Audit").replace("Get your free quote", "Get your free AI audit")}
+  </div>
+</section>
+''' + cta("Ready to put AI to work?", "Book a free AI audit and see exactly how AI can grow your business.")
+
+ai_nodes = [{"@type": "Service", "@id": f"{SITE}/ai-services.html#{s}", "name": n, "serviceType": n, "description": t,
+             "provider": {"@id": SITE + "/#org"}, "areaServed": "Worldwide", "url": f"{SITE}/ai-services.html#{s}"} for s, ic, n, t, f, u in AI]
+ai_nodes.append({"@type": "ItemList", "name": "Webratron AI services", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "url": f"{SITE}/ai-services.html#{s}"} for i, (s, ic, n, t, f, u) in enumerate(AI)]})
+ai_nodes.append(faq_node(AI_FAQS))
+page("ai-services.html", "AI Services: Chatbots, Voice Agents, Automation & AI SEO | Webratron",
+     "10 AI services for businesses: AI search optimization (AEO/GEO), chatbots, voice agents, automation, AI content, video, design, PPC, custom AI apps and consulting. Free AI audit.",
+     ai_body, "ai-services.html", crumbs=[("Home", "index.html"), ("AI Services", "ai-services.html")], extra_nodes=ai_nodes, priority=0.9)
+
 # ================= LEGAL =================
 privacy = page_hero("Privacy Policy", "Legal", "Privacy Policy", "How we collect, use and protect your information.") + f'''
 <section class="section" style="padding-top:20px">
@@ -1694,6 +1894,9 @@ lines = ["# Webratron", "",
  "## Services"]
 for sid, ic, name, text, tags in SERVICES:
     lines.append(f"- [{name}]({SITE}/{SVC_URL[sid]}): {SVC[sid]['lead']}")
+lines += ["", "## AI services (custom quote after a free AI audit)"]
+for s_, ic_, n_, t_, f_, u_ in AI:
+    lines.append(f"- [{n_}]({SITE}/ai-services.html#{s_}): {t_} Includes: " + "; ".join(f_) + ".")
 lines += ["", "## Packages and prices (USD)"]
 def _cards(title, cards, note=""):
     lines.append(f"### {title}{note}")
@@ -1710,7 +1913,7 @@ lines += ["", "## Frequently asked questions"]
 for sid in SVC:
     for q, a in SVC[sid]["faqs"][:2]: lines.append(f"- Q: {q}\n  A: {a}")
 lines += ["", "## Pages",
- f"- [Home]({SITE}/)", f"- [Services]({SITE}/services.html)", f"- [Pricing]({SITE}/pricing.html)", f"- [Portfolio]({SITE}/portfolio.html)",
+ f"- [Home]({SITE}/)", f"- [Services]({SITE}/services.html)", f"- [AI Services]({SITE}/ai-services.html)", f"- [Pricing]({SITE}/pricing.html)", f"- [Portfolio]({SITE}/portfolio.html)",
  f"- [About]({SITE}/about.html)", f"- [Blog]({SITE}/blog.html)", f"- [Contact]({SITE}/contact.html)", ""]
 open(os.path.join(ROOT, "llms.txt"), "w").write("\n".join(lines))
 
