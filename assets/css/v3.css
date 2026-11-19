@@ -362,3 +362,86 @@ h1, h2, h3 { color: inherit; }
 .lp-trust { width: 412px; max-width: 100%; height: auto; }
 .lp-form .form__note { color: #4a5078; }
 .lp-footer a { text-decoration: underline; }
+
+/* =========================================================
+   Brand showcase — Webratron brand system board
+   ========================================================= */
+.bshow-sec { padding-bottom: 0; overflow: hidden; }
+.bshow { display: grid; grid-template-columns: .92fr 1.08fr; height: clamp(520px, 50vw, 720px); background: #fff; border-top: 1px solid #e3e7f7; }
+.bshow.reveal { transform: none; }
+.bshow__hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #e3eaff, #eef2ff); }
+.bshow__logo { position: absolute; top: 7%; left: 50%; transform: translateX(-50%); width: 76%; max-width: 560px; height: auto; z-index: 2; }
+.bshow__stage { position: absolute; left: 0; right: 0; bottom: 0; top: 24%; }
+.bshow__ring { position: absolute; left: 50%; bottom: -14%; width: 92%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: #f7f9ff; box-shadow: inset 0 0 0 1px rgba(59,91,255,.08); }
+.bshow__img { position: absolute; left: 50%; bottom: -2%; width: 76%; height: auto; transform: translateX(-50%); filter: drop-shadow(0 30px 40px rgba(5,8,38,.35)); }
+.bshow__play {
+  position: absolute; top: 14%; right: 18%; z-index: 3; width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center;
+  border: 5px solid #ff2e63; color: #ff2e63; background: rgba(255,255,255,.55); backdrop-filter: blur(4px);
+  box-shadow: 0 0 0 0 rgba(255,46,99,.45); animation: playPulse 2.4s ease-out infinite; transition: transform .3s var(--ease), background .3s, color .3s;
+}
+.bshow__play svg { width: 34px; height: 34px; margin-left: 4px; }
+.bshow__play:hover { transform: scale(1.08); background: #ff2e63; color: #fff; }
+@keyframes playPulse { 70% { box-shadow: 0 0 0 22px rgba(255,46,99,0); } 100% { box-shadow: 0 0 0 0 rgba(255,46,99,0); } }
+
+.bshow__board { position: relative; overflow: hidden; background: #fff; }
+.bshow__board::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, #fff 0%, transparent 10%, transparent 90%, #fff 100%); }
+.bshow__plane { position: absolute; top: -45%; left: -20%; right: -20%; bottom: -45%; display: flex; justify-content: center; align-items: flex-start; gap: 34px; transform: rotate(-32deg); }
+.bcol { width: 290px; flex: 0 0 290px; }
+.bcol--1 { margin-top: -180px; }
+.bcol__track { animation: bscroll 48s linear infinite; will-change: transform; }
+.bcol--1 .bcol__track { animation-direction: reverse; animation-duration: 56s; }
+.bcol--2 .bcol__track { animation-duration: 44s; }
+@keyframes bscroll { to { transform: translateY(-50%); } }
+.bshow:hover .bcol__track { animation-play-state: paused; }
+
+.bsheet { margin-bottom: 34px; padding: 22px 22px 24px; border-radius: 6px; background: #f2f3f7; color: #0b1033; box-shadow: 0 34px 50px -34px rgba(5,8,38,.45); }
+.bsheet small { display: block; font-size: 9px; color: #8a90b8; letter-spacing: .04em; }
+.bsheet h4 { margin: 2px 0 10px; font-size: 19px; font-weight: 700; color: #0b1033; }
+.bsheet hr { border: 0; border-top: 1px solid #d9dceb; margin: 0 0 16px; }
+.bs-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.bs-pill { font-size: 10px; padding: 4px 10px; border-radius: 999px; background: #fff; border: 1px solid #dfe3f5; color: #4a5078; }
+.bs-icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.bs-ic { display: grid; place-items: center; aspect-ratio: 1; border-radius: 10px; background: #fff; color: #3b5bff; }
+.bs-ic:nth-child(3n) { color: #ff2e63; }
+.bs-ic svg { width: 22px; height: 22px; }
+.bs-type p { margin: 0 0 10px; color: #0b1033; line-height: 1.15; }
+.bs-aa { font-size: 64px !important; font-weight: 800; line-height: 1 !important; background: linear-gradient(120deg, #2336ff, #7c3aed 50%, #e11d48); -webkit-background-clip: text; background-clip: text; color: transparent !important; margin-top: 8px !important; }
+.bs-colors { display: grid; gap: 8px; }
+.bs-colors div { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 10px; font-size: 12px; }
+.bs-colors span { width: 40px; height: 30px; border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+.bs-colors i { font-style: normal; color: #6b7096; font-size: 11px; }
+.bs-gradbar { height: 14px; border-radius: 8px; margin-top: 14px; background: linear-gradient(90deg, #2336ff, #3b5bff, #7c3aed, #ff2e63); }
+.bs-cap { margin-top: 8px; font-size: 10px !important; color: #6b7096 !important; }
+.bs-logo { display: grid; place-items: center; height: 74px; border-radius: 8px; margin-bottom: 10px; }
+.bs-logo img { width: 70%; height: auto; }
+.bs-logo--light { background: #fff; }
+.bs-logo--dark { background: #050826; }
+.bs-mark img { width: 40px; height: 40px; border-radius: 10px; }
+.bs-pattern { border-radius: 8px; height: 120px; }
+.bs-pattern--stars { background: radial-gradient(1.2px 1.2px at 20px 30px, #fff, transparent), radial-gradient(1px 1px at 80px 70px, #fff, transparent), radial-gradient(1.5px 1.5px at 140px 20px, #fff, transparent), radial-gradient(1px 1px at 190px 90px, #fff, transparent), radial-gradient(circle at 70% 120%, rgba(59,91,255,.7), transparent 60%), #050826; background-size: 220px 110px, 220px 110px, 220px 110px, 220px 110px, 100% 100%, auto; }
+.bs-pattern--dots { flex: 1; height: 70px; background: radial-gradient(circle, #3b5bff 1.4px, transparent 1.8px) 0 0 / 12px 12px, #fff; }
+.bs-pattern--grad { flex: 1; height: 70px; background: repeating-linear-gradient(135deg, #ff2e63 0 6px, #fff 6px 14px); }
+.bs-comp { display: flex; gap: 8px; flex-wrap: wrap; }
+.bs-btn { font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 999px; color: #fff; background: linear-gradient(120deg, #2336ff, #7c3aed 50%, #e11d48); }
+.bs-btn--ghost { background: #fff; color: #0b1033; border: 1px solid #c9cfe8; }
+.bs-btn--navy { border-radius: 4px; background: #1c2f7a; flex: 1; text-align: center; }
+.bs-btn--red { border-radius: 4px; background: #ff2e63; flex: 1; text-align: center; }
+.bs-mini { margin-top: 14px; padding: 12px; border-radius: 8px; background: linear-gradient(180deg, #060a1c, #0b0a7a); color: #fff; display: grid; gap: 8px; }
+.bs-mini b { font-size: 11px; background: #0d1b3a; padding: 6px; text-align: center; border-radius: 3px; }
+.bs-mini div:first-of-type { display: flex; justify-content: space-between; align-items: baseline; }
+.bs-mini strong { font-size: 20px; }
+.bs-mini s { font-size: 11px; color: #b8bddf; }
+.bs-mini > span { height: 5px; border-radius: 4px; background: rgba(255,255,255,.3); }
+.bs-imagery { display: grid; place-items: center; height: 200px; border-radius: 50%; background: radial-gradient(circle, #fff 0 58%, #e3eaff 59%); overflow: hidden; }
+.bs-imagery img { width: 84%; height: auto; }
+.bs-list { margin: 0; padding-left: 16px; font-size: 12px; color: #4a5078; line-height: 1.9; }
+
+.bshow__dots { height: 60px; background: radial-gradient(circle, #c3c9e4 1.1px, transparent 1.5px) 0 0 / 76px 9px; border-top: 1px solid #eef0f8; }
+
+@media (max-width: 900px) {
+  .bshow { grid-template-columns: 1fr; height: auto; }
+  .bshow__hero { height: min(560px, 120vw); }
+  .bshow__board { height: 460px; }
+  .bcol { width: 240px; flex-basis: 240px; }
+}
+@media (prefers-reduced-motion: reduce) { .bcol__track, .bshow__play { animation: none; } }

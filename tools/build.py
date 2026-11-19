@@ -615,6 +615,62 @@ COMBO_HTML = combo_section()
 # ================= HOME =================
 import json
 
+# ================= BRAND SHOWCASE (Webratron brand system board) =================
+def _sheet(title, inner, cls=""):
+    return f'<div class="bsheet {cls}"><small>Webratron Design System</small><h4>{title}</h4><hr>{inner}</div>'
+
+def brand_sheets():
+    ics = "".join(f'<span class="bs-ic">{icon(ic)}</span>' for ic in ["web", "code", "mobile", "brand", "cart", "seo", "video", "shield", "chart", "mail", "phone", "chat", "bolt", "target", "users", "heart"])
+    icons = _sheet("Icons", f'<div class="bs-icons">{ics}</div><div class="bs-row"><span class="bs-pill">Line · 1.8px</span><span class="bs-pill">24 grid</span></div>')
+    typo = _sheet("Typography", '''<div class="bs-type">
+      <p style="font-size:30px;font-weight:800">H1/Poppins/ExtraBold/56px</p>
+      <p style="font-size:22px;font-weight:700">H2/Poppins/Bold/40px</p>
+      <p style="font-size:17px;font-weight:600">H3/Poppins/SemiBold/28px</p>
+      <p style="font-size:13px;font-weight:400">Body/Poppins/Regular/16px</p>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.14em">EYEBROW/POPPINS/MEDIUM/12PX</p>
+      <p class="bs-aa">Aa</p></div>''')
+    sw = [("#050826", "Navy Night"), ("#3b5bff", "Electric Blue"), ("#ff2e63", "Logo Red"), ("#7c3aed", "Violet"), ("#f4f6ff", "Mist")]
+    colors = _sheet("Colour", '<div class="bs-colors">' + "".join(f'<div><span style="background:{c}"></span><b>{n}</b><i>{c.upper()}</i></div>' for c, n in sw) + '</div><div class="bs-gradbar"></div><small class="bs-cap">Brand gradient · Blue → Violet → Red</small>')
+    logo = _sheet("Logo", '<div class="bs-logo bs-logo--light"><img src="assets/img/logo-dark.webp" alt="" width="593" height="104" loading="lazy"></div><div class="bs-logo bs-logo--dark"><img src="assets/img/logo-light.webp" alt="" width="441" height="80" loading="lazy"></div><div class="bs-row"><span class="bs-mark"><img src="assets/img/favicon.svg" alt="" width="40" height="40" loading="lazy"></span><span class="bs-pill">Clear space = height of “A”</span></div>')
+    patterns = _sheet("Patterns", '<div class="bs-pattern bs-pattern--stars"></div><div class="bs-row"><div class="bs-pattern bs-pattern--dots"></div><div class="bs-pattern bs-pattern--grad"></div></div>')
+    comps = _sheet("Components", f'<div class="bs-comp"><span class="bs-btn">Get a Quote</span><span class="bs-btn bs-btn--ghost">View Packages</span></div><div class="bs-mini"><b>Startup Website Package</b><div><strong>$469</strong><s>$938</s></div><span></span><span></span><span style="width:60%"></span><div class="bs-comp"><span class="bs-btn bs-btn--navy">Order Now</span><span class="bs-btn bs-btn--red">View Details</span></div></div>')
+    imagery = _sheet("Imagery", '<div class="bs-imagery"><img src="assets/img/hero-visual.webp" alt="" width="740" height="785" loading="lazy"></div><small class="bs-cap">Classical meets digital — statue, device, cosmos</small>')
+    assets = _sheet("Brand Assets", '<ul class="bs-list"><li>Logo suite · SVG / PNG / WebP</li><li>Social media kit</li><li>Business card &amp; letterhead</li><li>Presentation template</li><li>Email signature</li></ul><div class="bs-gradbar"></div>')
+    return icons, typo, colors, logo, patterns, comps, imagery, assets
+
+def brand_showcase(head=True):
+    icons, typo, colors, logo, patterns, comps, imagery, assets = brand_sheets()
+    cols = [[icons, patterns, imagery], [typo, logo, comps], [colors, assets, icons]]
+    col_html = "".join(f'<div class="bcol bcol--{i}"><div class="bcol__track">{"".join(c)}{"".join(c)}</div></div>' for i, c in enumerate(cols))
+    header = '''
+  <div class="container">
+    <div class="split-head">
+      <div><span class="eyebrow reveal">Brand identity systems</span>
+      <h2 class="reveal">Branding that's built to be <span class="grad-text">remembered</span></h2></div>
+      <p class="reveal">Logo, typography, colour, icons, patterns and components — we craft complete brand systems that stay consistent everywhere. Here's a look at our own.</p>
+    </div>
+  </div>''' if head else ""
+    return f'''
+<section class="section bshow-sec">{header}
+  <div class="bshow reveal">
+    <div class="bshow__hero">
+      <img src="assets/img/logo-dark.webp" alt="Webratron" width="593" height="104" class="bshow__logo" loading="lazy">
+      <div class="bshow__stage">
+        <span class="bshow__ring"></span>
+        <img src="assets/img/hero-visual.webp" alt="Webratron brand imagery: a classical statue stepping out of a smartphone in front of a glowing planet" width="740" height="785" class="bshow__img" loading="lazy">
+        <a href="portfolio.html" class="bshow__play" aria-label="See our work"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7l8 5-8 5z" fill="currentColor"/></svg></a>
+      </div>
+    </div>
+    <div class="bshow__board" aria-hidden="true">
+      <div class="bshow__plane">{col_html}</div>
+    </div>
+  </div>
+  <div class="bshow__dots" aria-hidden="true"></div>
+</section>'''
+
+BRAND_SHOW = brand_showcase()
+
+
 # ================= HOME v3 (new creative layout) =================
 def _num(p): return float(p.replace("$", "").replace(",", ""))
 
@@ -783,6 +839,8 @@ home = f'''
   </div>
 </section>
 
+{BRAND_SHOW}
+
 {PACKAGES_HTML}
 {COMBO_HTML}
 {calculator()}
@@ -940,6 +998,7 @@ portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">sp
     </div>
   </div>
 </section>
+{BRAND_SHOW}
 <section class="section section--light">
   <div class="container">
     <div class="section-head">
@@ -1342,6 +1401,7 @@ def svc_page(sid):
   </div>
 </section>
 
+{brand_showcase(False) if sid == "branding" else ""}
 <section class="packages" id="packages">
   <div class="container">
     <div class="pk-head"><h2>{name} packages &amp; pricing</h2><p>Transparent packages with full ownership of your work. Not sure which fits? <a href="contact.html?service={sid}">Ask for a free recommendation</a>.</p></div>
