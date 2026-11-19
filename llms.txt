@@ -1,0 +1,101 @@
+# Webratron
+
+> Webratron is a results-driven web design and development company headquartered in New York (80 Broad Street, 5th Floor, New York, NY 10004) with an office in Sydney, Australia. It builds custom websites, Shopify and e-commerce stores, mobile apps, logos and brand identities, SEO campaigns and animated explainer videos for startups and growing businesses worldwide.
+
+## Key facts
+- Website: https://webratron.com/
+- Email: support@webratron.com
+- Phone: (917) 924-6809 (sales), (864) 671-0341
+- Locations: 80 Broad St 5th Floor, New York, NY 10004, USA; 308 Sussex St, Sydney NSW 2000, Australia
+- Ratings: 4.7/5 on Trustpilot; 5.0 on ProvenExpert
+- Website packages start at $469; standard website packages are delivered in 48–72 hours
+- All packages include full ownership rights to the client's unique design
+
+## Services
+- [Website Design](https://webratron.com/website-design.html): Webratron designs custom, mobile-first websites for startups and growing businesses. Packages start at $469 for a 3-page Startup Website and standard packages are delivered in 48 to 72 hours — with full ownership of your design.
+- [Web Development](https://webratron.com/web-development.html): Webratron builds fast, secure and scalable websites and web applications using WordPress, custom PHP, React and Next.js. Website packages start at $469, and Professional packages include CMS support and complete deployment.
+- [Mobile App Development](https://webratron.com/mobile-app-development.html): Webratron develops cross-platform mobile apps with Flutter, so one codebase runs on both iOS and Android. We handle UI/UX design, development, backend integration and App Store and Google Play publishing. Every app is quoted to your exact requirements.
+- [Logo Design & Branding](https://webratron.com/logo-design.html): Webratron creates custom logos that are distinctive and consistent with your business goals. Logo packages start at $75 for 4 design concepts, the Standard package at $149 includes 8 concepts with unlimited revisions, and 3D logo design starts at $499.
+- [Shopify & E-commerce](https://webratron.com/ecommerce-website-development.html): Webratron builds Shopify stores and custom e-commerce websites with product catalogues, payment gateways, shopping carts and fast mobile checkout. Custom e-commerce packages start at $669 and Shopify packages start at $699.
+- [SEO & Digital Marketing](https://webratron.com/seo-services.html): Webratron's SEO services improve your visibility and organic rankings through business, consumer and competitor analysis, keyword targeting and on-page optimisation. Plans run for 6 months: Basic $3,500, Premium $6,000 and Platinum $8,000.
+- [Video Animation](https://webratron.com/video-animation.html): Webratron produces whiteboard, 2D explainer and brand-intro animation videos that keep viewers watching. Packages start at $499 for a 30-second video and include a professional script, storyboard, animation, voice-over and sound effects.
+- [Website Maintenance](https://webratron.com/website-maintenance.html): Webratron keeps your website fast, secure and up to date with plugin, theme and core updates, bug fixes, security hardening and content changes on request. Maintenance is quoted based on your website and needs.
+
+## Packages and prices (USD)
+### Website
+- Startup Website Package: $469.00 (regular $938.00) — 3 Page; 5 Stock Images; 1 jQuery Slider Banner; 3 Banner Design; Contact/Query Form
+- Standard Website Package: $869.00 (regular $1938.00) — 5 Page; 10 Stock Images; 1 jQuery Slider Banner; 5 Banner Design; Contact/Query Form
+- Professional Package: $1269.00 (regular $2938.00) — 10 Page; 15 Premium Stock Images; 5 Banner Design; Social Media Integration; Contact/Query Form
+- Business Package: $1969.00 (regular $4938.00) — 20 Page; 15 Premium Stock Images; 1 jQuery Slider Banner; 5 Banner Design; Social Media Integration
+- Customized Web Portal: $5499.00 (regular $10,998.00) — Complete Custom Design & Development; Dating Portal, Job Portal, Professional Network Portal, Social Network Portal, Restaurant Portal, Medical Portal, Enterprise Portal (Any One); Unique, User Friendly, Interactive, Dynamic, High End UI Design
+### E-commerce
+- Basic Ecommerce Package: $669.00 (regular $1338.00) — Up to 10 Products; 5 Stock Images; 1 jQuery Slider Banner; 3 Banner Design; Contact/Query Form
+- Standard Ecommerce Package: $1769.00 (regular $3538.00) — Up to 50 Products; 15 Premium Stock Images; 1 jQuery Slider Banner; 5 Banner Design; CMS / Admin Panel Support
+- Professional Ecommerce Package: $2969.00 (regular $5938.00) — Up to 100 Products; CMS / Admin Panel Support; Payment Gateway Integration; Shopping Cart Integration; Customer Login Area
+- Business Ecommerce Package: $4969.00 (regular $9938.00) — 500+ Products; Client Dashboard; Search Engine Indexing Setup; CMS / Admin Panel Support; Payment Gateway Integration
+### Shopify
+- Basic Shopify Package: $699.00 (regular $1399.00) — Custom Designed Homepage (1x Concept); 5 Inner Pages; Up to 50 Products; Up to 7 Categories; Content Management System
+- Standard Shopify Package: $2299.00 (regular $4599.00) — Up to 1,000 Products; Up to 20 Categories; 20 Inner Pages; Customer Login; Shopping Cart & Guest Checkout
+- Professional Shopify Package: $2799.00 (regular $5599.00) — Unlimited Products; Unlimited Categories; Unlimited Inner Pages; Unlimited Promotional Banners; Custom Coding
+### Logo design
+- Startup Package: $75 (regular $99) — 4 Design Concepts; 2 Revisions; 2 Dedicated Designers; Jpeg PNG Format; Ownership Rights & Unique Design
+- Standard Package: $149 (regular $199) — 8 Design Concepts; Unlimited Revisions; 2 Dedicated Designer; Vector Formats (AI, PSD, EPS, PNG, GIF, JPG, PDF); Icon Design
+- Professional Package: $199 (regular $249) — 12 Design Concepts; 3 Dedicated Designer; Vector Formats (AI, PSD, EPS, PNG, GIF, JPG, PDF); Unlimited Revisions; Business Card Design
+- Business Package: $360.00 (regular $738.00) — Unlimited Original Logo Concepts; 4 Dedicated Designer; Vector Formats (AI, PSD, EPS, PNG, GIF, JPG, PDF); Unlimited Revisions; Business Card Design
+- Premium Package: $425.00 (regular $938.00) — Unlimited Original Logo Concepts; 4 Dedicated Designer; Vector Formats (AI, PSD, EPS, PNG, GIF, JPG, PDF); Unlimited Revisions; Business Card Design
+- 3D Logo Design Package: $499.00 (regular $2338.00) — 3 Unique 3D Logo Concepts; Light Effects and VFX; Fully Rendered; Multiple 3D Angles; 3 Dedicated Designers
+### SEO (6-month plans)
+- Basic SEO Package: $3500 (regular $7000) — Prior Analysis; Business Analysis; Consumer Analysis; Competitor Analysis; 15 Selected Keywords Targeting
+- Premium SEO Package: $6000 (regular $12000) — Prior Analysis; Business Analysis; Consumer Analysis; Competitor Analysis; 30 Selected Keywords Targeting
+- Platinum SEO Package: $8000 (regular $16000) — Prior Analysis; Business Analysis; Consumer Analysis; Competitor Analysis; 30 Selected Keywords Targeting
+### Animation
+- Basic Animation Package: $499 (regular $1598) — 30 Second Video; Professional Script; Storyboard; Animation; Voice-Over & Sound Effects
+- Classic Animation Package: $999 (regular $2198) — 60 Second Video; Professional Script; Sample Theme; Storyboard; Animation
+- Premium Animation Package: $1499 (regular $2998) — 90 Second Video; Professional Script; Sample Theme; Storyboard; Animation
+- Unlimited Animation Package: $2299 (regular $4590) — 120 Second Video; Professional Script; Sample Theme; Storyboard; Animation
+### Business Starter combo
+- Business Starter Package: $1,999 (regular $3,999) — logo design, stationery, social media pages and a 15-page website
+- Mobile app, branding, web app development and website maintenance: custom quote
+
+## Frequently asked questions
+- Q: How much does a custom website design cost?
+  A: At Webratron, website design packages start at $469 for a 3-page Startup Website. Standard (5 pages) is $869, Professional (10 pages) is $1,269, Business (20 pages) is $1,969, and a customized web portal starts at $5,499.
+- Q: How long does it take to design a website?
+  A: Standard website packages are delivered in 48 to 72 hours after we receive your content. Larger or custom projects are scheduled with clear milestones before work begins.
+- Q: Should I choose WordPress or a custom-built website?
+  A: WordPress is ideal if you want to edit content yourself and launch quickly. A custom build suits unique features, portals or integrations. We recommend the right option after a free consultation.
+- Q: Can you redesign or rebuild my existing website?
+  A: Yes. We can redesign, rebuild or migrate an existing website while keeping your content and protecting the SEO value you have already built.
+- Q: How much does it cost to build a mobile app?
+  A: App cost depends on features, screens and integrations. Webratron provides a free consultation and a fixed custom quote before development begins.
+- Q: Why use Flutter for app development?
+  A: Flutter lets us build one codebase that runs natively on both iOS and Android, which reduces cost and development time while keeping performance high.
+- Q: How much does a professional logo cost?
+  A: Webratron logo packages are $75 (Startup), $149 (Standard), $199 (Professional), $360 (Business), $425 (Premium) and $499 for 3D logo design.
+- Q: How many logo concepts will I get?
+  A: Between 4 and 12 initial concepts depending on the package, and unlimited original concepts on the Business and Premium packages.
+- Q: Should I build my store on Shopify or WooCommerce?
+  A: Choose Shopify for a fast, hosted store with minimal maintenance. Choose WordPress with WooCommerce for maximum flexibility and content-heavy marketing. Read our Shopify vs WordPress guide for a full comparison.
+- Q: How much does an e-commerce website cost?
+  A: Custom e-commerce packages are $669, $1,769, $2,969 and $4,969. Shopify packages are $699, $2,299 and $2,799, depending on products, pages and features.
+- Q: How long does SEO take to show results?
+  A: SEO is a long-term investment; meaningful ranking improvements usually build over several months, which is why our plans run for 6 months.
+- Q: What is included in your SEO packages?
+  A: Prior, business, consumer and competitor analysis, 15–30 selected target keywords, keyword-targeted pages, webpage optimisation and meta tag creation.
+- Q: How much does an animated explainer video cost?
+  A: Webratron animation packages are $499 (30 seconds), $999 (60 seconds), $1,499 (90 seconds) and $2,299 (120 seconds).
+- Q: What is included in an animation package?
+  A: Every package includes a professional script, storyboard, animation, voice-over and sound effects, plus a dedicated project manager.
+- Q: What does website maintenance include?
+  A: Plugin, theme and core updates, bug fixes and troubleshooting, security hardening and content updates on request.
+- Q: Why does my website need maintenance?
+  A: Regular updates keep your site secure, compatible and fast. Outdated plugins and software are a common cause of hacks and broken pages.
+
+## Pages
+- [Home](https://webratron.com/)
+- [Services](https://webratron.com/services.html)
+- [Pricing](https://webratron.com/pricing.html)
+- [Portfolio](https://webratron.com/portfolio.html)
+- [About](https://webratron.com/about.html)
+- [Blog](https://webratron.com/blog.html)
+- [Contact](https://webratron.com/contact.html)
