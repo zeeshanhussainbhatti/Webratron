@@ -56,7 +56,7 @@ def header(active):
     for h, t in NAV:
         cur = ' aria-current="page"' if h == active else ""
         if h == "services.html":
-            dd = "".join(f'<li><a href="services.html#{sid}"><span class="dd__icon">{icon(ic)}</span>{name}</a></li>' for sid, ic, name, _, _ in SERVICES)
+            dd = "".join(f'<li><a href="{SVC_URL[sid]}"><span class="dd__icon">{icon(ic)}</span>{name}</a></li>' for sid, ic, name, _, _ in SERVICES)
             lis.append(f'        <li class="has-dd"><a href="{h}"{cur}>{t} <span class="caret">{icon("chev")}</span></a>\n          <ul class="dropdown">{dd}</ul></li>')
         else:
             lis.append(f'        <li><a href="{h}"{cur}>{t}</a></li>')
@@ -102,7 +102,7 @@ def footer():
     </div>
     <div class="footer__links">
       <div><h2 class="footer__h">Quick Links</h2><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="blog.html">Blogs</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div><h2 class="footer__h">Services</h2><ul>{"".join(f'<li><a href="services.html#{sid}">{name}</a></li>' for sid, ic, name, _, _ in SERVICES)}</ul></div>
+      <div><h2 class="footer__h">Services</h2><ul>{"".join(f'<li><a href="{SVC_URL[sid]}">{name}</a></li>' for sid, ic, name, _, _ in SERVICES)}</ul></div>
     </div>
     <div class="footer__locations">
       <h2 class="footer__loc">Our Locations</h2>
@@ -122,8 +122,81 @@ def footer():
 </footer>
 <a href="contact.html" class="help-btn">{icon("help")}<span>Help</span></a>"""
 
-def page(fname, title, desc, body, active=None, schema=""):
+import json as _json
+# ---- Tracking (fill these in to activate; leave empty to disable) ----
+GTM_ID = ""        # e.g. "GTM-XXXXXXX"  (Google Tag Manager — recommended for Google Ads / GA4)
+GA4_ID = ""        # e.g. "G-XXXXXXXXXX" (only if not using GTM)
+FORM_ENDPOINT = "" # e.g. "https://formspree.io/f/xxxx" — receives leads directly
+
+SVC_URL = {"web-design": "website-design.html", "development": "web-development.html", "mobile": "mobile-app-development.html",
+           "branding": "logo-design.html", "ecommerce": "ecommerce-website-development.html", "seo": "seo-services.html",
+           "video": "video-animation.html", "maintenance": "website-maintenance.html"}
+SITEMAP = []  # (url, priority)
+
+def org_graph():
+    org = {
+      "@type": ["Organization", "ProfessionalService"], "@id": SITE + "/#org", "name": "Webratron", "url": SITE + "/",
+      "logo": SITE + "/assets/img/logo-dark.webp", "image": SITE + "/assets/img/og-image.jpg",
+      "description": "Webratron is a results-driven web design and development company in New York offering custom websites, Shopify and e-commerce stores, mobile apps, logo design, SEO and video animation.",
+      "email": EMAIL, "telephone": "+1-917-924-6809", "priceRange": "$75 - $10,998",
+      "address": {"@type": "PostalAddress", "streetAddress": "80 Broad Street, 5th Floor", "addressLocality": "New York", "addressRegion": "NY", "postalCode": "10004", "addressCountry": "US"},
+      "department": [{"@type": "LocalBusiness", "name": "Webratron Australia", "address": {"@type": "PostalAddress", "streetAddress": "308 Sussex St", "addressLocality": "Sydney", "addressRegion": "NSW", "postalCode": "2000", "addressCountry": "AU"}, "telephone": "+1-917-924-6809"}],
+      "contactPoint": [{"@type": "ContactPoint", "contactType": "sales", "telephone": "+1-917-924-6809", "email": EMAIL, "areaServed": "Worldwide", "availableLanguage": ["English"]},
+                       {"@type": "ContactPoint", "contactType": "customer support", "telephone": "+1-864-671-0341", "email": EMAIL}],
+      "areaServed": "Worldwide",
+      "knowsAbout": ["Website design", "Web development", "WordPress", "Shopify", "E-commerce", "Mobile app development", "Flutter", "Logo design", "Branding", "Search engine optimization", "2D animation", "Whiteboard animation"],
+      "sameAs": [TRUSTPILOT, PROVEN],
+    }
+    site = {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": "Webratron", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en"}
+    return [org, site]
+
+def ld(*nodes):
+    return '\n  <script type="application/ld+json">' + _json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False) + '</script>'
+
+def breadcrumbs(crumbs):
+    items = [{"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + "/" + (u if u != "index.html" else "")} for i, (n, u) in enumerate(crumbs)]
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+def faq_node(pairs):
+    return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}
+
+def tracking_head():
+    out = '\n  <script>window.dataLayer=window.dataLayer||[];</script>'
+    if GTM_ID:
+        out += f"\n  <script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);}})(window,document,'script','dataLayer','{GTM_ID}');</script>"
+    elif GA4_ID:
+        out += f"\n  <script async src=\"https://www.googletagmanager.com/gtag/js?id={GA4_ID}\"></script>\n  <script>function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{GA4_ID}');</script>"
+    return out
+
+def tracking_body():
+    return f'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' if GTM_ID else ""
+
+def lp_header():
+    return f"""<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header lp-header">
+  <div class="container topbar">
+    <a href="index.html" class="brand" aria-label="Webratron home"><img src="assets/img/logo-light.webp" alt="Webratron" width="441" height="80"></a>
+    <a href="tel:{PHONE_TEL}" class="lp-call" data-track="click_call">{icon("phone")}<span><small>Call now — free consultation</small>{PHONE}</span></a>
+    <a href="#lead" class="btn btn--quote">Get a Free Quote</a>
+  </div>
+</header>"""
+
+def lp_footer():
+    return f"""<footer class="lp-footer">
+  <div class="container">
+    <img src="assets/img/badges.webp" alt="Top 10 ranked, Verified, DesignRush accredited agency, Appfutura, GoodFirms, Trustpilot, Google reviews, McAfee Secure, DMCA protected" width="755" height="200" loading="lazy" class="lp-footer__badges">
+    <p>Webratron · 80 Broad St 5th Floor, New York, NY 10004 · 308 Sussex St, Sydney NSW 2000 · <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="tel:{PHONE_TEL}">{PHONE}</a></p>
+    <p>&copy; Webratron <span data-year>2026</span> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Condition</a></p>
+  </div>
+</footer>
+<div class="lp-bar"><a href="tel:{PHONE_TEL}" data-track="click_call">{icon("phone")} Call</a><a href="#lead">{icon("chat")} Free Quote</a></div>"""
+
+def page(fname, title, desc, body, active=None, schema="", noindex=False, crumbs=None, lp=False, extra_nodes=(), priority=None):
     canonical = SITE + "/" + ("" if fname == "index.html" else fname)
+    nodes = org_graph() + list(extra_nodes)
+    if crumbs: nodes.append(breadcrumbs(crumbs))
+    robots = "noindex, follow" if noindex else "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    if not noindex: SITEMAP.append((canonical, priority or (1.0 if fname == "index.html" else 0.7)))
     html = f'''<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -131,28 +204,35 @@ def page(fname, title, desc, body, active=None, schema=""):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{desc}">
+  <meta name="robots" content="{robots}">
   <link rel="canonical" href="{canonical}">
-  <meta name="theme-color" content="#080716">
+  <meta name="theme-color" content="#050826">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Webratron">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{SITE}/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{title}">
+  <meta name="twitter:description" content="{desc}">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="text/plain" href="{SITE}/llms.txt" title="LLM summary">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/v3.css">{'<link rel="preload" as="image" href="assets/img/hero-visual.webp" fetchpriority="high">' if fname == "index.html" else ""}{schema}
+  <link rel="stylesheet" href="assets/css/v3.css">{'<link rel="preload" as="image" href="assets/img/hero-visual.webp" fetchpriority="high">' if fname == "index.html" else ""}{tracking_head()}{ld(*nodes)}{schema}
 </head>
-<body>
-{header(active)}
+<body{' class="is-lp"' if lp else ''} data-form-endpoint="{FORM_ENDPOINT}">
+{tracking_body()}{lp_header() if lp else header(active)}
 <main id="main">
 {textwrap.dedent(body).strip()}
 </main>
-{footer()}
+{lp_footer() if lp else footer()}
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
@@ -190,7 +270,7 @@ def service_cards(limit=None, links=True):
     out = []
     for i, (sid, ic, name, text, tags) in enumerate(SERVICES[:limit] if limit else SERVICES):
         tag_html = "".join(f'<span class="tag">{t}</span>' for t in tags)
-        link = f'<a href="services.html#{sid}" class="card__link">Learn more<span class="sr-only"> about {name}</span> {ARROW}</a>' if links else ""
+        link = f'<a href="{SVC_URL[sid]}" class="card__link">Learn more<span class="sr-only"> about {name}</span> {ARROW}</a>' if links else ""
         out.append(f'''      <article class="card reveal" data-delay="{i % 4}">
         <div class="icon">{icon(ic)}</div>
         <h3>{name}</h3>
@@ -616,7 +696,7 @@ def bento():
         kind = layout.get(sid, "")
         art = scene(sid) if kind else ""
         tag_html = "".join(f'<span class="tag">{t}</span>' for t in tags)
-        tiles.append(f'''<a href="services.html#{sid}" class="tile tile--{kind or "sm"} reveal">
+        tiles.append(f'''<a href="{SVC_URL[sid]}" class="tile tile--{kind or "sm"} reveal">
         <div class="tile__body"><div class="icon">{icon(ic)}</div><h3>{name}</h3><p>{text}</p><div class="tags">{tag_html}</div><span class="tile__go" aria-hidden="true">{ARROW}</span></div>
         {f'<div class="tile__art">{art}</div>' if art else ""}
       </a>''')
@@ -779,9 +859,9 @@ home = f'''
 </section>
 '''
 
-page("index.html", "Webratron — Website Design, Development & Digital Agency",
-     "Webratron is a full-service digital agency building custom websites, mobile apps, brands and SEO strategies that help businesses grow.",
-     home, "index.html", ORG_SCHEMA)
+page("index.html", "Website Design & Development Company in New York | Webratron",
+     "Custom website design from $469, Shopify & e-commerce stores, mobile apps, logo design, SEO and explainer videos. Rated 4.7/5 on Trustpilot. Get a free quote.",
+     home, "index.html", extra_nodes=[faq_node(FAQS)])
 
 # ================= SERVICES =================
 DETAILS = {
@@ -808,7 +888,7 @@ for i, (sid, ic, name, text, tags) in enumerate(SERVICES):
       <h2 class="reveal">{name}</h2>
       <p class="reveal">{text}</p>
       <ul class="checklist reveal">{lis}</ul>
-      <a href="contact.html?service={sid}" class="btn btn--primary reveal">Start your project {ARROW}</a>
+      <div class="hero__actions" style="margin:0"><a href="contact.html?service={sid}" class="btn btn--primary reveal">Start your project {ARROW}</a><a href="{SVC_URL[sid]}" class="btn btn--ghost reveal">{name} details</a></div>
     </div>
     <div class="visual-panel reveal" data-delay="1" aria-hidden="true">
       <div class="bg-grid"></div>
@@ -839,7 +919,7 @@ services = page_hero("Services", "Our services", 'Digital services that <span cl
 </section>''' + cta()
 page("services.html", "Services — Web Design, Development, Apps & SEO | Webratron",
      "Explore Webratron's services: website design, web development, mobile apps, logo & branding, e-commerce, SEO, animation videos and website maintenance.",
-     services, "services.html")
+     services, "services.html", crumbs=[("Home", "index.html"), ("Services", "services.html")])
 
 # ================= PORTFOLIO =================
 portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">speaks for itself</span>',
@@ -874,7 +954,7 @@ portfolio = page_hero("Work", "Portfolio", 'Work that <span class="grad-text">sp
 </section>''' + cta("Your project could be next.", "Let's create something you're proud to show the world.")
 page("portfolio.html", "Portfolio — Our Work | Webratron",
      "See websites, mobile apps, e-commerce stores, brand identities and animation videos designed and built by Webratron.",
-     portfolio, "portfolio.html")
+     portfolio, "portfolio.html", crumbs=[("Home", "index.html"), ("Portfolio", "portfolio.html")])
 
 # ================= ABOUT =================
 VALUES = [("target", "Results-driven", "Every pixel and line of code serves one purpose: growing your business."),
@@ -929,7 +1009,7 @@ about = page_hero("About", "About Webratron", 'We turn ideas into <span class="g
 </section>''' + cta()
 page("about.html", "About Us | Webratron Digital Agency",
      "Learn about Webratron — a New York-based digital agency of designers, developers and marketers helping businesses grow online.",
-     about, "about.html")
+     about, "about.html", crumbs=[("Home", "index.html"), ("About", "about.html")])
 
 # ================= PRICING =================
 pricing = page_hero("Pricing", "Pricing", 'Packages for <span class="grad-text">every business</span>',
@@ -949,7 +1029,7 @@ pricing = page_hero("Pricing", "Pricing", 'Packages for <span class="grad-text">
 </section>''' + cta()
 page("pricing.html", "Pricing — Website & App Packages | Webratron",
      "Transparent website design and development packages from Webratron. Starter, Business and E-commerce plans plus add-ons for branding, apps, SEO and maintenance.",
-     pricing, "pricing.html", faq_schema())
+     pricing, "pricing.html", faq_schema(), crumbs=[("Home", "index.html"), ("Pricing", "pricing.html")])
 
 # ================= CONTACT =================
 chips = "".join(f'<label><input type="checkbox" name="services" value="{sid}"><span>{name}</span></label>' for sid, ic, name, t, tg in SERVICES)
@@ -1005,7 +1085,7 @@ contact = page_hero("Contact", "Contact us", "Let's build something <span class=
 </section>'''
 page("contact.html", "Contact Us — Get a Free Quote | Webratron",
      "Contact Webratron for a free consultation and quote on your website, mobile app, branding or SEO project.",
-     contact, "contact.html")
+     contact, "contact.html", crumbs=[("Home", "index.html"), ("Contact", "contact.html")])
 
 import json
 # ================= BLOG =================
@@ -1087,7 +1167,7 @@ blog = page_hero("Blogs", "Blogs", 'Insights to <span class="grad-text">grow onl
   </div>
 </section>''' + cta()
 page("blog.html", "Blogs — Web Design & Marketing Tips | Webratron",
-     "Web design, development, e-commerce and digital marketing tips from the Webratron team.", blog, "blog.html")
+     "Web design, development, e-commerce and digital marketing tips from the Webratron team.", blog, "blog.html", crumbs=[("Home", "index.html"), ("Blogs", "blog.html")])
 
 for i, (slug, title, cat, art, date, mins, excerpt, body) in enumerate(POSTS):
     others = "\n".join(post_card(s2, t2, c2, a2, d2, m2, e2, j) for j, (s2, t2, c2, a2, d2, m2, e2, _) in enumerate(POSTS) if s2 != slug)
@@ -1116,9 +1196,301 @@ for i, (slug, title, cat, art, date, mins, excerpt, body) in enumerate(POSTS):
     </div>
   </div>
 </section>'''
-    schema = '\n  <script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BlogPosting", "headline": title, "description": excerpt, "author": {"@type": "Organization", "name": "Webratron"}, "publisher": {"@type": "Organization", "name": "Webratron"}}) + '</script>'
-    page(f"blog-{slug}.html", f"{title} | Webratron Blog", excerpt, html, "blog.html", schema)
+    iso = {"Nov 2026": "2026-11-01", "Oct 2026": "2026-10-01", "Sep 2026": "2026-09-01"}.get(date, "2026-11-01")
+    post_node = {"@type": "BlogPosting", "headline": title, "description": excerpt, "datePublished": iso, "dateModified": "2026-11-19",
+                 "author": {"@id": SITE + "/#org"}, "publisher": {"@id": SITE + "/#org"}, "image": SITE + "/assets/img/og-image.jpg",
+                 "mainEntityOfPage": f"{SITE}/blog-{slug}.html", "inLanguage": "en"}
+    page(f"blog-{slug}.html", f"{title} | Webratron Blog", excerpt, html, "blog.html",
+         crumbs=[("Home", "index.html"), ("Blogs", "blog.html"), (title, f"blog-{slug}.html")], extra_nodes=[post_node], priority=0.6)
 
+
+# ================= SEO SERVICE PAGES + PPC LANDING PAGES =================
+def _pk(sub=None, key=None):
+    if sub: return PACKAGES["website"]["sub"][sub][1]
+    return PACKAGES[key]["cards"]
+
+def _range(cards):
+    ps = [_num(c[1]) for c in cards]
+    return min(ps), max(ps)
+
+SVC = {
+ "web-design": dict(
+   title="Custom Website Design Services | From $469 | Webratron",
+   desc="Custom, mobile-first website design for startups and small businesses. Packages from $469, delivered in 48–72 hours, with full design ownership.",
+   h1='Custom Website Design <span class="grad-text">That Converts</span>',
+   kw="website design", lead="Webratron designs custom, mobile-first websites for startups and growing businesses. Packages start at $469 for a 3-page Startup Website and standard packages are delivered in 48 to 72 hours — with full ownership of your design.",
+   cards=lambda: _pk(sub="website"), stype="Website design",
+   facts=[("Starting price", "$469 (Startup Website, 3 pages)"), ("Delivery", "48–72 hours for standard packages"), ("Ownership", "100% ownership rights to your design"), ("Platforms", "WordPress, custom HTML/PHP, Shopify")],
+   faqs=[("How much does a custom website design cost?", "At Webratron, website design packages start at $469 for a 3-page Startup Website. Standard (5 pages) is $869, Professional (10 pages) is $1,269, Business (20 pages) is $1,969, and a customized web portal starts at $5,499."),
+         ("How long does it take to design a website?", "Standard website packages are delivered in 48 to 72 hours after we receive your content. Larger or custom projects are scheduled with clear milestones before work begins."),
+         ("Will my website be mobile-friendly and SEO-ready?", "Yes. Every website is fully responsive across devices and browsers, uses W3C-certified HTML, and includes on-page SEO basics such as clean structure, meta tags and a Google-friendly sitemap."),
+         ("Do I own my website design?", "Yes. All Webratron packages include full ownership rights to your unique design once the project is complete.")]),
+ "development": dict(
+   title="Web Development Company | WordPress & Custom Websites | Webratron",
+   desc="Fast, secure, scalable web development — WordPress, custom PHP and web apps. Website packages from $469 with complete deployment and CMS options.",
+   h1='Web Development <span class="grad-text">Built to Perform</span>',
+   kw="web development", lead="Webratron builds fast, secure and scalable websites and web applications using WordPress, custom PHP, React and Next.js. Website packages start at $469, and Professional packages include CMS support and complete deployment.",
+   cards=lambda: _pk(sub="website"), stype="Web development",
+   facts=[("Technologies", "WordPress, custom PHP, React, Next.js, Shopify"), ("Starting price", "$469"), ("Includes", "W3C-certified HTML, deployment, CMS options"), ("Custom portals", "From $5,499")],
+   faqs=[("Should I choose WordPress or a custom-built website?", "WordPress is ideal if you want to edit content yourself and launch quickly. A custom build suits unique features, portals or integrations. We recommend the right option after a free consultation."),
+         ("Can you redesign or rebuild my existing website?", "Yes. We can redesign, rebuild or migrate an existing website while keeping your content and protecting the SEO value you have already built."),
+         ("Do you handle deployment and launch?", "Yes. Our Professional package and above include complete deployment, so your site goes live without you needing to deal with servers."),
+         ("Can you build web applications and portals?", "Yes. Our Customized Web Portal package starts at $5,499 and covers job, dating, social network, restaurant, medical and enterprise portals.")]),
+ "mobile": dict(
+   title="Mobile App Development Company | Flutter iOS & Android | Webratron",
+   desc="Cross-platform mobile app development with Flutter for iOS and Android — UI/UX design, backend, push notifications and app store publishing.",
+   h1='Mobile App Development <span class="grad-text">for iOS &amp; Android</span>',
+   kw="mobile app development", lead="Webratron develops cross-platform mobile apps with Flutter, so one codebase runs on both iOS and Android. We handle UI/UX design, development, backend integration and App Store and Google Play publishing. Every app is quoted to your exact requirements.",
+   cards=lambda: None, stype="Mobile app development",
+   facts=[("Framework", "Flutter (one codebase for iOS & Android)"), ("Includes", "UI/UX, development, backend, store publishing"), ("Pricing", "Custom quote based on features"), ("Reviews", "Clients praise on-time delivery and communication")],
+   faqs=[("How much does it cost to build a mobile app?", "App cost depends on features, screens and integrations. Webratron provides a free consultation and a fixed custom quote before development begins."),
+         ("Why use Flutter for app development?", "Flutter lets us build one codebase that runs natively on both iOS and Android, which reduces cost and development time while keeping performance high."),
+         ("Do you publish apps to the App Store and Google Play?", "Yes. We handle store listings and publishing for both the Apple App Store and Google Play."),
+         ("Can you design the app UI as well?", "Yes. Our team designs the app's UI/UX before development so you can review screens and flows early.")]),
+ "branding": dict(
+   title="Professional Logo Design Services | From $75 | Webratron",
+   desc="Custom logo design from $75 with 4–12 concepts, unlimited revisions on most packages, vector files and full ownership. 3D logos from $499.",
+   h1='Professional Logo Design <span class="grad-text">From $75</span>',
+   kw="logo design", lead="Webratron creates custom logos that are distinctive and consistent with your business goals. Logo packages start at $75 for 4 design concepts, the Standard package at $149 includes 8 concepts with unlimited revisions, and 3D logo design starts at $499.",
+   cards=lambda: _pk(key="logo"), stype="Logo design",
+   facts=[("Starting price", "$75 (4 concepts)"), ("Most popular", "$149 — 8 concepts, unlimited revisions"), ("File formats", "AI, PSD, EPS, PNG, GIF, JPG, PDF"), ("Ownership", "Full ownership rights to your logo")],
+   faqs=[("How much does a professional logo cost?", "Webratron logo packages are $75 (Startup), $149 (Standard), $199 (Professional), $360 (Business), $425 (Premium) and $499 for 3D logo design."),
+         ("How many logo concepts will I get?", "Between 4 and 12 initial concepts depending on the package, and unlimited original concepts on the Business and Premium packages."),
+         ("What file formats are included?", "Standard and higher packages include vector formats: AI, PSD, EPS, PNG, GIF, JPG and PDF."),
+         ("Do I own the final logo?", "Yes. You receive full ownership rights to your unique logo design.")]),
+ "ecommerce": dict(
+   title="Shopify & E-commerce Website Development | From $669 | Webratron",
+   desc="Shopify stores from $699 and custom e-commerce websites from $669 — payment gateways, product catalogues, carts and mobile-friendly checkout.",
+   h1='Shopify &amp; E-commerce <span class="grad-text">Stores That Sell</span>',
+   kw="ecommerce website development", lead="Webratron builds Shopify stores and custom e-commerce websites with product catalogues, payment gateways, shopping carts and fast mobile checkout. Custom e-commerce packages start at $669 and Shopify packages start at $699.",
+   cards=lambda: _pk(sub="ecommerce") + _pk(sub="shopify"), stype="E-commerce website development",
+   facts=[("Shopify", "$699 – $2,799"), ("Custom e-commerce", "$669 – $4,969"), ("Products", "From 10 up to unlimited"), ("Includes", "Payments, cart, CMS, mobile-responsive")],
+   faqs=[("Should I build my store on Shopify or WooCommerce?", "Choose Shopify for a fast, hosted store with minimal maintenance. Choose WordPress with WooCommerce for maximum flexibility and content-heavy marketing. Read our Shopify vs WordPress guide for a full comparison."),
+         ("How much does an e-commerce website cost?", "Custom e-commerce packages are $669, $1,769, $2,969 and $4,969. Shopify packages are $699, $2,299 and $2,799, depending on products, pages and features."),
+         ("How many products can my store have?", "From up to 10 products on the Basic e-commerce package to 500+ on Business, and unlimited products on the Professional Shopify package."),
+         ("Do you set up payment gateways?", "Yes. We integrate payment gateways and shopping carts so customers can check out securely on any device.")]),
+ "seo": dict(
+   title="SEO Services | 6-Month SEO Plans from $3,500 | Webratron",
+   desc="Results-focused SEO services: business, consumer and competitor analysis, keyword targeting, on-page optimisation and meta tags. 6-month plans from $3,500.",
+   h1='SEO Services <span class="grad-text">That Get You Found</span>',
+   kw="SEO services", lead="Webratron's SEO services improve your visibility and organic rankings through business, consumer and competitor analysis, keyword targeting and on-page optimisation. Plans run for 6 months: Basic $3,500, Premium $6,000 and Platinum $8,000.",
+   cards=lambda: _pk(key="seo"), stype="Search engine optimization",
+   facts=[("Plan length", "6 months"), ("Pricing", "$3,500 / $6,000 / $8,000"), ("Keywords", "15–30 targeted keywords"), ("Includes", "Analysis, on-page optimisation, meta tags")],
+   faqs=[("How long does SEO take to show results?", "SEO is a long-term investment; meaningful ranking improvements usually build over several months, which is why our plans run for 6 months."),
+         ("What is included in your SEO packages?", "Prior, business, consumer and competitor analysis, 15–30 selected target keywords, keyword-targeted pages, webpage optimisation and meta tag creation."),
+         ("How much do SEO services cost?", "Our 6-month SEO plans are Basic at $3,500, Premium at $6,000 and Platinum at $8,000."),
+         ("Do you offer local SEO?", "Yes. We optimise for local search, including Google Business Profile and location-based keywords.")]),
+ "video": dict(
+   title="Explainer & 2D Animation Video Services | From $499 | Webratron",
+   desc="Whiteboard, 2D explainer and brand-intro animation videos from $499 — professional script, storyboard, voice-over and sound effects included.",
+   h1='Animated Explainer Videos <span class="grad-text">From $499</span>',
+   kw="animation video", lead="Webratron produces whiteboard, 2D explainer and brand-intro animation videos that keep viewers watching. Packages start at $499 for a 30-second video and include a professional script, storyboard, animation, voice-over and sound effects.",
+   cards=lambda: _pk(key="animation"), stype="Video animation",
+   facts=[("Starting price", "$499 (30-second video)"), ("Lengths", "30, 60, 90 or 120 seconds"), ("Includes", "Script, storyboard, voice-over, sound effects"), ("Delivery", "4–6 weeks depending on package")],
+   faqs=[("How much does an animated explainer video cost?", "Webratron animation packages are $499 (30 seconds), $999 (60 seconds), $1,499 (90 seconds) and $2,299 (120 seconds)."),
+         ("What is included in an animation package?", "Every package includes a professional script, storyboard, animation, voice-over and sound effects, plus a dedicated project manager."),
+         ("How long does it take to make an animated video?", "Delivery is 4 weeks for the Basic package, 5 weeks for Classic and 6 weeks for Premium."),
+         ("What animation styles do you offer?", "Whiteboard animation, 2D explainer videos, 2D brand intros and motion graphics.")]),
+ "maintenance": dict(
+   title="Website Maintenance Services | Updates, Security & Support | Webratron",
+   desc="Website maintenance: plugin, theme and core updates, bug fixes, security hardening and content updates — so your site stays fast and secure.",
+   h1='Website Maintenance <span class="grad-text">&amp; Support</span>',
+   kw="website maintenance", lead="Webratron keeps your website fast, secure and up to date with plugin, theme and core updates, bug fixes, security hardening and content changes on request. Maintenance is quoted based on your website and needs.",
+   cards=lambda: None, stype="Website maintenance",
+   facts=[("Covers", "Updates, fixes, security, content changes"), ("Platforms", "WordPress, Shopify, custom sites"), ("Pricing", "Custom quote"), ("Post-launch", "Basic Shopify includes 30 days free maintenance")],
+   faqs=[("What does website maintenance include?", "Plugin, theme and core updates, bug fixes and troubleshooting, security hardening and content updates on request."),
+         ("Why does my website need maintenance?", "Regular updates keep your site secure, compatible and fast. Outdated plugins and software are a common cause of hacks and broken pages."),
+         ("Do you maintain websites you didn't build?", "Yes. We can review and maintain existing WordPress, Shopify and custom websites."),
+         ("How much does website maintenance cost?", "Maintenance is quoted to your website's size and needs. Contact us for a free quote.")]),
+}
+
+def svc_page(sid):
+    d = SVC[sid]; ic, name = [(i, n) for s, i, n, _, _ in SERVICES if s == sid][0]
+    fname = SVC_URL[sid]; cards = d["cards"]()
+    facts = "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in d["facts"])
+    feats = "".join(f"<li>{x}</li>" for x in DETAILS[sid])
+    faq_html = "\n".join(f'      <details class="reveal"><summary>{q}</summary><p>{a}</p></details>' for q, a in d["faqs"])
+    others = "".join(f'<a href="{SVC_URL[s]}" class="chip-link">{n}</a>' for s, i2, n, _, _ in SERVICES if s != sid)
+    pk_html = pkg_grid(cards, name) if cards else pkg_quote(name)
+    body = f'''
+<section class="page-hero svc-hero">
+  <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
+  <div class="container svc-hero__grid">
+    <div>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><a href="services.html">Services</a><span aria-hidden="true">/</span><span>{name}</span></nav>
+      <h1>{d["h1"]}</h1>
+      <p class="svc-hero__lead">{d["lead"]}</p>
+      <div class="hero__actions"><a href="contact.html?service={sid}" class="btn btn--primary btn--lg" data-track="cta_click">Get a Free Quote {ARROW}</a><a href="tel:{PHONE_TEL}" class="btn btn--ghost btn--lg" data-track="click_call">Call {PHONE}</a></div>
+    </div>
+    <div class="svc-hero__art">{scene(sid)}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container answer-grid">
+    <div class="answer reveal">
+      <span class="eyebrow">Quick answer</span>
+      <h2>What do Webratron's {d["kw"]} services include?</h2>
+      <p>{d["lead"]}</p>
+      <ul class="checklist">{feats}</ul>
+    </div>
+    <aside class="facts reveal" aria-label="Key facts">
+      <h2>Key facts</h2>
+      <dl>{facts}</dl>
+      <p class="facts__rating"><span class="stars">★★★★★</span> Rated 4.7/5 on <a href="{TRUSTPILOT}" target="_blank" rel="noopener">Trustpilot</a></p>
+    </aside>
+  </div>
+</section>
+
+<section class="packages" id="packages">
+  <div class="container">
+    <div class="pk-head"><h2>{name} packages &amp; pricing</h2><p>Transparent packages with full ownership of your work. Not sure which fits? <a href="contact.html?service={sid}">Ask for a free recommendation</a>.</p></div>
+    {pk_html}
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow reveal">How it works</span><h2 class="reveal">Our {d["kw"]} <span class="grad-text">process</span></h2></div>
+    <div class="process">
+{process()}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container faq-split">
+    <div class="faq-split__head">
+      <span class="eyebrow reveal">FAQ</span>
+      <h2 class="reveal">{name}: <span class="grad-text">your questions answered</span></h2>
+      <p class="reveal">Still have questions? Call <a href="tel:{PHONE_TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+    </div>
+    <div class="faq">
+{faq_html}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt section--tight">
+  <div class="container text-center">
+    <h2 class="related-h">Explore more services</h2>
+    <div class="chip-links">{others}</div>
+  </div>
+</section>
+''' + cta()
+    lo_hi = _range(cards) if cards else None
+    svc_node = {"@type": "Service", "@id": f"{SITE}/{fname}#service", "name": name, "serviceType": d["stype"], "description": d["desc"],
+                "provider": {"@id": SITE + "/#org"}, "areaServed": "Worldwide", "url": f"{SITE}/{fname}"}
+    if lo_hi:
+        svc_node["offers"] = {"@type": "AggregateOffer", "priceCurrency": "USD", "lowPrice": f"{lo_hi[0]:.2f}", "highPrice": f"{lo_hi[1]:.2f}", "offerCount": len(cards)}
+        svc_node["hasOfferCatalog"] = {"@type": "OfferCatalog", "name": f"{name} packages", "itemListElement": [
+            {"@type": "Offer", "name": c[0], "price": f"{_num(c[1]):.2f}", "priceCurrency": "USD", "url": f"{SITE}/{fname}#packages"} for c in cards]}
+    page(fname, d["title"], d["desc"], body, "services.html", crumbs=[("Home", "index.html"), ("Services", "services.html"), (name, fname)],
+         extra_nodes=[svc_node, faq_node(d["faqs"])], priority=0.9)
+
+for _sid in SVC: svc_page(_sid)
+
+# ---------- PPC landing pages ----------
+def lead_form(service_value, cta_label):
+    chips = "".join(f'<option value="{n}"{" selected" if s == service_value else ""}>{n}</option>' for s, i, n, _, _ in SERVICES)
+    return f'''<div class="form lp-form" id="lead">
+      <form novalidate data-email="{EMAIL}" data-lead-form>
+        <p class="lp-form__title">Get your free quote</p>
+        <p class="lp-form__sub">Free consultation · No obligation</p>
+        <div class="field"><label for="lp-name">Full name *</label><input id="lp-name" name="name" type="text" autocomplete="name" required><span class="error">Please enter your name.</span></div>
+        <div class="field"><label for="lp-email">Email *</label><input id="lp-email" name="email" type="email" autocomplete="email" required><span class="error">Please enter a valid email.</span></div>
+        <div class="field"><label for="lp-phone">Phone *</label><input id="lp-phone" name="phone" type="tel" autocomplete="tel" required><span class="error">Please enter your phone number.</span></div>
+        <div class="field"><label for="lp-service">Service</label><select id="lp-service" name="service">{chips}</select></div>
+        <div class="field"><label for="lp-message">Project details *</label><textarea id="lp-message" name="message" rows="3" required placeholder="A few words about your business and goals"></textarea><span class="error">Please tell us a little about your project.</span></div>
+        <div style="position:absolute;left:-9999px" aria-hidden="true"><input type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
+        <button type="submit" class="btn btn--primary btn--block">{cta_label} {ARROW}</button>
+        <p class="form__note">🔒 Your details are safe with us. Prefer to talk? <a href="tel:{PHONE_TEL}" data-track="click_call">{PHONE}</a></p>
+      </form>
+      <div class="form-success" role="status"><div class="icon">{icon("check")}</div><h3>Thank you!</h3><p>We'll be in touch shortly.</p></div>
+    </div>'''
+
+LPS = [
+ ("lp-website-design.html", "web-design", "Professional Website Design — From $469 | Webratron",
+  "Get a custom, mobile-first business website from $469. Delivered in 48–72 hours with full ownership. Free quote today.",
+  "Limited offer · Up to 50% off", 'Get a Professional Website <span class="grad-text">From $469</span>',
+  ["Custom design — no templates", "Delivered in 48–72 hours", "Mobile-friendly &amp; SEO-ready", "100% ownership · Money-back guarantee on eligible packages"], "Get My Free Quote"),
+ ("lp-logo-design.html", "branding", "Custom Logo Design From $75 | Webratron",
+  "Professional custom logo design from $75 — up to 12 concepts, unlimited revisions on most packages, vector files and full ownership.",
+  "Logo packages from $75", 'Stand Out With a <span class="grad-text">Custom Logo</span>',
+  ["4–12 original concepts", "Unlimited revisions (Standard &amp; up)", "Vector files: AI, EPS, PDF, PNG", "Full ownership · Moneyback guarantee"], "Start My Logo"),
+ ("lp-ecommerce.html", "ecommerce", "Shopify & E-commerce Stores From $669 | Webratron",
+  "Launch a Shopify or custom online store from $669 — payments, cart, product setup and mobile checkout. Free consultation.",
+  "Shopify &amp; custom stores", 'Launch an Online Store <span class="grad-text">That Sells</span>',
+  ["Shopify from $699 · Custom from $669", "Payment gateway &amp; cart setup", "Mobile-friendly fast checkout", "Up to unlimited products"], "Get My Store Quote"),
+ ("lp-video-animation.html", "video", "Animated Explainer Videos From $499 | Webratron",
+  "2D and whiteboard explainer videos from $499 — script, storyboard, voice-over and sound effects included.",
+  "Explainer videos from $499", 'Explain Your Business in <span class="grad-text">60 Seconds</span>',
+  ["Professional script &amp; storyboard", "Voice-over &amp; sound effects", "30 to 120-second videos", "Dedicated project manager"], "Get My Video Quote"),
+]
+for fname, sid, title, desc, badge, h1, points, cta_label in LPS:
+    d = SVC[sid]; cards = d["cards"]()
+    pts = "".join(f"<li>{p}</li>" for p in points)
+    faq_html = "\n".join(f'      <details><summary>{q}</summary><p>{a}</p></details>' for q, a in d["faqs"])
+    body = f'''
+<section class="hero hero--v2 hero--inset lp-hero">
+  <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
+  <div class="container lp-hero__grid">
+    <div>
+      <span class="lp-badge">{badge}</span>
+      <h1>{h1}</h1>
+      <p class="lp-lead">{d["lead"]}</p>
+      <ul class="hero__points lp-points">{pts}</ul>
+      <div class="lp-proof"><span class="stars">★★★★★</span><span>Rated <strong>4.7/5</strong> on Trustpilot · <strong>5.0</strong> on ProvenExpert</span></div>
+      <img src="assets/img/trust-logos.webp" alt="Reviewed on Bark, Clutch, Google and Trustpilot" width="946" height="92" class="lp-trust">
+    </div>
+    {lead_form(sid, cta_label)}
+  </div>
+</section>
+<section class="packages">
+  <div class="container">
+    <div class="pk-head"><h2>Choose your package</h2><p>Clear prices. Full ownership. Free consultation before you pay.</p></div>
+    {pkg_grid(cards, d["kw"]) if cards else ""}
+  </div>
+</section>
+<section class="section section--alt section--tight">
+  <div class="container">
+    <div class="section-head"><h2>How it works</h2></div>
+    <div class="process">
+{process()}
+    </div>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="container">
+    <div class="section-head"><h2>What our clients say</h2></div>
+    <div class="grid grid--3">
+{testimonials()}
+    </div>
+  </div>
+</section>
+<section class="section section--alt section--tight">
+  <div class="container faq-split">
+    <div class="faq-split__head"><h2>Frequently asked questions</h2><a href="#lead" class="btn btn--primary">{cta_label} {ARROW}</a></div>
+    <div class="faq">
+{faq_html}
+    </div>
+  </div>
+</section>'''
+    page(fname, title, desc, body, None, noindex=True, lp=True, extra_nodes=[faq_node(d["faqs"])])
+
+# ---------- Thank-you (conversion) page ----------
+thanks = f'''
+<section class="page-hero">
+  <div class="starfield"></div><div class="orb orb--1"></div><div class="orb orb--2"></div>
+  <div class="container">
+    <span class="eyebrow">Request received</span>
+    <h1>Thank you — <span class="grad-text">we're on it!</span></h1>
+    <p>Our team will review your request and get back to you shortly. Need us sooner? Call <a href="tel:{PHONE_TEL}" style="color:#fff;text-decoration:underline">{PHONE}</a>.</p>
+    <div class="hero__actions" style="justify-content:center"><a href="index.html" class="btn btn--primary">Back to home {ARROW}</a><a href="portfolio.html" class="btn btn--ghost">See our work</a></div>
+  </div>
+</section>
+<script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({{event:"conversion_thank_you"}});</script>'''
+page("thank-you.html", "Thank You | Webratron", "Thanks for contacting Webratron.", thanks, noindex=True)
 
 # ================= LEGAL =================
 privacy = page_hero("Privacy Policy", "Legal", "Privacy Policy", "How we collect, use and protect your information.") + f'''
@@ -1137,7 +1509,7 @@ privacy = page_hero("Privacy Policy", "Legal", "Privacy Policy", "How we collect
     <p>Webratron, {ADDRESS}.</p>
   </div>
 </section>'''
-page("privacy.html", "Privacy Policy | Webratron", "Webratron privacy policy.", privacy)
+page("privacy.html", "Privacy Policy | Webratron", "Webratron privacy policy.", privacy, priority=0.3)
 
 terms = page_hero("Terms of Service", "Legal", "Terms of Service", "The terms that govern our work together.") + f'''
 <section class="section" style="padding-top:20px">
@@ -1157,7 +1529,7 @@ terms = page_hero("Terms of Service", "Legal", "Terms of Service", "The terms th
     <p>Questions about these terms? Email <a href="mailto:{EMAIL}" class="grad-text">{EMAIL}</a>.</p>
   </div>
 </section>'''
-page("terms.html", "Terms of Service | Webratron", "Webratron terms of service.", terms)
+page("terms.html", "Terms of Service | Webratron", "Webratron terms of service.", terms, priority=0.3)
 
 # ================= 404 =================
 nf = f'''
@@ -1170,5 +1542,75 @@ nf = f'''
     <a href="index.html" class="btn btn--primary">Back to home {ARROW}</a>
   </div>
 </section>'''
-page("404.html", "Page not found | Webratron", "The page you are looking for could not be found.", nf)
+page("404.html", "Page not found | Webratron", "The page you are looking for could not be found.", nf, noindex=True)
 print("built")
+
+# ================= LLM / CRAWLER FILES =================
+def _money(x): return "${:,.0f}".format(x)
+lines = ["# Webratron", "",
+ "> Webratron is a results-driven web design and development company headquartered in New York (80 Broad Street, 5th Floor, New York, NY 10004) with an office in Sydney, Australia. It builds custom websites, Shopify and e-commerce stores, mobile apps, logos and brand identities, SEO campaigns and animated explainer videos for startups and growing businesses worldwide.", "",
+ "## Key facts",
+ f"- Website: {SITE}/",
+ f"- Email: {EMAIL}",
+ f"- Phone: {PHONE} (sales), {PHONE2}",
+ "- Locations: 80 Broad St 5th Floor, New York, NY 10004, USA; 308 Sussex St, Sydney NSW 2000, Australia",
+ "- Ratings: 4.7/5 on Trustpilot; 5.0 on ProvenExpert",
+ "- Website packages start at $469; standard website packages are delivered in 48–72 hours",
+ "- All packages include full ownership rights to the client's unique design", "",
+ "## Services"]
+for sid, ic, name, text, tags in SERVICES:
+    lines.append(f"- [{name}]({SITE}/{SVC_URL[sid]}): {SVC[sid]['lead']}")
+lines += ["", "## Packages and prices (USD)"]
+def _cards(title, cards, note=""):
+    lines.append(f"### {title}{note}")
+    for c in cards: lines.append(f"- {c[0]}: {c[1]} (regular {c[2]}) — " + "; ".join(c[4][:5]))
+_cards("Website", PACKAGES["website"]["sub"]["website"][1])
+_cards("E-commerce", PACKAGES["website"]["sub"]["ecommerce"][1])
+_cards("Shopify", PACKAGES["website"]["sub"]["shopify"][1])
+_cards("Logo design", PACKAGES["logo"]["cards"])
+_cards("SEO", PACKAGES["seo"]["cards"], " (6-month plans)")
+_cards("Animation", PACKAGES["animation"]["cards"])
+lines.append("### Business Starter combo\n- Business Starter Package: $1,999 (regular $3,999) — logo design, stationery, social media pages and a 15-page website")
+lines.append("- Mobile app, branding, web app development and website maintenance: custom quote")
+lines += ["", "## Frequently asked questions"]
+for sid in SVC:
+    for q, a in SVC[sid]["faqs"][:2]: lines.append(f"- Q: {q}\n  A: {a}")
+lines += ["", "## Pages",
+ f"- [Home]({SITE}/)", f"- [Services]({SITE}/services.html)", f"- [Pricing]({SITE}/pricing.html)", f"- [Portfolio]({SITE}/portfolio.html)",
+ f"- [About]({SITE}/about.html)", f"- [Blog]({SITE}/blog.html)", f"- [Contact]({SITE}/contact.html)", ""]
+open(os.path.join(ROOT, "llms.txt"), "w").write("\n".join(lines))
+
+open(os.path.join(ROOT, "robots.txt"), "w").write(f"""# Webratron robots.txt
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+
+# AI / answer-engine crawlers are welcome
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+Sitemap: {SITE}/sitemap.xml
+""")
+
+sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+for url, pr in SITEMAP:
+    if url.endswith("/404.html"): continue
+    sm.append(f"  <url><loc>{url}</loc><lastmod>2026-11-19</lastmod><priority>{pr:.1f}</priority></url>")
+sm.append("</urlset>")
+open(os.path.join(ROOT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")

@@ -147,10 +147,48 @@
     msg.value = "Hi, I'm interested in the " + nice + (extras ? " with " + extras.replace(/[<>]/g, "") : "") + ". Please share the next steps.";
   }
 
-  /* ---- Contact form ---- */
-  var wrap = document.querySelector(".form");
-  var form = wrap && wrap.querySelector("form");
-  if (form) {
+  /* ---- Analytics helper (Google Tag Manager / GA4 via dataLayer) ---- */
+  window.dataLayer = window.dataLayer || [];
+  function track(ev, extra) {
+    var o = { event: ev, page_path: location.pathname };
+    for (var k in extra || {}) o[k] = extra[k];
+    window.dataLayer.push(o);
+  }
+
+  /* ---- Attribution: remember UTM / click IDs for 90 days ---- */
+  var ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid", "msclkid", "fbclid"];
+  var attr = {};
+  try { attr = JSON.parse(localStorage.getItem("wr_attr") || "{}"); } catch (e) { attr = {}; }
+  if (attr.ts && Date.now() - attr.ts > 90 * 864e5) attr = {};
+  var fresh = false;
+  ATTR_KEYS.forEach(function (k) { var v = params.get(k); if (v) { attr[k] = v.slice(0, 200); fresh = true; } });
+  if (fresh || !attr.landing_page) {
+    if (fresh || !attr.ts) { attr.landing_page = location.pathname; attr.referrer = document.referrer.slice(0, 200); attr.ts = Date.now(); }
+    try { localStorage.setItem("wr_attr", JSON.stringify(attr)); } catch (e) {}
+  }
+
+  /* ---- Click tracking: calls, emails, CTAs, packages ---- */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a, button");
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (href.indexOf("tel:") === 0) track("click_call", { link_url: href });
+    else if (href.indexOf("mailto:") === 0) track("click_email", { link_url: href });
+    else if (a.classList.contains("pkg__btn--order")) track("select_package", { package: (a.closest(".pkg") || {}).querySelector ? a.closest(".pkg").querySelector(".pkg__name").textContent : href });
+    else if (a.hasAttribute("data-calc-cta")) track("calculator_quote", { link_url: href });
+    else if (a.getAttribute("data-track")) track(a.getAttribute("data-track"), { link_url: href });
+  });
+
+  /* ---- Lead forms (contact page + PPC landing pages) ---- */
+  var endpointAttr = document.body.getAttribute("data-form-endpoint") || "";
+  document.querySelectorAll(".form form").forEach(function (form) {
+    var wrap = form.closest(".form");
+    // hidden attribution fields
+    ATTR_KEYS.concat(["landing_page", "referrer"]).forEach(function (k) {
+      if (attr[k]) { var h = document.createElement("input"); h.type = "hidden"; h.name = k; h.value = attr[k]; form.appendChild(h); }
+    });
+    var started = false;
+    form.addEventListener("focusin", function () { if (!started) { started = true; track("form_start"); } });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var valid = true;
@@ -166,41 +204,36 @@
         if (firstErr) firstErr.focus();
         return;
       }
-
       var data = new FormData(form);
-      var services = data.getAll("services").join(", ");
-      var endpoint = form.getAttribute("data-endpoint");
+      if (data.get("company_website")) { wrap.classList.add("is-sent"); return; } // honeypot
+      var endpoint = form.getAttribute("data-endpoint") || endpointAttr;
       var btn = form.querySelector("button[type=submit]");
-
-      // Honeypot spam check
-      if (data.get("company_website")) { wrap.classList.add("is-sent"); return; }
-
+      var services = data.getAll("services").join(", ") || data.get("service") || "-";
+      function done() {
+        track("generate_lead", { form_page: location.pathname, service: services, utm_source: attr.utm_source || "", utm_campaign: attr.utm_campaign || "", gclid: attr.gclid || "" });
+        setTimeout(function () { location.href = "thank-you.html"; }, endpoint ? 300 : 900);
+      }
       if (endpoint) {
-        btn.disabled = true;
-        btn.textContent = "Sending…";
+        btn.disabled = true; btn.textContent = "Sending…";
         fetch(endpoint, { method: "POST", body: data, headers: { Accept: "application/json" } })
-          .then(function (r) {
-            if (!r.ok) throw new Error("Request failed");
-            wrap.classList.add("is-sent");
-          })
+          .then(function (r) { if (!r.ok) throw new Error("Request failed"); wrap.classList.add("is-sent"); done(); })
           .catch(function () {
-            btn.disabled = false;
-            btn.textContent = "Send message";
+            btn.disabled = false; btn.textContent = "Send message";
             alert("Sorry, something went wrong. Please email us directly at " + form.getAttribute("data-email"));
           });
       } else {
-        // Fallback: open the visitor's email app with the message pre-filled
-        var body =
-          "Name: " + data.get("name") + "\n" +
-          "Email: " + data.get("email") + "\n" +
-          "Phone: " + (data.get("phone") || "-") + "\n" +
-          "Services: " + (services || "-") + "\n" +
-          "Budget: " + (data.get("budget") || "-") + "\n\n" +
-          data.get("message");
+        var lines = [
+          "Name: " + data.get("name"), "Email: " + data.get("email"), "Phone: " + (data.get("phone") || "-"),
+          "Services: " + services, "Budget: " + (data.get("budget") || "-"), "", String(data.get("message") || ""), "",
+          "— Source —"
+        ];
+        ATTR_KEYS.concat(["landing_page"]).forEach(function (k) { if (attr[k]) lines.push(k + ": " + attr[k]); });
+        lines.push("form_page: " + location.pathname);
         window.location.href = "mailto:" + form.getAttribute("data-email") +
           "?subject=" + encodeURIComponent("New project enquiry — " + data.get("name")) +
-          "&body=" + encodeURIComponent(body);
+          "&body=" + encodeURIComponent(lines.join("\n"));
         wrap.classList.add("is-sent");
+        done();
       }
     });
     form.querySelectorAll("input, textarea, select").forEach(function (input) {
@@ -209,7 +242,7 @@
         if (field) field.classList.remove("has-error");
       });
     });
-  }
+  });
 
   /* ---- Footer year ---- */
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
