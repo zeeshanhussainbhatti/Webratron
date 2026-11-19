@@ -1748,3 +1748,7 @@ for url, pr in SITEMAP:
     sm.append(f"  <url><loc>{url}</loc><lastmod>2026-11-19</lastmod><priority>{pr:.1f}</priority></url>")
 sm.append("</urlset>")
 open(os.path.join(ROOT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
+
+# ================= v2 design (separate /v2/ folder; v1 untouched) =================
+import runpy
+runpy.run_path(os.path.join(ROOT, "tools", "build_v2.py"))
